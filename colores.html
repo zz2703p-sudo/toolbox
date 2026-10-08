@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de colores | Herramio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .generador {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .color {
+            width: 100%;
+            height: 300px;
+            border-radius: 14px;
+            background: #2563eb;
+            margin-bottom: 25px;
+            border: 1px solid #e5e7eb;
+            transition: background 0.2s;
+        }
+
+        .informacion {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .dato {
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .dato-titulo {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .dato-valor {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3a8a;
+            word-break: break-word;
+        }
+
+        .boton-generar {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-generar:hover {
+            background: #1d4ed8;
+        }
+
+        .boton-copiar {
+            width: 100%;
+            margin-top: 12px;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            background: white;
+            color: #1f2937;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-copiar:hover {
+            background: #f8fafc;
+            border-color: #2563eb;
+        }
+
+        .mensaje {
+            text-align: center;
+            margin-top: 10px;
+            color: #16a34a;
+            font-size: 13px;
+            min-height: 16px;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .generador {
+                padding: 20px;
+            }
+
+            .color {
+                height: 220px;
+            }
+
+            .informacion {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Herramio</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🎨 Generador de colores</h1>
+        <p>Genera colores aleatorios y obtén su código hexadecimal.</p>
+    </div>
+
+    <section class="generador">
+
+        <div class="color" id="color"></div>
+
+        <div class="informacion">
+
+            <div class="dato">
+                <div class="dato-titulo">
+                    HEX
+                </div>
+
+                <div class="dato-valor" id="hex">
+                    #2563EB
+                </div>
+            </div>
+
+            <div class="dato">
+                <div class="dato-titulo">
+                    RGB
+                </div>
+
+                <div class="dato-valor" id="rgb">
+                    rgb(37, 99, 235)
+                </div>
+            </div>
+
+        </div>
+
+        <button
+            class="boton-generar"
+            id="generar"
+            type="button"
+        >
+            Generar color
+        </button>
+
+        <button
+            class="boton-copiar"
+            id="copiar"
+            type="button"
+        >
+            Copiar HEX
+        </button>
+
+        <div class="mensaje" id="mensaje"></div>
+
+    </section>
+
+    <a href="generadores.html" class="volver">
+        ← Volver a Generadores
+    </a>
+
+</main>
+
+<script>
+
+    const color = document.getElementById("color");
+    const hex = document.getElementById("hex");
+    const rgb = document.getElementById("rgb");
+    const generar = document.getElementById("generar");
+    const copiar = document.getElementById("copiar");
+    const mensaje = document.getElementById("mensaje");
+
+    let colorActual = "#2563EB";
+
+    function generarColor() {
+
+        const rojo = Math.floor(Math.random() * 256);
+        const verde = Math.floor(Math.random() * 256);
+        const azul = Math.floor(Math.random() * 256);
+
+        const convertirHex = numero => {
+            return numero.toString(16).padStart(2, "0");
+        };
+
+        colorActual =
+            "#" +
+            convertirHex(rojo) +
+            convertirHex(verde) +
+            convertirHex(azul);
+
+        const rgbActual =
+            `rgb(${rojo}, ${verde}, ${azul})`;
+
+        color.style.background = colorActual;
+        hex.textContent = colorActual.toUpperCase();
+        rgb.textContent = rgbActual;
+
+        mensaje.textContent = "";
+    }
+
+    generar.addEventListener("click", generarColor);
+
+    copiar.addEventListener("click", async () => {
+
+        try {
+            await navigator.clipboard.writeText(colorActual);
+
+            mensaje.textContent = "✓ Código HEX copiado.";
+
+        } catch (error) {
+
+            mensaje.textContent =
+                "No se pudo copiar el código.";
+
+        }
+    });
+
+</script>
+
+</body>
+</html>

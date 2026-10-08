@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo | Herramio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .generador {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .controles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .boton {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton:hover {
+            background: #1d4ed8;
+        }
+
+        .boton-secundario {
+            background: #111827;
+        }
+
+        .boton-secundario:hover {
+            background: #374151;
+        }
+
+        .numero-actual {
+            margin: 25px auto;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 5px solid #dbe3ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .info {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .tablero {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 7px;
+        }
+
+        .numero {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border: 1px solid #dbe3ef;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .numero.sacado {
+            background: #dbeafe;
+            border-color: #2563eb;
+            color: #1e3a8a;
+        }
+
+        .mensaje {
+            margin-top: 18px;
+            text-align: center;
+            color: #16a34a;
+            font-size: 14px;
+            min-height: 18px;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .generador {
+                padding: 20px;
+            }
+
+            .controles {
+                grid-template-columns: 1fr;
+            }
+
+            .tablero {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .numero-actual {
+                width: 125px;
+                height: 125px;
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Herramio</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🎱 Bingo</h1>
+        <p>Genera números de bingo aleatoriamente sin repetir.</p>
+    </div>
+
+    <section class="generador">
+
+        <div class="numero-actual" id="numeroActual">
+            —
+        </div>
+
+        <div class="info" id="info">
+            0 de 90 números extraídos
+        </div>
+
+        <div class="controles">
+
+            <button
+                class="boton"
+                id="sacar"
+                type="button"
+            >
+                Sacar número
+            </button>
+
+            <button
+                class="boton boton-secundario"
+                id="reiniciar"
+                type="button"
+            >
+                Reiniciar
+            </button>
+
+        </div>
+
+        <div class="tablero" id="tablero"></div>
+
+        <div class="mensaje" id="mensaje"></div>
+
+    </section>
+
+    <a href="generadores.html" class="volver">
+        ← Volver a Generadores
+    </a>
+
+</main>
+
+<script>
+
+    const numeroActual = document.getElementById("numeroActual");
+    const info = document.getElementById("info");
+    const sacar = document.getElementById("sacar");
+    const reiniciar = document.getElementById("reiniciar");
+    const tablero = document.getElementById("tablero");
+    const mensaje = document.getElementById("mensaje");
+
+    let numerosSacados = [];
+
+    function crearTablero() {
+
+        tablero.innerHTML = "";
+
+        for (let i = 1; i <= 90; i++) {
+
+            const numero = document.createElement("div");
+
+            numero.className = "numero";
+            numero.textContent = i;
+            numero.id = `numero-${i}`;
+
+            tablero.appendChild(numero);
+        }
+    }
+
+    function actualizarInfo() {
+
+        info.textContent =
+            `${numerosSacados.length} de 90 números extraídos`;
+    }
+
+    sacar.addEventListener("click", () => {
+
+        mensaje.textContent = "";
+
+        if (numerosSacados.length >= 90) {
+
+            numeroActual.textContent = "✓";
+            mensaje.textContent =
+                "¡Han salido todos los números!";
+            return;
+        }
+
+        let numero;
+
+        do {
+            numero = Math.floor(Math.random() * 90) + 1;
+        } while (numerosSacados.includes(numero));
+
+        numerosSacados.push(numero);
+
+        numeroActual.textContent = numero;
+
+        const casilla =
+            document.getElementById(`numero-${numero}`);
+
+        casilla.classList.add("sacado");
+
+        actualizarInfo();
+    });
+
+    reiniciar.addEventListener("click", () => {
+
+        numerosSacados = [];
+
+        numeroActual.textContent = "—";
+
+        mensaje.textContent = "";
+
+        actualizarInfo();
+
+        crearTablero();
+    });
+
+    crearTablero();
+    actualizarInfo();
+
+</script>
+
+</body>
+</html>

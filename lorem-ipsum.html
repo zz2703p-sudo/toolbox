@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum | Herramio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .herramienta {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .controles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .campo label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        .campo input:focus,
+        .campo select:focus {
+            border-color: #2563eb;
+        }
+
+        .botones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        button {
+            border: none;
+            border-radius: 9px;
+            padding: 13px 15px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #2563eb;
+            color: white;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .boton-secundario {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .boton-secundario:hover {
+            background: #d1d5db;
+        }
+
+        .resultado {
+            display: none;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .resultado.visible {
+            display: block;
+        }
+
+        .resultado h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        #textoResultado {
+            white-space: pre-wrap;
+            line-height: 1.7;
+            color: #374151;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .herramienta {
+                padding: 20px;
+            }
+
+            .controles,
+            .botones {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Herramio</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>📄 Lorem Ipsum</h1>
+        <p>Genera texto Lorem Ipsum para tus diseños y proyectos.</p>
+    </div>
+
+    <section class="herramienta">
+
+        <div class="controles">
+
+            <div class="campo">
+                <label for="cantidad">Cantidad</label>
+
+                <input
+                    type="number"
+                    id="cantidad"
+                    min="1"
+                    max="50"
+                    value="3"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="tipo">Generar por</label>
+
+                <select id="tipo">
+                    <option value="parrafos">Párrafos</option>
+                    <option value="frases">Frases</option>
+                    <option value="palabras">Palabras</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="botones">
+
+            <button
+                id="generar"
+                type="button"
+            >
+                Generar Lorem Ipsum
+            </button>
+
+            <button
+                id="copiar"
+                type="button"
+                class="boton-secundario"
+            >
+                Copiar texto
+            </button>
+
+        </div>
+
+        <div
+            id="resultado"
+            class="resultado"
+        >
+            <h2>Resultado</h2>
+
+            <div id="textoResultado"></div>
+        </div>
+
+    </section>
+
+    <a href="herramientas.html" class="volver">
+        ← Volver a Herramientas
+    </a>
+
+</main>
+
+<script>
+
+    const cantidad =
+        document.getElementById("cantidad");
+
+    const tipo =
+        document.getElementById("tipo");
+
+    const generar =
+        document.getElementById("generar");
+
+    const copiar =
+        document.getElementById("copiar");
+
+    const resultado =
+        document.getElementById("resultado");
+
+    const textoResultado =
+        document.getElementById("textoResultado");
+
+
+    const palabrasLorem = [
+        "lorem", "ipsum", "dolor", "sit", "amet",
+        "consectetur", "adipiscing", "elit",
+        "integer", "nec", "odio", "praesent",
+        "libero", "sed", "cursus", "ante",
+        "dapibus", "diam", "sed", "nisi",
+        "nulla", "quis", "sem", "at",
+        "nibh", "elementum", "imperdiet",
+        "duis", "sagittis", "ipsum",
+        "praesent", "mauris", "fusce",
+        "nec", "tellus", "sed", "augue",
+        "semper", "porta", "massa",
+        "vestibulum", "lacinia", "arcu",
+        "eget", "nulla", "class", "aptent",
+        "taciti", "sociosqu", "ad", "litora",
+        "torquent", "per", "conubia",
+        "nostra", "per", "inceptos",
+        "himenaeos", "curabitur", "sodales",
+        "ligula", "in", "libero", "sed",
+        "dignissim", "lacinia", "nunc"
+    ];
+
+
+    function numeroAleatorio(min, max) {
+
+        return Math.floor(
+            Math.random() * (max - min + 1)
+        ) + min;
+
+    }
+
+
+    function generarPalabras(numero) {
+
+        let resultado = [];
+
+        for (let i = 0; i < numero; i++) {
+
+            const indice =
+                numeroAleatorio(
+                    0,
+                    palabrasLorem.length - 1
+                );
+
+            resultado.push(
+                palabrasLorem[indice]
+            );
+        }
+
+        let texto = resultado.join(" ");
+
+        return texto.charAt(0).toUpperCase() +
+            texto.slice(1) +
+            ".";
+
+    }
+
+
+    function generarFrase() {
+
+        const cantidadPalabras =
+            numeroAleatorio(8, 16);
+
+        return generarPalabras(
+            cantidadPalabras
+        );
+
+    }
+
+
+    function generarParrafo() {
+
+        const cantidadFrases =
+            numeroAleatorio(4, 7);
+
+        let frases = [];
+
+        for (let i = 0; i < cantidadFrases; i++) {
+
+            frases.push(
+                generarFrase()
+            );
+
+        }
+
+        return frases.join(" ");
+
+    }
+
+
+    generar.addEventListener("click", () => {
+
+        let cantidadGenerada =
+            parseInt(cantidad.value);
+
+        if (
+            isNaN(cantidadGenerada) ||
+            cantidadGenerada < 1
+        ) {
+
+            cantidadGenerada = 1;
+
+        }
+
+        if (cantidadGenerada > 50) {
+
+            cantidadGenerada = 50;
+
+        }
+
+        cantidad.value =
+            cantidadGenerada;
+
+
+        let textos = [];
+
+
+        if (tipo.value === "palabras") {
+
+            textos.push(
+                generarPalabras(
+                    cantidadGenerada
+                )
+            );
+
+        }
+
+
+        if (tipo.value === "frases") {
+
+            for (
+                let i = 0;
+                i < cantidadGenerada;
+                i++
+            ) {
+
+                textos.push(
+                    generarFrase()
+                );
+
+            }
+
+        }
+
+
+        if (tipo.value === "parrafos") {
+
+            for (
+                let i = 0;
+                i < cantidadGenerada;
+                i++
+            ) {
+
+                textos.push(
+                    generarParrafo()
+                );
+
+            }
+
+        }
+
+
+        textoResultado.textContent =
+            textos.join("\n\n");
+
+        resultado.classList.add("visible");
+
+    });
+
+
+    copiar.addEventListener("click", async () => {
+
+        const texto =
+            textoResultado.textContent;
+
+        if (!texto) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(
+                texto
+            );
+
+            copiar.textContent =
+                "¡Copiado!";
+
+            setTimeout(() => {
+
+                copiar.textContent =
+                    "Copiar texto";
+
+            }, 1500);
+
+        } catch (error) {
+
+            alert(
+                "No se ha podido copiar el texto."
+            );
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

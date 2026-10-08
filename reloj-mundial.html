@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj mundial | Herramio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .herramienta {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .relojes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .reloj {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .reloj h2 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .reloj .hora {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 7px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .reloj .fecha {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .herramienta {
+                padding: 20px;
+            }
+
+            .relojes {
+                grid-template-columns: 1fr;
+            }
+
+            .reloj .hora {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Herramio</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🌍 Reloj mundial</h1>
+        <p>Consulta la hora actual en diferentes ciudades del mundo.</p>
+    </div>
+
+    <section class="herramienta">
+
+        <div class="relojes">
+
+            <div class="reloj">
+                <h2>🇪🇸 Madrid</h2>
+                <div class="hora" id="madridHora">--:--:--</div>
+                <div class="fecha" id="madridFecha">--</div>
+            </div>
+
+            <div class="reloj">
+                <h2>🇬🇧 Londres</h2>
+                <div class="hora" id="londresHora">--:--:--</div>
+                <div class="fecha" id="londresFecha">--</div>
+            </div>
+
+            <div class="reloj">
+                <h2>🇺🇸 Nueva York</h2>
+                <div class="hora" id="nuevaYorkHora">--:--:--</div>
+                <div class="fecha" id="nuevaYorkFecha">--</div>
+            </div>
+
+            <div class="reloj">
+                <h2>🇺🇸 Los Ángeles</h2>
+                <div class="hora" id="losAngelesHora">--:--:--</div>
+                <div class="fecha" id="losAngelesFecha">--</div>
+            </div>
+
+            <div class="reloj">
+                <h2>🇯🇵 Tokio</h2>
+                <div class="hora" id="tokioHora">--:--:--</div>
+                <div class="fecha" id="tokioFecha">--</div>
+            </div>
+
+            <div class="reloj">
+                <h2>🇦🇺 Sídney</h2>
+                <div class="hora" id="sidneyHora">--:--:--</div>
+                <div class="fecha" id="sidneyFecha">--</div>
+            </div>
+
+            <div class="reloj">
+                <h2>🇦🇪 Dubái</h2>
+                <div class="hora" id="dubaiHora">--:--:--</div>
+                <div class="fecha" id="dubaiFecha">--</div>
+            </div>
+
+            <div class="reloj">
+                <h2>🇧🇷 São Paulo</h2>
+                <div class="hora" id="saoPauloHora">--:--:--</div>
+                <div class="fecha" id="saoPauloFecha">--</div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <a href="herramientas.html" class="volver">
+        ← Volver a Herramientas
+    </a>
+
+</main>
+
+<script>
+
+    const ciudades = [
+        {
+            zona: "Europe/Madrid",
+            hora: "madridHora",
+            fecha: "madridFecha"
+        },
+        {
+            zona: "Europe/London",
+            hora: "londresHora",
+            fecha: "londresFecha"
+        },
+        {
+            zona: "America/New_York",
+            hora: "nuevaYorkHora",
+            fecha: "nuevaYorkFecha"
+        },
+        {
+            zona: "America/Los_Angeles",
+            hora: "losAngelesHora",
+            fecha: "losAngelesFecha"
+        },
+        {
+            zona: "Asia/Tokyo",
+            hora: "tokioHora",
+            fecha: "tokioFecha"
+        },
+        {
+            zona: "Australia/Sydney",
+            hora: "sidneyHora",
+            fecha: "sidneyFecha"
+        },
+        {
+            zona: "Asia/Dubai",
+            hora: "dubaiHora",
+            fecha: "dubaiFecha"
+        },
+        {
+            zona: "America/Sao_Paulo",
+            hora: "saoPauloHora",
+            fecha: "saoPauloFecha"
+        }
+    ];
+
+    function actualizarRelojes() {
+
+        const ahora = new Date();
+
+        ciudades.forEach(ciudad => {
+
+            const horaElemento =
+                document.getElementById(ciudad.hora);
+
+            const fechaElemento =
+                document.getElementById(ciudad.fecha);
+
+            const hora =
+                new Intl.DateTimeFormat("es-ES", {
+                    timeZone: ciudad.zona,
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false
+                }).format(ahora);
+
+            const fecha =
+                new Intl.DateTimeFormat("es-ES", {
+                    timeZone: ciudad.zona,
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }).format(ahora);
+
+            horaElemento.textContent = hora;
+            fechaElemento.textContent = fecha;
+        });
+    }
+
+    actualizarRelojes();
+
+    setInterval(actualizarRelojes, 1000);
+
+</script>
+
+</body>
+</html>

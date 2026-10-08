@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de contraseñas | Herramio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .generador {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .campo {
+            margin-bottom: 25px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .longitud-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .longitud-contenedor input[type="range"] {
+            flex: 1;
+            accent-color: #2563eb;
+            cursor: pointer;
+        }
+
+        .numero-longitud {
+            min-width: 45px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .opciones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .opcion {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .opcion:hover {
+            border-color: #2563eb;
+            background: #f8faff;
+        }
+
+        .opcion input {
+            accent-color: #2563eb;
+            cursor: pointer;
+        }
+
+        .opcion label {
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .boton-generar {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-generar:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 22px;
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .resultado-titulo {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .resultado-contenedor {
+            display: flex;
+            gap: 10px;
+        }
+
+        .contrasena {
+            flex: 1;
+            min-width: 0;
+            padding: 13px;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 16px;
+            word-break: break-all;
+        }
+
+        .boton-copiar {
+            padding: 13px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #111827;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .boton-copiar:hover {
+            background: #374151;
+        }
+
+        .mensaje {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #16a34a;
+            min-height: 16px;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .generador {
+                padding: 20px;
+            }
+
+            .opciones {
+                grid-template-columns: 1fr;
+            }
+
+            .resultado-contenedor {
+                flex-direction: column;
+            }
+
+            .boton-copiar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Herramio</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🔐 Generador de contraseñas</h1>
+        <p>Crea contraseñas aleatorias y personalízalas a tu gusto.</p>
+    </div>
+
+    <section class="generador">
+
+        <div class="campo">
+            <label for="longitud">Longitud de la contraseña</label>
+
+            <div class="longitud-contenedor">
+                <input
+                    type="range"
+                    id="longitud"
+                    min="4"
+                    max="50"
+                    value="16"
+                >
+
+                <span class="numero-longitud" id="numeroLongitud">
+                    16
+                </span>
+            </div>
+        </div>
+
+        <div class="campo">
+
+            <label>Opciones</label>
+
+            <div class="opciones">
+
+                <div class="opcion">
+                    <input type="checkbox" id="mayusculas" checked>
+                    <label for="mayusculas">Mayúsculas (A-Z)</label>
+                </div>
+
+                <div class="opcion">
+                    <input type="checkbox" id="minusculas" checked>
+                    <label for="minusculas">Minúsculas (a-z)</label>
+                </div>
+
+                <div class="opcion">
+                    <input type="checkbox" id="numeros" checked>
+                    <label for="numeros">Números (0-9)</label>
+                </div>
+
+                <div class="opcion">
+                    <input type="checkbox" id="simbolos" checked>
+                    <label for="simbolos">Símbolos (!@#$...)</label>
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="boton-generar" id="generar" type="button">
+            Generar contraseña
+        </button>
+
+        <div class="resultado">
+
+            <div class="resultado-titulo">
+                Contraseña generada
+            </div>
+
+            <div class="resultado-contenedor">
+
+                <div class="contrasena" id="resultado">
+                    —
+                </div>
+
+                <button class="boton-copiar" id="copiar" type="button">
+                    Copiar
+                </button>
+
+            </div>
+
+            <div class="mensaje" id="mensaje"></div>
+
+        </div>
+
+    </section>
+
+    <a href="generadores.html" class="volver">
+        ← Volver a Generadores
+    </a>
+
+</main>
+
+<script>
+
+    const longitud = document.getElementById("longitud");
+    const numeroLongitud = document.getElementById("numeroLongitud");
+
+    const mayusculas = document.getElementById("mayusculas");
+    const minusculas = document.getElementById("minusculas");
+    const numeros = document.getElementById("numeros");
+    const simbolos = document.getElementById("simbolos");
+
+    const generar = document.getElementById("generar");
+    const resultado = document.getElementById("resultado");
+    const copiar = document.getElementById("copiar");
+    const mensaje = document.getElementById("mensaje");
+
+    const caracteresMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const caracteresMinusculas = "abcdefghijklmnopqrstuvwxyz";
+    const caracteresNumeros = "0123456789";
+    const caracteresSimbolos = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+    longitud.addEventListener("input", () => {
+        numeroLongitud.textContent = longitud.value;
+        mensaje.textContent = "";
+    });
+
+    function generarContrasena() {
+
+        let caracteres = "";
+
+        if (mayusculas.checked) {
+            caracteres += caracteresMayusculas;
+        }
+
+        if (minusculas.checked) {
+            caracteres += caracteresMinusculas;
+        }
+
+        if (numeros.checked) {
+            caracteres += caracteresNumeros;
+        }
+
+        if (simbolos.checked) {
+            caracteres += caracteresSimbolos;
+        }
+
+        if (caracteres.length === 0) {
+            resultado.textContent = "Selecciona al menos una opción.";
+            return;
+        }
+
+        let contrasena = "";
+
+        for (let i = 0; i < Number(longitud.value); i++) {
+            const posicion = Math.floor(
+                Math.random() * caracteres.length
+            );
+
+            contrasena += caracteres[posicion];
+        }
+
+        resultado.textContent = contrasena;
+        mensaje.textContent = "";
+    }
+
+    generar.addEventListener("click", generarContrasena);
+
+    copiar.addEventListener("click", async () => {
+
+        const texto = resultado.textContent;
+
+        if (!texto || texto === "—" || texto === "Selecciona al menos una opción.") {
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(texto);
+            mensaje.textContent = "✓ Contraseña copiada.";
+        } catch (error) {
+            mensaje.textContent = "No se pudo copiar la contraseña.";
+        }
+    });
+
+    mayusculas.addEventListener("change", () => {
+        mensaje.textContent = "";
+    });
+
+    minusculas.addEventListener("change", () => {
+        mensaje.textContent = "";
+    });
+
+    numeros.addEventListener("change", () => {
+        mensaje.textContent = "";
+    });
+
+    simbolos.addEventListener("change", () => {
+        mensaje.textContent = "";
+    });
+
+</script>
+
+</body>
+</html>

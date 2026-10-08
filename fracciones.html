@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fracciones | Herramio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .herramienta {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .operaciones {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .operacion {
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #374151;
+            border-radius: 9px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .operacion:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .operacion.activa {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .fracciones {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .fraccion {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .grupo-fraccion {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .grupo-fraccion input {
+            width: 90px;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .grupo-fraccion input:focus {
+            border-color: #2563eb;
+        }
+
+        .linea {
+            width: 90px;
+            height: 2px;
+            background: #374151;
+        }
+
+        .simbolo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .eliminar {
+            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .eliminar:hover {
+            background: #fecaca;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .boton {
+            border: none;
+            border-radius: 9px;
+            padding: 12px 18px;
+            background: #2563eb;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #1d4ed8;
+        }
+
+        .boton-secundario {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .boton-secundario:hover {
+            background: #d1d5db;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 12px;
+            background: #f1f5f9;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3a8a;
+            min-height: 55px;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .herramienta {
+                padding: 20px;
+            }
+
+            .operaciones {
+                grid-template-columns: 1fr;
+            }
+
+            .fraccion {
+                gap: 6px;
+            }
+
+            .grupo-fraccion input,
+            .linea {
+                width: 70px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Herramio</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>➗ Fracciones</h1>
+        <p>Opera, simplifica y convierte fracciones fácilmente.</p>
+    </div>
+
+    <section class="herramienta">
+
+        <div class="operaciones">
+
+            <button class="operacion activa" data-operacion="sumar">
+                Sumar
+            </button>
+
+            <button class="operacion" data-operacion="restar">
+                Restar
+            </button>
+
+            <button class="operacion" data-operacion="multiplicar">
+                Multiplicar
+            </button>
+
+            <button class="operacion" data-operacion="dividir">
+                Dividir
+            </button>
+
+            <button class="operacion" data-operacion="simplificar">
+                Simplificar
+            </button>
+
+            <button class="operacion" data-operacion="decimal">
+                A decimal
+            </button>
+
+            <button class="operacion" data-operacion="fraccion">
+                A fracción
+            </button>
+
+        </div>
+
+        <div id="fracciones" class="fracciones"></div>
+
+        <div class="botones">
+
+            <button
+                id="anadir"
+                class="boton boton-secundario"
+                type="button"
+            >
+                ＋ Añadir fracción
+            </button>
+
+            <button
+                id="calcular"
+                class="boton"
+                type="button"
+            >
+                Calcular
+            </button>
+
+        </div>
+
+        <div
+            id="resultado"
+            class="resultado"
+        >
+            Resultado
+        </div>
+
+    </section>
+
+    <a href="calculadoras.html" class="volver">
+        ← Volver a Calculadoras
+    </a>
+
+</main>
+
+<script>
+
+    const contenedor =
+        document.getElementById("fracciones");
+
+    const resultado =
+        document.getElementById("resultado");
+
+    const anadir =
+        document.getElementById("anadir");
+
+    const calcular =
+        document.getElementById("calcular");
+
+    const botonesOperacion =
+        document.querySelectorAll(".operacion");
+
+    let operacionActual = "sumar";
+
+
+    function mcd(a, b) {
+
+        a = Math.abs(a);
+        b = Math.abs(b);
+
+        while (b !== 0) {
+
+            const temporal = b;
+
+            b = a % b;
+            a = temporal;
+
+        }
+
+        return a;
+    }
+
+
+    function simplificarFraccion(
+        numerador,
+        denominador
+    ) {
+
+        if (denominador === 0) {
+            return null;
+        }
+
+        if (numerador === 0) {
+            return {
+                numerador: 0,
+                denominador: 1
+            };
+        }
+
+        const divisor =
+            mcd(numerador, denominador);
+
+        numerador /= divisor;
+        denominador /= divisor;
+
+        if (denominador < 0) {
+
+            numerador *= -1;
+            denominador *= -1;
+
+        }
+
+        return {
+            numerador,
+            denominador
+        };
+    }
+
+
+    function crearFraccion(
+        numerador = "",
+        denominador = ""
+    ) {
+
+        const elemento =
+            document.createElement("div");
+
+        elemento.className = "fraccion";
+
+        elemento.innerHTML = `
+            <div class="grupo-fraccion">
+                <input
+                    type="number"
+                    class="numerador"
+                    placeholder="Num."
+                    value="${numerador}"
+                >
+
+                <div class="linea"></div>
+
+                <input
+                    type="number"
+                    class="denominador"
+                    placeholder="Den."
+                    value="${denominador}"
+                >
+            </div>
+
+            <button
+                class="eliminar"
+                type="button"
+                title="Eliminar"
+            >
+                ×
+            </button>
+        `;
+
+        elemento
+            .querySelector(".eliminar")
+            .addEventListener("click", () => {
+
+                if (
+                    contenedor.children.length > 1
+                ) {
+
+                    elemento.remove();
+
+                } else {
+
+                    alert(
+                        "Debe haber al menos una fracción."
+                    );
+
+                }
+
+            });
+
+        contenedor.appendChild(elemento);
+    }
+
+
+    function mostrarFraccionesNecesarias() {
+
+        const todas =
+            [...contenedor.children];
+
+        if (
+            operacionActual === "simplificar" ||
+            operacionActual === "decimal"
+        ) {
+
+            while (
+                contenedor.children.length > 1
+            ) {
+
+                contenedor.lastElementChild.remove();
+
+            }
+
+        }
+
+        if (
+            operacionActual === "fraccion"
+        ) {
+
+            while (
+                contenedor.children.length > 1
+            ) {
+
+                contenedor.lastElementChild.remove();
+
+            }
+        }
+
+        if (
+            operacionActual === "sumar" ||
+            operacionActual === "restar" ||
+            operacionActual === "multiplicar" ||
+            operacionActual === "dividir"
+        ) {
+
+            if (
+                contenedor.children.length < 2
+            ) {
+
+                crearFraccion();
+
+            }
+
+        }
+
+        anadir.style.display =
+            (
+                operacionActual === "sumar" ||
+                operacionActual === "restar" ||
+                operacionActual === "multiplicar" ||
+                operacionActual === "dividir"
+            )
+                ? "inline-block"
+                : "none";
+    }
+
+
+    botonesOperacion.forEach(boton => {
+
+        boton.addEventListener("click", () => {
+
+            botonesOperacion.forEach(
+                otro => otro.classList.remove("activa")
+            );
+
+            boton.classList.add("activa");
+
+            operacionActual =
+                boton.dataset.operacion;
+
+            resultado.textContent =
+                "Resultado";
+
+            mostrarFraccionesNecesarias();
+
+        });
+
+    });
+
+
+    anadir.addEventListener("click", () => {
+
+        const valores =
+            [...contenedor.children].map(
+                elemento => ({
+                    numerador:
+                        elemento.querySelector(".numerador").value,
+
+                    denominador:
+                        elemento.querySelector(".denominador").value
+                })
+            );
+
+        crearFraccion();
+
+        const nueva =
+            contenedor.lastElementChild;
+
+        nueva.querySelector(".numerador").value =
+            "";
+
+        nueva.querySelector(".denominador").value =
+            "";
+
+    });
+
+
+    function obtenerFracciones() {
+
+        const elementos =
+            [...contenedor.children];
+
+        const fracciones = [];
+
+        for (const elemento of elementos) {
+
+            const numerador =
+                Number(
+                    elemento.querySelector(".numerador").value
+                );
+
+            const denominador =
+                Number(
+                    elemento.querySelector(".denominador").value
+                );
+
+            if (
+                !Number.isFinite(numerador) ||
+                !Number.isFinite(denominador)
+            ) {
+
+                return null;
+
+            }
+
+            if (denominador === 0) {
+
+                return null;
+
+            }
+
+            fracciones.push({
+                numerador,
+                denominador
+            });
+
+        }
+
+        return fracciones;
+    }
+
+
+    function textoFraccion(fraccion) {
+
+        if (fraccion.denominador === 1) {
+            return `${fraccion.numerador}`;
+        }
+
+        return `${fraccion.numerador}/${fraccion.denominador}`;
+    }
+
+
+    calcular.addEventListener("click", () => {
+
+        if (operacionActual === "fraccion") {
+
+            const valor =
+                Number(
+                    document.querySelector(".numerador").value
+                );
+
+            const denominador =
+                Number(
+                    document.querySelector(".denominador").value
+                );
+
+            if (
+                !Number.isFinite(valor) ||
+                !Number.isFinite(denominador)
+            ) {
+
+                resultado.textContent =
+                    "Introduce un número.";
+
+                return;
+
+            }
+
+            if (denominador === 0) {
+
+                resultado.textContent =
+                    "El denominador no puede ser 0.";
+
+                return;
+
+            }
+
+            const fraccion =
+                simplificarFraccion(
+                    valor,
+                    denominador
+                );
+
+            resultado.textContent =
+                textoFraccion(fraccion);
+
+            return;
+        }
+
+
+        const fracciones =
+            obtenerFracciones();
+
+        if (!fracciones) {
+
+            resultado.textContent =
+                "Introduce valores válidos.";
+
+            return;
+        }
+
+
+        if (operacionActual === "simplificar") {
+
+            const fraccion =
+                simplificarFraccion(
+                    fracciones[0].numerador,
+                    fracciones[0].denominador
+                );
+
+            resultado.textContent =
+                textoFraccion(fraccion);
+
+            return;
+        }
+
+
+        if (operacionActual === "decimal") {
+
+            const valor =
+                fracciones[0].numerador /
+                fracciones[0].denominador;
+
+            resultado.textContent =
+                valor.toLocaleString(
+                    "es-ES",
+                    {
+                        maximumFractionDigits: 12
+                    }
+                );
+
+            return;
+        }
+
+
+        let numerador =
+            fracciones[0].numerador;
+
+        let denominador =
+            fracciones[0].denominador;
+
+
+        for (
+            let i = 1;
+            i < fracciones.length;
+            i++
+        ) {
+
+            const siguiente =
+                fracciones[i];
+
+            if (operacionActual === "sumar") {
+
+                numerador =
+                    numerador *
+                    siguiente.denominador +
+                    siguiente.numerador *
+                    denominador;
+
+                denominador *=
+                    siguiente.denominador;
+
+            }
+
+
+            if (operacionActual === "restar") {
+
+                numerador =
+                    numerador *
+                    siguiente.denominador -
+                    siguiente.numerador *
+                    denominador;
+
+                denominador *=
+                    siguiente.denominador;
+
+            }
+
+
+            if (operacionActual === "multiplicar") {
+
+                numerador *=
+                    siguiente.numerador;
+
+                denominador *=
+                    siguiente.denominador;
+
+            }
+
+
+            if (operacionActual === "dividir") {
+
+                if (
+                    siguiente.numerador === 0
+                ) {
+
+                    resultado.textContent =
+                        "No se puede dividir entre 0.";
+
+                    return;
+
+                }
+
+                numerador *=
+                    siguiente.denominador;
+
+                denominador *=
+                    siguiente.numerador;
+
+            }
+
+        }
+
+
+        const simplificada =
+            simplificarFraccion(
+                numerador,
+                denominador
+            );
+
+        resultado.textContent =
+            textoFraccion(simplificada);
+
+    });
+
+
+    crearFraccion();
+    crearFraccion();
+
+</script>
+
+</body>
+</html>

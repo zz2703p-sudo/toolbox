@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Potencias | Herramio</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-herramienta {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .cabecera-herramienta {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cabecera-herramienta h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera-herramienta p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .calculadora-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .modos {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .modo {
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            padding: 13px 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modo:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .modo.activo {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .descripcion-modo {
+            background: #f5f7fb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 24px;
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .campo input:focus {
+            border-color: #2563eb;
+        }
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-principal {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secundario {
+            background: #eef2ff;
+            color: #2563eb;
+        }
+
+        .btn-secundario:hover {
+            background: #dbeafe;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f5f7fb;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        .resultado .texto {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .resultado .valor {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            word-break: break-word;
+        }
+
+        .error {
+            color: #dc2626 !important;
+            font-weight: 600;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .modos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-herramienta {
+                padding: 45px 15px;
+            }
+
+            .cabecera-herramienta h1 {
+                font-size: 34px;
+            }
+
+            .calculadora-card {
+                padding: 20px;
+            }
+
+            .modos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Herramio</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-herramienta">
+
+        <div class="cabecera-herramienta">
+            <h1>⚡ Potencias</h1>
+            <p>Calcula potencias de forma rápida y sencilla.</p>
+        </div>
+
+        <div class="calculadora-card">
+
+            <div class="modos">
+
+                <button class="modo activo" data-modo="cuadrado">
+                    x²
+                </button>
+
+                <button class="modo" data-modo="cubo">
+                    x³
+                </button>
+
+                <button class="modo" data-modo="exponente">
+                    xⁿ
+                </button>
+
+                <button class="modo" data-modo="diez">
+                    10ⁿ
+                </button>
+
+            </div>
+
+            <div class="descripcion-modo" id="descripcion">
+                Calcula el cuadrado de un número.
+            </div>
+
+            <div id="campos"></div>
+
+            <div class="botones">
+
+                <button class="btn btn-principal" id="calcular" type="button">
+                    Calcular
+                </button>
+
+                <button class="btn btn-secundario" id="limpiar" type="button">
+                    Limpiar
+                </button>
+
+            </div>
+
+            <div class="resultado" id="resultado">
+
+                <div class="texto" id="textoResultado"></div>
+
+                <div class="valor" id="valorResultado"></div>
+
+            </div>
+
+        </div>
+
+        <a href="calculadoras.html" class="volver">
+            ← Volver a Calculadoras
+        </a>
+
+    </main>
+
+    <script>
+        const modos = document.querySelectorAll(".modo");
+        const campos = document.getElementById("campos");
+        const descripcion = document.getElementById("descripcion");
+
+        const botonCalcular = document.getElementById("calcular");
+        const botonLimpiar = document.getElementById("limpiar");
+
+        const resultado = document.getElementById("resultado");
+        const textoResultado = document.getElementById("textoResultado");
+        const valorResultado = document.getElementById("valorResultado");
+
+        let modoActual = "cuadrado";
+
+        const descripciones = {
+            cuadrado: "Calcula el cuadrado de un número.",
+            cubo: "Calcula el cubo de un número.",
+            exponente: "Calcula un número elevado al exponente que elijas.",
+            diez: "Calcula 10 elevado al exponente que elijas."
+        };
+
+        function limpiarResultado() {
+            resultado.style.display = "none";
+            textoResultado.textContent = "";
+            valorResultado.textContent = "";
+            textoResultado.classList.remove("error");
+        }
+
+        function crearCampo(id, etiqueta, placeholder) {
+
+            const div = document.createElement("div");
+            div.className = "campo";
+
+            const label = document.createElement("label");
+            label.textContent = etiqueta;
+            label.htmlFor = id;
+
+            const input = document.createElement("input");
+            input.type = "number";
+            input.step = "any";
+            input.id = id;
+            input.placeholder = placeholder;
+
+            input.addEventListener("input", limpiarResultado);
+
+            div.appendChild(label);
+            div.appendChild(input);
+
+            campos.appendChild(div);
+        }
+
+        function crearCampos() {
+
+            campos.innerHTML = "";
+
+            if (modoActual === "cuadrado") {
+
+                crearCampo(
+                    "numero",
+                    "Número",
+                    "Ejemplo: 5"
+                );
+
+            } else if (modoActual === "cubo") {
+
+                crearCampo(
+                    "numero",
+                    "Número",
+                    "Ejemplo: 5"
+                );
+
+            } else if (modoActual === "exponente") {
+
+                crearCampo(
+                    "numero",
+                    "Base",
+                    "Ejemplo: 5"
+                );
+
+                crearCampo(
+                    "exponente",
+                    "Exponente",
+                    "Ejemplo: 3"
+                );
+
+            } else if (modoActual === "diez") {
+
+                crearCampo(
+                    "exponente",
+                    "Exponente",
+                    "Ejemplo: 4"
+                );
+            }
+        }
+
+        function mostrarError(mensaje) {
+
+            resultado.style.display = "block";
+
+            textoResultado.textContent = mensaje;
+            textoResultado.classList.add("error");
+
+            valorResultado.textContent = "";
+        }
+
+        function redondear(numero) {
+
+            if (!Number.isFinite(numero)) {
+                return numero;
+            }
+
+            return Math.round((numero + Number.EPSILON) * 100000000) / 100000000;
+        }
+
+        modos.forEach(boton => {
+
+            boton.addEventListener("click", () => {
+
+                modos.forEach(b => {
+                    b.classList.remove("activo");
+                });
+
+                boton.classList.add("activo");
+
+                modoActual = boton.dataset.modo;
+
+                descripcion.textContent = descripciones[modoActual];
+
+                crearCampos();
+
+                limpiarResultado();
+            });
+
+        });
+
+        botonCalcular.addEventListener("click", () => {
+
+            limpiarResultado();
+
+            let numero;
+            let exponente;
+            let resultadoCalculado;
+            let texto;
+
+            if (modoActual === "cuadrado") {
+
+                numero = Number(document.getElementById("numero").value);
+
+                if (!Number.isFinite(numero)) {
+                    mostrarError("Introduce un número válido.");
+                    return;
+                }
+
+                resultadoCalculado = Math.pow(numero, 2);
+
+                texto = `${numero}² =`;
+
+            } else if (modoActual === "cubo") {
+
+                numero = Number(document.getElementById("numero").value);
+
+                if (!Number.isFinite(numero)) {
+                    mostrarError("Introduce un número válido.");
+                    return;
+                }
+
+                resultadoCalculado = Math.pow(numero, 3);
+
+                texto = `${numero}³ =`;
+
+            } else if (modoActual === "exponente") {
+
+                numero = Number(document.getElementById("numero").value);
+                exponente = Number(document.getElementById("exponente").value);
+
+                if (!Number.isFinite(numero) || !Number.isFinite(exponente)) {
+                    mostrarError("Introduce una base y un exponente válidos.");
+                    return;
+                }
+
+                resultadoCalculado = Math.pow(numero, exponente);
+
+                texto = `${numero}^${exponente} =`;
+
+            } else if (modoActual === "diez") {
+
+                exponente = Number(document.getElementById("exponente").value);
+
+                if (!Number.isFinite(exponente)) {
+                    mostrarError("Introduce un exponente válido.");
+                    return;
+                }
+
+                resultadoCalculado = Math.pow(10, exponente);
+
+                texto = `10^${exponente} =`;
+            }
+
+            resultadoCalculado = redondear(resultadoCalculado);
+
+            textoResultado.classList.remove("error");
+
+            textoResultado.textContent = texto;
+            valorResultado.textContent = resultadoCalculado;
+
+            resultado.style.display = "block";
+        });
+
+        botonLimpiar.addEventListener("click", () => {
+
+            campos.querySelectorAll("input").forEach(input => {
+                input.value = "";
+            });
+
+            limpiarResultado();
+        });
+
+        crearCampos();
+    </script>
+
+</body>
+</html>

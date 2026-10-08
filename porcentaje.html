@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Porcentajes | Herramio</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-herramienta {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .cabecera-herramienta {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cabecera-herramienta h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera-herramienta p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .calculadora-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .modos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .modo {
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modo:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .modo.activo {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .descripcion-modo {
+            background: #f5f7fb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 24px;
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .campo input:focus {
+            border-color: #2563eb;
+        }
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-principal {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secundario {
+            background: #eef2ff;
+            color: #2563eb;
+        }
+
+        .btn-secundario:hover {
+            background: #dbeafe;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f5f7fb;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        .resultado .texto {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .resultado .valor {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            word-break: break-word;
+        }
+
+        .error {
+            color: #dc2626 !important;
+            font-weight: 600;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .modos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-herramienta {
+                padding: 45px 15px;
+            }
+
+            .cabecera-herramienta h1 {
+                font-size: 34px;
+            }
+
+            .calculadora-card {
+                padding: 20px;
+            }
+
+            .modos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Herramio</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-herramienta">
+
+        <div class="cabecera-herramienta">
+            <h1>💯 Porcentajes</h1>
+            <p>Calcula porcentajes, aumentos, descuentos e IVA.</p>
+        </div>
+
+        <div class="calculadora-card">
+
+            <div class="modos">
+
+                <button class="modo activo" data-modo="porcentaje">
+                    X% de un número
+                </button>
+
+                <button class="modo" data-modo="aumentar">
+                    Aumentar
+                </button>
+
+                <button class="modo" data-modo="reducir">
+                    Reducir
+                </button>
+
+                <button class="modo" data-modo="que-porcentaje">
+                    Qué porcentaje es
+                </button>
+
+                <button class="modo" data-modo="descuento">
+                    Descuento
+                </button>
+
+                <button class="modo" data-modo="iva">
+                    IVA
+                </button>
+
+            </div>
+
+            <div class="descripcion-modo" id="descripcion">
+                Calcula cuánto es un porcentaje de una cantidad.
+            </div>
+
+            <div id="campos"></div>
+
+            <div class="botones">
+
+                <button class="btn btn-principal" id="calcular" type="button">
+                    Calcular
+                </button>
+
+                <button class="btn btn-secundario" id="limpiar" type="button">
+                    Limpiar
+                </button>
+
+            </div>
+
+            <div class="resultado" id="resultado">
+                <div class="texto" id="textoResultado"></div>
+                <div class="valor" id="valorResultado"></div>
+            </div>
+
+        </div>
+
+        <a href="calculadoras.html" class="volver">
+            ← Volver a Calculadoras
+        </a>
+
+    </main>
+
+    <script>
+        const modos = document.querySelectorAll(".modo");
+        const campos = document.getElementById("campos");
+        const descripcion = document.getElementById("descripcion");
+
+        const botonCalcular = document.getElementById("calcular");
+        const botonLimpiar = document.getElementById("limpiar");
+
+        const resultado = document.getElementById("resultado");
+        const textoResultado = document.getElementById("textoResultado");
+        const valorResultado = document.getElementById("valorResultado");
+
+        let modoActual = "porcentaje";
+
+        const descripciones = {
+            porcentaje:
+                "Calcula cuánto es un porcentaje de una cantidad.",
+
+            aumentar:
+                "Aumenta una cantidad en el porcentaje indicado.",
+
+            reducir:
+                "Reduce una cantidad en el porcentaje indicado.",
+
+            "que-porcentaje":
+                "Calcula qué porcentaje representa una cantidad respecto a otra.",
+
+            descuento:
+                "Calcula el precio final después de aplicar un descuento.",
+
+            iva:
+                "Añade o quita IVA a una cantidad."
+        };
+
+        function limpiarResultado() {
+            resultado.style.display = "none";
+            textoResultado.textContent = "";
+            valorResultado.textContent = "";
+            textoResultado.classList.remove("error");
+        }
+
+        function crearCampo(id, etiqueta, placeholder) {
+
+            const div = document.createElement("div");
+            div.className = "campo";
+
+            const label = document.createElement("label");
+            label.textContent = etiqueta;
+            label.htmlFor = id;
+
+            const input = document.createElement("input");
+            input.type = "number";
+            input.step = "any";
+            input.id = id;
+            input.placeholder = placeholder;
+
+            input.addEventListener("input", limpiarResultado);
+
+            div.appendChild(label);
+            div.appendChild(input);
+
+            campos.appendChild(div);
+        }
+
+        function crearCampos() {
+
+            campos.innerHTML = "";
+
+            if (modoActual === "porcentaje") {
+
+                crearCampo(
+                    "numero",
+                    "Número",
+                    "Ejemplo: 250"
+                );
+
+                crearCampo(
+                    "porcentaje",
+                    "Porcentaje",
+                    "Ejemplo: 20"
+                );
+
+            } else if (modoActual === "aumentar") {
+
+                crearCampo(
+                    "numero",
+                    "Cantidad",
+                    "Ejemplo: 250"
+                );
+
+                crearCampo(
+                    "porcentaje",
+                    "Porcentaje a aumentar",
+                    "Ejemplo: 20"
+                );
+
+            } else if (modoActual === "reducir") {
+
+                crearCampo(
+                    "numero",
+                    "Cantidad",
+                    "Ejemplo: 250"
+                );
+
+                crearCampo(
+                    "porcentaje",
+                    "Porcentaje a reducir",
+                    "Ejemplo: 20"
+                );
+
+            } else if (modoActual === "que-porcentaje") {
+
+                crearCampo(
+                    "parte",
+                    "Cantidad parcial",
+                    "Ejemplo: 50"
+                );
+
+                crearCampo(
+                    "total",
+                    "Cantidad total",
+                    "Ejemplo: 200"
+                );
+
+            } else if (modoActual === "descuento") {
+
+                crearCampo(
+                    "precio",
+                    "Precio original",
+                    "Ejemplo: 100"
+                );
+
+                crearCampo(
+                    "descuento",
+                    "Descuento (%)",
+                    "Ejemplo: 20"
+                );
+
+            } else if (modoActual === "iva") {
+
+                crearCampo(
+                    "precio",
+                    "Cantidad",
+                    "Ejemplo: 100"
+                );
+
+                crearCampo(
+                    "iva",
+                    "IVA (%)",
+                    "Ejemplo: 21"
+                );
+
+                const campo = document.createElement("div");
+                campo.className = "campo";
+
+                const label = document.createElement("label");
+                label.textContent = "Operación";
+
+                const select = document.createElement("select");
+                select.id = "operacion";
+
+                select.style.width = "100%";
+                select.style.padding = "14px 16px";
+                select.style.border = "1px solid #d1d5db";
+                select.style.borderRadius = "10px";
+                select.style.fontSize = "17px";
+                select.style.outline = "none";
+
+                const opcionAnadir = document.createElement("option");
+                opcionAnadir.value = "anadir";
+                opcionAnadir.textContent = "Añadir IVA";
+
+                const opcionQuitar = document.createElement("option");
+                opcionQuitar.value = "quitar";
+                opcionQuitar.textContent = "Quitar IVA";
+
+                select.appendChild(opcionAnadir);
+                select.appendChild(opcionQuitar);
+
+                select.addEventListener("change", limpiarResultado);
+
+                campo.appendChild(label);
+                campo.appendChild(select);
+
+                campos.appendChild(campo);
+            }
+        }
+
+        function obtenerNumero(id) {
+            return Number(document.getElementById(id).value);
+        }
+
+        function mostrarError(mensaje) {
+
+            resultado.style.display = "block";
+
+            textoResultado.textContent = mensaje;
+            textoResultado.classList.add("error");
+
+            valorResultado.textContent = "";
+        }
+
+        function redondear(numero) {
+            return Math.round((numero + Number.EPSILON) * 100) / 100;
+        }
+
+        modos.forEach(boton => {
+
+            boton.addEventListener("click", () => {
+
+                modos.forEach(b => b.classList.remove("activo"));
+
+                boton.classList.add("activo");
+
+                modoActual = boton.dataset.modo;
+
+                descripcion.textContent = descripciones[modoActual];
+
+                crearCampos();
+
+                limpiarResultado();
+            });
+
+        });
+
+        botonCalcular.addEventListener("click", () => {
+
+            limpiarResultado();
+
+            let resultadoCalculado;
+            let texto;
+
+            if (modoActual === "porcentaje") {
+
+                const numero = obtenerNumero("numero");
+                const porcentaje = obtenerNumero("porcentaje");
+
+                if (!Number.isFinite(numero) || !Number.isFinite(porcentaje)) {
+                    mostrarError("Introduce todos los valores.");
+                    return;
+                }
+
+                resultadoCalculado = numero * porcentaje / 100;
+
+                texto = `${porcentaje}% de ${numero} es`;
+
+            } else if (modoActual === "aumentar") {
+
+                const numero = obtenerNumero("numero");
+                const porcentaje = obtenerNumero("porcentaje");
+
+                if (!Number.isFinite(numero) || !Number.isFinite(porcentaje)) {
+                    mostrarError("Introduce todos los valores.");
+                    return;
+                }
+
+                resultadoCalculado =
+                    numero * (1 + porcentaje / 100);
+
+                texto = `${numero} aumentado un ${porcentaje}% es`;
+
+            } else if (modoActual === "reducir") {
+
+                const numero = obtenerNumero("numero");
+                const porcentaje = obtenerNumero("porcentaje");
+
+                if (!Number.isFinite(numero) || !Number.isFinite(porcentaje)) {
+                    mostrarError("Introduce todos los valores.");
+                    return;
+                }
+
+                resultadoCalculado =
+                    numero * (1 - porcentaje / 100);
+
+                texto = `${numero} reducido un ${porcentaje}% es`;
+
+            } else if (modoActual === "que-porcentaje") {
+
+                const parte = obtenerNumero("parte");
+                const total = obtenerNumero("total");
+
+                if (!Number.isFinite(parte) || !Number.isFinite(total)) {
+                    mostrarError("Introduce todos los valores.");
+                    return;
+                }
+
+                if (total === 0) {
+                    mostrarError("La cantidad total no puede ser 0.");
+                    return;
+                }
+
+                resultadoCalculado =
+                    (parte / total) * 100;
+
+                texto = `${parte} representa el`;
+
+            } else if (modoActual === "descuento") {
+
+                const precio = obtenerNumero("precio");
+                const descuento = obtenerNumero("descuento");
+
+                if (!Number.isFinite(precio) || !Number.isFinite(descuento)) {
+                    mostrarError("Introduce todos los valores.");
+                    return;
+                }
+
+                resultadoCalculado =
+                    precio * (1 - descuento / 100);
+
+                texto = `Precio final con ${descuento}% de descuento`;
+
+            } else if (modoActual === "iva") {
+
+                const precio = obtenerNumero("precio");
+                const iva = obtenerNumero("iva");
+                const operacion = document.getElementById("operacion").value;
+
+                if (!Number.isFinite(precio) || !Number.isFinite(iva)) {
+                    mostrarError("Introduce todos los valores.");
+                    return;
+                }
+
+                if (operacion === "anadir") {
+
+                    resultadoCalculado =
+                        precio * (1 + iva / 100);
+
+                    texto = `Precio con IVA del ${iva}%`;
+
+                } else {
+
+                    if (iva === -100) {
+                        mostrarError("No se puede quitar un IVA del -100%.");
+                        return;
+                    }
+
+                    resultadoCalculado =
+                        precio / (1 + iva / 100);
+
+                    texto = `Precio sin IVA del ${iva}%`;
+                }
+            }
+
+            resultadoCalculado = redondear(resultadoCalculado);
+
+            textoResultado.classList.remove("error");
+
+            textoResultado.textContent = texto;
+            valorResultado.textContent = resultadoCalculado;
+
+            if (modoActual === "que-porcentaje") {
+                valorResultado.textContent += "%";
+            }
+
+            resultado.style.display = "block";
+        });
+
+        botonLimpiar.addEventListener("click", () => {
+
+            campos.querySelectorAll("input").forEach(input => {
+                input.value = "";
+            });
+
+            limpiarResultado();
+        });
+
+        crearCampos();
+    </script>
+
+</body>
+</html>

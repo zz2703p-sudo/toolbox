@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador | Herramio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .herramienta {
+            background: white;
+            border-radius: 18px;
+            padding: 35px 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .configuracion {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .campo label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 18px;
+            text-align: center;
+            outline: none;
+        }
+
+        .campo input:focus {
+            border-color: #2563eb;
+        }
+
+        .tiempo {
+            font-size: 56px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .boton {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-principal {
+            background: #2563eb;
+            color: white;
+        }
+
+        .boton-principal:hover {
+            background: #1d4ed8;
+        }
+
+        .boton-secundario {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .boton-secundario:hover {
+            background: #d1d5db;
+        }
+
+        .mensaje {
+            min-height: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #dc2626;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .herramienta {
+                padding: 25px 20px;
+            }
+
+            .configuracion {
+                grid-template-columns: 1fr;
+            }
+
+            .tiempo {
+                font-size: 42px;
+            }
+
+            .botones {
+                flex-direction: column;
+            }
+
+            .boton {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Herramio</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>⏳ Temporizador</h1>
+        <p>Cuenta hacia atrás desde el tiempo que elijas.</p>
+    </div>
+
+    <section class="herramienta">
+
+        <div class="configuracion">
+
+            <div class="campo">
+                <label for="horas">Horas</label>
+                <input
+                    type="number"
+                    id="horas"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="minutos">Minutos</label>
+                <input
+                    type="number"
+                    id="minutos"
+                    min="0"
+                    max="59"
+                    value="5"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="segundos">Segundos</label>
+                <input
+                    type="number"
+                    id="segundos"
+                    min="0"
+                    max="59"
+                    value="0"
+                >
+            </div>
+
+        </div>
+
+        <div class="tiempo" id="tiempo">
+            00:05:00
+        </div>
+
+        <div class="botones">
+
+            <button
+                class="boton boton-principal"
+                id="iniciar"
+                type="button"
+            >
+                Iniciar
+            </button>
+
+            <button
+                class="boton boton-secundario"
+                id="pausar"
+                type="button"
+            >
+                Pausar
+            </button>
+
+            <button
+                class="boton boton-secundario"
+                id="reiniciar"
+                type="button"
+            >
+                Reiniciar
+            </button>
+
+        </div>
+
+        <div class="mensaje" id="mensaje"></div>
+
+    </section>
+
+    <a href="herramientas.html" class="volver">
+        ← Volver a Herramientas
+    </a>
+
+</main>
+
+<script>
+
+    const horasInput = document.getElementById("horas");
+    const minutosInput = document.getElementById("minutos");
+    const segundosInput = document.getElementById("segundos");
+
+    const tiempoElemento = document.getElementById("tiempo");
+
+    const iniciar = document.getElementById("iniciar");
+    const pausar = document.getElementById("pausar");
+    const reiniciar = document.getElementById("reiniciar");
+
+    const mensaje = document.getElementById("mensaje");
+
+    let tiempoRestante = 300000;
+    let tiempoInicial = 300000;
+    let intervalo = null;
+    let corriendo = false;
+    let finalizacion = 0;
+
+    function obtenerTiempoConfigurado() {
+
+        const horas =
+            Math.max(0, parseInt(horasInput.value) || 0);
+
+        const minutos =
+            Math.max(0, parseInt(minutosInput.value) || 0);
+
+        const segundos =
+            Math.max(0, parseInt(segundosInput.value) || 0);
+
+        return (
+            horas * 60 * 60 * 1000 +
+            minutos * 60 * 1000 +
+            segundos * 1000
+        );
+    }
+
+    function formatearTiempo(milisegundos) {
+
+        const totalSegundos =
+            Math.max(0, Math.ceil(milisegundos / 1000));
+
+        const horas =
+            Math.floor(totalSegundos / 3600);
+
+        const minutos =
+            Math.floor((totalSegundos % 3600) / 60);
+
+        const segundos =
+            totalSegundos % 60;
+
+        return (
+            String(horas).padStart(2, "0") +
+            ":" +
+            String(minutos).padStart(2, "0") +
+            ":" +
+            String(segundos).padStart(2, "0")
+        );
+    }
+
+    function actualizarPantalla() {
+        tiempoElemento.textContent =
+            formatearTiempo(tiempoRestante);
+    }
+
+    function detenerTemporizador() {
+
+        clearInterval(intervalo);
+
+        intervalo = null;
+        corriendo = false;
+    }
+
+    function terminar() {
+
+        detenerTemporizador();
+
+        tiempoRestante = 0;
+
+        actualizarPantalla();
+
+        mensaje.textContent = "⏰ ¡Tiempo terminado!";
+
+        iniciar.textContent = "Iniciar";
+    }
+
+    function iniciarTemporizador() {
+
+        mensaje.textContent = "";
+
+        if (tiempoRestante <= 0) {
+
+            tiempoRestante = obtenerTiempoConfigurado();
+            tiempoInicial = tiempoRestante;
+
+            if (tiempoRestante <= 0) {
+                mensaje.textContent =
+                    "Introduce un tiempo mayor que 0.";
+                return;
+            }
+        }
+
+        if (corriendo) {
+            return;
+        }
+
+        corriendo = true;
+
+        finalizacion =
+            Date.now() + tiempoRestante;
+
+        intervalo = setInterval(() => {
+
+            tiempoRestante =
+                Math.max(0, finalizacion - Date.now());
+
+            actualizarPantalla();
+
+            if (tiempoRestante <= 0) {
+                terminar();
+            }
+
+        }, 100);
+
+        iniciar.textContent = "Continuar";
+    }
+
+    iniciar.addEventListener("click", () => {
+        iniciarTemporizador();
+    });
+
+    pausar.addEventListener("click", () => {
+
+        if (!corriendo) {
+            return;
+        }
+
+        tiempoRestante =
+            Math.max(0, finalizacion - Date.now());
+
+        detenerTemporizador();
+
+        actualizarPantalla();
+
+        iniciar.textContent = "Continuar";
+    });
+
+    reiniciar.addEventListener("click", () => {
+
+        detenerTemporizador();
+
+        tiempoRestante =
+            obtenerTiempoConfigurado();
+
+        tiempoInicial =
+            tiempoRestante;
+
+        mensaje.textContent = "";
+
+        actualizarPantalla();
+
+        iniciar.textContent = "Iniciar";
+    });
+
+    [horasInput, minutosInput, segundosInput].forEach(input => {
+
+        input.addEventListener("input", () => {
+
+            if (corriendo) {
+                return;
+            }
+
+            tiempoRestante =
+                obtenerTiempoConfigurado();
+
+            tiempoInicial =
+                tiempoRestante;
+
+            mensaje.textContent = "";
+
+            actualizarPantalla();
+        });
+    });
+
+    actualizarPantalla();
+
+</script>
+
+</body>
+</html>
