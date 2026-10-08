@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de palabras | ToolBox</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .herramienta {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 280px;
+            resize: vertical;
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1f2937;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .estadisticas {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .estadistica {
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 18px 10px;
+            text-align: center;
+        }
+
+        .estadistica .numero {
+            display: block;
+            font-size: 25px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .estadistica .nombre {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 18px;
+        }
+
+        .boton {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 18px;
+            background: #e5e7eb;
+            color: #374151;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton:hover {
+            background: #d1d5db;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .herramienta {
+                padding: 20px;
+            }
+
+            .estadisticas {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            textarea {
+                min-height: 230px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ToolBox</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🔤 Contador de palabras</h1>
+        <p>Cuenta palabras, caracteres, frases y líneas de tu texto.</p>
+    </div>
+
+    <section class="herramienta">
+
+        <textarea
+            id="texto"
+            placeholder="Escribe o pega tu texto aquí..."
+        ></textarea>
+
+        <div class="estadisticas">
+
+            <div class="estadistica">
+                <span class="numero" id="palabras">0</span>
+                <span class="nombre">Palabras</span>
+            </div>
+
+            <div class="estadistica">
+                <span class="numero" id="caracteres">0</span>
+                <span class="nombre">Caracteres</span>
+            </div>
+
+            <div class="estadistica">
+                <span class="numero" id="frases">0</span>
+                <span class="nombre">Frases</span>
+            </div>
+
+            <div class="estadistica">
+                <span class="numero" id="lineas">0</span>
+                <span class="nombre">Líneas</span>
+            </div>
+
+        </div>
+
+        <div class="botones">
+
+            <button
+                class="boton"
+                id="limpiar"
+                type="button"
+            >
+                Limpiar
+            </button>
+
+        </div>
+
+    </section>
+
+    <a href="herramientas.html" class="volver">
+        ← Volver a Herramientas
+    </a>
+
+</main>
+
+<script>
+
+    const texto = document.getElementById("texto");
+
+    const palabras = document.getElementById("palabras");
+    const caracteres = document.getElementById("caracteres");
+    const frases = document.getElementById("frases");
+    const lineas = document.getElementById("lineas");
+
+    const limpiar = document.getElementById("limpiar");
+
+    function actualizarContadores() {
+
+        const contenido = texto.value;
+
+        /* Caracteres incluyendo espacios */
+        caracteres.textContent =
+            contenido.length;
+
+        /* Palabras */
+        const textoLimpio =
+            contenido.trim();
+
+        if (textoLimpio === "") {
+
+            palabras.textContent = "0";
+
+        } else {
+
+            palabras.textContent =
+                textoLimpio
+                    .split(/\s+/)
+                    .length;
+        }
+
+        /* Frases */
+        if (textoLimpio === "") {
+
+            frases.textContent = "0";
+
+        } else {
+
+            const resultadoFrases =
+                textoLimpio.match(/[.!?]+/g);
+
+            frases.textContent =
+                resultadoFrases
+                    ? resultadoFrases.length
+                    : "0";
+        }
+
+        /* Líneas */
+        if (contenido === "") {
+
+            lineas.textContent = "0";
+
+        } else {
+
+            lineas.textContent =
+                contenido.split(/\r?\n/).length;
+        }
+    }
+
+    texto.addEventListener(
+        "input",
+        actualizarContadores
+    );
+
+    limpiar.addEventListener("click", () => {
+
+        texto.value = "";
+
+        actualizarContadores();
+
+        texto.focus();
+    });
+
+    actualizarContadores();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Conversores | ToolBox</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-seccion {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 20px;
+        }
+
+        .cabecera-seccion {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .cabecera-seccion h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cabecera-seccion p {
+            color: #6b7280;
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .herramientas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .herramienta-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .herramienta-card:hover {
+            transform: translateY(-4px);
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+        }
+
+        .herramienta-icono {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .herramienta-card h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .herramienta-card p {
+            color: #6b7280;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        @media (max-width: 850px) {
+            .herramientas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-seccion {
+                padding: 50px 15px;
+            }
+
+            .herramientas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ToolBox</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-seccion">
+
+        <div class="cabecera-seccion">
+            <h1>🔄 Conversores</h1>
+
+            <p>
+                Convierte unidades, medidas, monedas y mucho más
+                de forma rápida y sencilla.
+            </p>
+        </div>
+
+        <div class="herramientas-grid">
+
+            <a href="temperatura.html" class="herramienta-card">
+                <div class="herramienta-icono">🌡️</div>
+                <h2>Temperatura</h2>
+                <p>
+                    Convierte entre Celsius, Fahrenheit y Kelvin.
+                </p>
+            </a>
+
+            <a href="longitud.html" class="herramienta-card">
+                <div class="herramienta-icono">📏</div>
+                <h2>Longitud</h2>
+                <p>
+                    Convierte milímetros, centímetros, metros,
+                    kilómetros y otras unidades.
+                </p>
+            </a>
+
+            <a href="peso.html" class="herramienta-card">
+                <div class="herramienta-icono">⚖️</div>
+                <h2>Peso y masa</h2>
+                <p>
+                    Convierte gramos, kilogramos, toneladas,
+                    libras, onzas y más.
+                </p>
+            </a>
+
+            <a href="area.html" class="herramienta-card">
+                <div class="herramienta-icono">📐</div>
+                <h2>Área</h2>
+                <p>
+                    Convierte unidades de superficie y área.
+                </p>
+            </a>
+
+            <a href="volumen.html" class="herramienta-card">
+                <div class="herramienta-icono">🧊</div>
+                <h2>Volumen</h2>
+                <p>
+                    Convierte litros, mililitros, metros cúbicos
+                    y otras unidades.
+                </p>
+            </a>
+
+            <a href="velocidad.html" class="herramienta-card">
+                <div class="herramienta-icono">🚗</div>
+                <h2>Velocidad</h2>
+                <p>
+                    Convierte km/h, m/s, mph, nudos y otras unidades.
+                </p>
+            </a>
+
+            <a href="tiempo.html" class="herramienta-card">
+                <div class="herramienta-icono">⏱️</div>
+                <h2>Tiempo</h2>
+                <p>
+                    Convierte segundos, minutos, horas, días,
+                    semanas y más.
+                </p>
+            </a>
+
+            <a href="datos.html" class="herramienta-card">
+                <div class="herramienta-icono">💾</div>
+                <h2>Datos digitales</h2>
+                <p>
+                    Convierte bits, bytes, KB, MB, GB, TB
+                    y unidades binarias.
+                </p>
+            </a>
+
+            <a href="monedas.html" class="herramienta-card">
+                <div class="herramienta-icono">💱</div>
+                <h2>Monedas</h2>
+                <p>
+                    Convierte entre diferentes monedas utilizando
+                    tipos de cambio de referencia.
+                </p>
+            </a>
+
+            <a href="angulos.html" class="herramienta-card">
+                <div class="herramienta-icono">📏</div>
+                <h2>Ángulos</h2>
+                <p>
+                    Convierte grados, radianes, gradianes,
+                    revoluciones y milirradianes.
+                </p>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

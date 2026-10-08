@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector aleatorio | ToolBox</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .generador {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .campo label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .campo textarea {
+            width: 100%;
+            min-height: 180px;
+            resize: vertical;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.5;
+            outline: none;
+        }
+
+        .campo textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .ayuda {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .boton-seleccionar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-seleccionar:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 25px 20px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            text-align: center;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .resultado-titulo {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .resultado-valor {
+            font-size: 30px;
+            font-weight: bold;
+            color: #1e3a8a;
+            word-break: break-word;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: #dc2626;
+            text-align: center;
+            font-size: 14px;
+            min-height: 18px;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .generador {
+                padding: 20px;
+            }
+
+            .resultado-valor {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ToolBox</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🎯 Selector aleatorio</h1>
+        <p>Escribe varias opciones y deja que ToolBox elija una al azar.</p>
+    </div>
+
+    <section class="generador">
+
+        <div class="campo">
+
+            <label for="opciones">Opciones</label>
+
+            <textarea
+                id="opciones"
+                placeholder="Escribe una opción por línea..."
+            ></textarea>
+
+            <div class="ayuda">
+                Escribe cada opción en una línea diferente.
+            </div>
+
+        </div>
+
+        <button
+            class="boton-seleccionar"
+            id="seleccionar"
+            type="button"
+        >
+            Elegir al azar
+        </button>
+
+        <div class="resultado">
+
+            <div class="resultado-titulo">
+                Opción elegida
+            </div>
+
+            <div class="resultado-valor" id="resultado">
+                —
+            </div>
+
+        </div>
+
+        <div class="error" id="error"></div>
+
+    </section>
+
+    <a href="generadores.html" class="volver">
+        ← Volver a Generadores
+    </a>
+
+</main>
+
+<script>
+
+    const opciones = document.getElementById("opciones");
+    const seleccionar = document.getElementById("seleccionar");
+    const resultado = document.getElementById("resultado");
+    const error = document.getElementById("error");
+
+    seleccionar.addEventListener("click", () => {
+
+        const lista = opciones.value
+            .split("\n")
+            .map(opcion => opcion.trim())
+            .filter(opcion => opcion !== "");
+
+        error.textContent = "";
+
+        if (lista.length === 0) {
+            resultado.textContent = "—";
+            error.textContent = "Escribe al menos una opción.";
+            return;
+        }
+
+        const posicion = Math.floor(
+            Math.random() * lista.length
+        );
+
+        resultado.textContent = lista[posicion];
+    });
+
+</script>
+
+</body>
+</html>

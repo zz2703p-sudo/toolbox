@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados | ToolBox</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .generador {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .campo select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 16px;
+            background: white;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .campo select:focus {
+            border-color: #2563eb;
+        }
+
+        .boton-generar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-generar:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 25px 20px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .resultado-titulo {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        .dados-resultado {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dado {
+            width: 75px;
+            height: 75px;
+            background: white;
+            border: 2px solid #dbe3ef;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 46px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .suma {
+            margin-top: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .generador {
+                padding: 20px;
+            }
+
+            .dado {
+                width: 65px;
+                height: 65px;
+                font-size: 38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ToolBox</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🎲 Dados</h1>
+        <p>Lanza uno o varios dados de seis caras al azar.</p>
+    </div>
+
+    <section class="generador">
+
+        <div class="campo">
+            <label for="cantidad">Número de dados</label>
+
+            <select id="cantidad">
+                <option value="1">1 dado</option>
+                <option value="2">2 dados</option>
+                <option value="3">3 dados</option>
+                <option value="4">4 dados</option>
+                <option value="5">5 dados</option>
+                <option value="6">6 dados</option>
+                <option value="7">7 dados</option>
+                <option value="8">8 dados</option>
+                <option value="9">9 dados</option>
+                <option value="10">10 dados</option>
+            </select>
+        </div>
+
+        <button class="boton-generar" id="lanzar" type="button">
+            Lanzar dados
+        </button>
+
+        <div class="resultado">
+
+            <div class="resultado-titulo">
+                Resultado
+            </div>
+
+            <div class="dados-resultado" id="dadosResultado">
+                <div class="dado">⚄</div>
+            </div>
+
+            <div class="suma" id="suma">
+                Total: 5
+            </div>
+
+        </div>
+
+    </section>
+
+    <a href="generadores.html" class="volver">
+        ← Volver a Generadores
+    </a>
+
+</main>
+
+<script>
+
+    const cantidad = document.getElementById("cantidad");
+    const lanzar = document.getElementById("lanzar");
+    const dadosResultado = document.getElementById("dadosResultado");
+    const suma = document.getElementById("suma");
+
+    const caras = [
+        "⚀",
+        "⚁",
+        "⚂",
+        "⚃",
+        "⚄",
+        "⚅"
+    ];
+
+    lanzar.addEventListener("click", () => {
+
+        const cantidadDados = Number(cantidad.value);
+
+        dadosResultado.innerHTML = "";
+
+        let total = 0;
+
+        for (let i = 0; i < cantidadDados; i++) {
+
+            const numero = Math.floor(Math.random() * 6) + 1;
+
+            total += numero;
+
+            const dado = document.createElement("div");
+
+            dado.className = "dado";
+            dado.textContent = caras[numero - 1];
+
+            dadosResultado.appendChild(dado);
+        }
+
+        suma.textContent = `Total: ${total}`;
+    });
+
+</script>
+
+</body>
+</html>

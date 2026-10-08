@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Generadores | ToolBox</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-seccion {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 20px;
+        }
+
+        .cabecera-seccion {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .cabecera-seccion h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cabecera-seccion p {
+            color: #6b7280;
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .herramientas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .herramienta-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .herramienta-card:hover {
+            transform: translateY(-4px);
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+        }
+
+        .herramienta-icono {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .herramienta-card h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .herramienta-card p {
+            color: #6b7280;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        @media (max-width: 850px) {
+            .herramientas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-seccion {
+                padding: 50px 15px;
+            }
+
+            .herramientas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ToolBox</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-seccion">
+
+        <div class="cabecera-seccion">
+            <h1>🎲 Generadores</h1>
+
+            <p>
+                Genera números, equipos, contraseñas, colores,
+                sorteos y mucho más de forma aleatoria.
+            </p>
+        </div>
+
+        <div class="herramientas-grid">
+
+            <a href="numero-aleatorio.html" class="herramienta-card">
+                <div class="herramienta-icono">🔢</div>
+                <h2>Número aleatorio</h2>
+                <p>
+                    Genera números aleatorios enteros o decimales
+                    dentro del rango que quieras.
+                </p>
+            </a>
+
+            <a href="dados.html" class="herramienta-card">
+                <div class="herramienta-icono">🎲</div>
+                <h2>Dados</h2>
+                <p>
+                    Lanza dados de diferentes caras y varios dados
+                    al mismo tiempo.
+                </p>
+            </a>
+
+            <a href="cara-cruz.html" class="herramienta-card">
+                <div class="herramienta-icono">🪙</div>
+                <h2>Cara o cruz</h2>
+                <p>
+                    Lanza una moneda virtual y obtén un resultado
+                    aleatorio.
+                </p>
+            </a>
+
+            <a href="contrasenas.html" class="herramienta-card">
+                <div class="herramienta-icono">🔐</div>
+                <h2>Contraseñas</h2>
+                <p>
+                    Genera contraseñas aleatorias personalizadas
+                    y seguras.
+                </p>
+            </a>
+
+            <a href="selector-aleatorio.html" class="herramienta-card">
+                <div class="herramienta-icono">🎯</div>
+                <h2>Selector aleatorio</h2>
+                <p>
+                    Introduce varias opciones y deja que ToolBox
+                    elija una al azar.
+                </p>
+            </a>
+
+            <a href="equipos.html" class="herramienta-card">
+                <div class="herramienta-icono">👥</div>
+                <h2>Generador de equipos</h2>
+                <p>
+                    Reparte participantes aleatoriamente
+                    en diferentes equipos.
+                </p>
+            </a>
+
+            <a href="colores.html" class="herramienta-card">
+                <div class="herramienta-icono">🎨</div>
+                <h2>Generador de colores</h2>
+                <p>
+                    Genera colores aleatorios y consulta sus
+                    valores HEX, RGB y HSL.
+                </p>
+            </a>
+
+            <a href="bingo.html" class="herramienta-card">
+                <div class="herramienta-icono">🎱</div>
+                <h2>Bingo</h2>
+                <p>
+                    Genera números del 1 al 90 sin repetirlos
+                    durante la partida.
+                </p>
+            </a>
+
+            <a href="loteria.html" class="herramienta-card">
+                <div class="herramienta-icono">🎟️</div>
+                <h2>Lotería</h2>
+                <p>
+                    Genera combinaciones aleatorias para
+                    La Primitiva, Euromillones y Bonoloto.
+                </p>
+            </a>
+
+            <a href="fecha-aleatoria.html" class="herramienta-card">
+                <div class="herramienta-icono">📅</div>
+                <h2>Fecha aleatoria</h2>
+                <p>
+                    Genera una fecha aleatoria entre dos fechas
+                    que tú elijas.
+                </p>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

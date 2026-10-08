@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otras operaciones | ToolBox</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .calculadora {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .operaciones {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .operacion {
+            border: 1px solid #dbe1ea;
+            background: #f8fafc;
+            color: #374151;
+            border-radius: 10px;
+            padding: 13px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .operacion:hover {
+            background: #eef2ff;
+            border-color: #2563eb;
+        }
+
+        .operacion.activa {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .contenido {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .campo {
+            margin-bottom: 16px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .campo input:focus {
+            border-color: #2563eb;
+        }
+
+        .fila-numero {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .fila-numero input {
+            flex: 1;
+        }
+
+        .eliminar {
+            width: 42px;
+            border: none;
+            border-radius: 9px;
+            background: #fee2e2;
+            color: #dc2626;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .eliminar:hover {
+            background: #fecaca;
+        }
+
+        .boton-anadir {
+            border: none;
+            background: #eef2ff;
+            color: #1d4ed8;
+            padding: 10px 15px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .boton-anadir:hover {
+            background: #dbeafe;
+        }
+
+        .calcular {
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .calcular:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 18px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            min-height: 55px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .operaciones {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .calculadora {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .operaciones {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ToolBox</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>🔢 Otras operaciones</h1>
+        <p>Realiza diferentes operaciones matemáticas de forma rápida.</p>
+    </div>
+
+    <section class="calculadora">
+
+        <div class="operaciones">
+            <button class="operacion activa" data-operacion="mcd">MCD</button>
+            <button class="operacion" data-operacion="mcm">MCM</button>
+            <button class="operacion" data-operacion="factorial">Factorial</button>
+            <button class="operacion" data-operacion="absoluto">Valor absoluto</button>
+            <button class="operacion" data-operacion="redondear">Redondear</button>
+            <button class="operacion" data-operacion="truncar">Truncar</button>
+            <button class="operacion" data-operacion="primo">Número primo</button>
+            <button class="operacion" data-operacion="divisores">Divisores</button>
+            <button class="operacion" data-operacion="signo">Cambiar signo</button>
+        </div>
+
+        <div class="contenido" id="contenido"></div>
+
+        <div class="resultado" id="resultado">
+            Introduce los números y pulsa calcular.
+        </div>
+
+    </section>
+
+    <a href="calculadoras.html" class="volver">
+        ← Volver a Calculadoras
+    </a>
+
+</main>
+
+<script>
+    const botones = document.querySelectorAll(".operacion");
+    const contenido = document.getElementById("contenido");
+    const resultado = document.getElementById("resultado");
+
+    let operacionActual = "mcd";
+
+    function mostrarResultado(texto) {
+        resultado.textContent = texto;
+    }
+
+    function limpiarResultado() {
+        resultado.textContent = "Introduce los números y pulsa calcular.";
+    }
+
+    function crearCampoNumero(valor = "") {
+        const fila = document.createElement("div");
+        fila.className = "fila-numero";
+
+        const input = document.createElement("input");
+        input.type = "number";
+        input.step = "any";
+        input.placeholder = "Número";
+        input.value = valor;
+
+        input.addEventListener("input", limpiarResultado);
+
+        const eliminar = document.createElement("button");
+        eliminar.className = "eliminar";
+        eliminar.type = "button";
+        eliminar.textContent = "×";
+
+        eliminar.addEventListener("click", () => {
+            const filas = contenido.querySelectorAll(".fila-numero");
+
+            if (filas.length > 2) {
+                fila.remove();
+                limpiarResultado();
+            }
+        });
+
+        fila.appendChild(input);
+        fila.appendChild(eliminar);
+
+        return fila;
+    }
+
+    function mostrarCamposMultiples() {
+        contenido.innerHTML = "";
+
+        const campos = document.createElement("div");
+        campos.id = "camposNumeros";
+
+        campos.appendChild(crearCampoNumero());
+        campos.appendChild(crearCampoNumero());
+
+        contenido.appendChild(campos);
+
+        const anadir = document.createElement("button");
+        anadir.className = "boton-anadir";
+        anadir.type = "button";
+        anadir.textContent = "＋ Añadir número";
+
+        anadir.addEventListener("click", () => {
+            campos.appendChild(crearCampoNumero());
+        });
+
+        contenido.appendChild(anadir);
+
+        const calcular = document.createElement("button");
+        calcular.className = "calcular";
+        calcular.type = "button";
+        calcular.textContent = "Calcular";
+
+        calcular.addEventListener("click", calcularOperacion);
+
+        contenido.appendChild(calcular);
+    }
+
+    function mostrarCampoUnico() {
+        contenido.innerHTML = "";
+
+        const campo = document.createElement("div");
+        campo.className = "campo";
+
+        const label = document.createElement("label");
+        label.textContent = "Número";
+
+        const input = document.createElement("input");
+        input.type = "number";
+        input.step = "any";
+        input.id = "numero";
+        input.placeholder = "Escribe un número";
+
+        input.addEventListener("input", limpiarResultado);
+
+        campo.appendChild(label);
+        campo.appendChild(input);
+
+        contenido.appendChild(campo);
+
+        const calcular = document.createElement("button");
+        calcular.className = "calcular";
+        calcular.type = "button";
+        calcular.textContent = "Calcular";
+
+        calcular.addEventListener("click", calcularOperacion);
+
+        contenido.appendChild(calcular);
+    }
+
+    function actualizarInterfaz() {
+        if (operacionActual === "mcd" || operacionActual === "mcm") {
+            mostrarCamposMultiples();
+        } else {
+            mostrarCampoUnico();
+        }
+
+        limpiarResultado();
+    }
+
+    function obtenerNumeros() {
+        const inputs = contenido.querySelectorAll("input");
+        const numeros = [];
+
+        for (const input of inputs) {
+            if (input.value.trim() === "") {
+                return null;
+            }
+
+            const numero = Number(input.value);
+
+            if (Number.isNaN(numero)) {
+                return null;
+            }
+
+            numeros.push(numero);
+        }
+
+        return numeros;
+    }
+
+    function mcd(a, b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+
+        while (b !== 0) {
+            const temporal = b;
+            b = a % b;
+            a = temporal;
+        }
+
+        return a;
+    }
+
+    function calcularMCD(numeros) {
+        return numeros.reduce((resultado, numero) => {
+            return mcd(resultado, numero);
+        });
+    }
+
+    function mcm(a, b) {
+        if (a === 0 || b === 0) {
+            return 0;
+        }
+
+        return Math.abs(a * b) / mcd(a, b);
+    }
+
+    function calcularMCM(numeros) {
+        return numeros.reduce((resultado, numero) => {
+            return mcm(resultado, numero);
+        });
+    }
+
+    function esEntero(numero) {
+        return Number.isInteger(numero);
+    }
+
+    function calcularOperacion() {
+
+        if (operacionActual === "mcd" || operacionActual === "mcm") {
+
+            const numeros = obtenerNumeros();
+
+            if (!numeros) {
+                mostrarResultado("Completa todos los campos.");
+                return;
+            }
+
+            if (!numeros.every(esEntero)) {
+                mostrarResultado("Para esta operación debes introducir números enteros.");
+                return;
+            }
+
+            if (operacionActual === "mcd") {
+                mostrarResultado(`MCD = ${calcularMCD(numeros)}`);
+            } else {
+                mostrarResultado(`MCM = ${calcularMCM(numeros)}`);
+            }
+
+            return;
+        }
+
+        const input = document.getElementById("numero");
+
+        if (!input || input.value.trim() === "") {
+            mostrarResultado("Introduce un número.");
+            return;
+        }
+
+        const numero = Number(input.value);
+
+        if (Number.isNaN(numero)) {
+            mostrarResultado("Introduce un número válido.");
+            return;
+        }
+
+        switch (operacionActual) {
+
+            case "factorial":
+
+                if (!esEntero(numero) || numero < 0) {
+                    mostrarResultado("El factorial necesita un número entero no negativo.");
+                    return;
+                }
+
+                if (numero > 170) {
+                    mostrarResultado("El número máximo permitido para el factorial es 170.");
+                    return;
+                }
+
+                let factorial = 1;
+
+                for (let i = 2; i <= numero; i++) {
+                    factorial *= i;
+                }
+
+                mostrarResultado(`${numero}! = ${factorial}`);
+                break;
+
+            case "absoluto":
+                mostrarResultado(`|${numero}| = ${Math.abs(numero)}`);
+                break;
+
+            case "redondear":
+                mostrarResultado(`Resultado = ${Math.round(numero)}`);
+                break;
+
+            case "truncar":
+                mostrarResultado(`Resultado = ${Math.trunc(numero)}`);
+                break;
+
+            case "primo":
+
+                if (!esEntero(numero) || numero < 0) {
+                    mostrarResultado("Para comprobar si es primo necesitas un número entero positivo.");
+                    return;
+                }
+
+                if (numero < 2) {
+                    mostrarResultado(`${numero} no es un número primo.`);
+                    return;
+                }
+
+                let primo = true;
+
+                for (let i = 2; i <= Math.sqrt(numero); i++) {
+                    if (numero % i === 0) {
+                        primo = false;
+                        break;
+                    }
+                }
+
+                mostrarResultado(
+                    primo
+                        ? `${numero} es un número primo.`
+                        : `${numero} no es un número primo.`
+                );
+
+                break;
+
+            case "divisores":
+
+                if (!esEntero(numero) || numero === 0) {
+                    mostrarResultado("Introduce un número entero distinto de 0.");
+                    return;
+                }
+
+                const numeroAbsoluto = Math.abs(numero);
+                const divisores = [];
+
+                for (let i = 1; i <= numeroAbsoluto; i++) {
+                    if (numeroAbsoluto % i === 0) {
+                        divisores.push(i);
+                    }
+                }
+
+                mostrarResultado(
+                    `Divisores de ${numero}: ${divisores.join(", ")}`
+                );
+
+                break;
+
+            case "signo":
+                mostrarResultado(`Resultado = ${numero * -1}`);
+                break;
+        }
+    }
+
+    botones.forEach(boton => {
+
+        boton.addEventListener("click", () => {
+
+            botones.forEach(b => b.classList.remove("activa"));
+
+            boton.classList.add("activa");
+
+            operacionActual = boton.dataset.operacion;
+
+            actualizarInterfaz();
+        });
+
+    });
+
+    actualizarInterfaz();
+</script>
+
+</body>
+</html>

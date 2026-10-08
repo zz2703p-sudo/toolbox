@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToolBox | Calculadoras, conversores y herramientas online gratis</title>
+
+    <meta
+        name="description"
+        content="ToolBox reúne calculadoras, conversores, generadores y herramientas online gratis. Calcula, convierte, genera y utiliza herramientas útiles desde cualquier dispositivo."
+    >
+
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ToolBox | Herramientas online gratis">
+    <meta property="og:description" content="Calculadoras, conversores, generadores y herramientas online gratis en un solo lugar.">
+    <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ToolBox | Herramientas online gratis">
+    <meta name="twitter:description" content="Calculadoras, conversores, generadores y herramientas online gratis en un solo lugar.">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* HEADER */
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 90px 20px 70px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 35px;
+            font-size: 19px;
+            line-height: 1.6;
+            color: #6b7280;
+        }
+
+        /* BUSCADOR */
+
+        .buscador {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 7px;
+            border-radius: 14px;
+            display: flex;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .buscador input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 15px;
+            font-size: 16px;
+            color: #1f2937;
+        }
+
+        .buscador button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 0 25px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .buscador button:hover {
+            background: #1d4ed8;
+        }
+
+        .buscador-contenedor {
+            position: relative;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .resultados-busqueda {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            text-align: left;
+            z-index: 50;
+        }
+
+        .resultado-busqueda {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #f1f5f9;
+            background: white;
+            padding: 13px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            text-align: left;
+            cursor: pointer;
+            color: #1f2937;
+            transition: 0.15s;
+        }
+
+        .resultado-busqueda:last-child {
+            border-bottom: none;
+        }
+
+        .resultado-busqueda:hover,
+        .resultado-busqueda.activo {
+            background: #eff6ff;
+        }
+
+        .resultado-nombre {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .resultado-categoria {
+            color: #6b7280;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .sin-resultados {
+            padding: 16px;
+            color: #6b7280;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* CATEGORÍAS */
+
+        .categorias {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px 20px 90px;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .titulo-seccion h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .titulo-seccion p {
+            color: #6b7280;
+        }
+
+        .categorias-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .categoria {
+            background: white;
+            padding: 32px;
+            border-radius: 18px;
+            border: 1px solid #e5e7eb;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.25s;
+            display: block;
+        }
+
+        .categoria:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.09);
+            border-color: #dbeafe;
+        }
+
+        .icono {
+            font-size: 40px;
+            margin-bottom: 18px;
+        }
+
+        .categoria h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .categoria p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .ver-seccion {
+            color: #2563eb;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        /* BLOQUE INFORMACIÓN */
+
+        .info {
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 70px 20px;
+        }
+
+        .info-contenido {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .info h2 {
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .info p {
+            color: #6b7280;
+            line-height: 1.7;
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        /* ACCESO RÁPIDO */
+
+        .acceso {
+            max-width: 1100px;
+            margin: auto;
+            padding: 80px 20px;
+        }
+
+        .acceso-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .acceso a {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .acceso a:hover {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #2563eb;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        footer p {
+            color: #9ca3af;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* MÓVIL */
+
+        @media (max-width: 850px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .acceso-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            header {
+                height: auto;
+                min-height: 70px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 65px 20px 55px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .buscador {
+                flex-direction: column;
+                padding: 7px;
+                gap: 7px;
+            }
+
+            .buscador button {
+                height: 48px;
+            }
+
+            .resultados-busqueda {
+                top: calc(100% + 8px);
+            }
+
+            .categorias-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .acceso-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 400px) {
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .acceso-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <a href="index.html" class="logo">
+            ToolBox
+        </a>
+
+        <nav>
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="calculadoras.html">
+                Calculadoras
+            </a>
+
+            <a href="generadores.html">
+                Generadores
+            </a>
+
+            <a href="conversores.html">
+                Conversores
+            </a>
+
+            <a href="herramientas.html">
+                Herramientas
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h1>
+            Todas tus herramientas<br>
+            <span>en un solo lugar</span>
+        </h1>
+
+        <p>
+            Calcula, convierte, genera y utiliza herramientas online
+            gratis de forma rápida, sencilla y fácil.
+        </p>
+
+
+        <div class="buscador-contenedor">
+
+            <div class="buscador">
+
+                <input
+                    type="text"
+                    id="busqueda"
+                    placeholder="¿Qué herramienta necesitas?"
+                    autocomplete="off"
+                    aria-label="Buscar una herramienta"
+                    aria-controls="resultados-busqueda"
+                    aria-autocomplete="list"
+                >
+
+                <button onclick="buscarHerramienta()">
+                    Buscar
+                </button>
+
+            </div>
+
+            <div
+                id="resultados-busqueda"
+                class="resultados-busqueda"
+                role="listbox"
+                aria-label="Resultados de búsqueda"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATEGORÍAS -->
+
+    <section class="categorias">
+
+        <div class="titulo-seccion">
+
+            <h2>
+                Explora ToolBox
+            </h2>
+
+            <p>
+                Elige una categoría para empezar
+            </p>
+
+        </div>
+
+
+        <div class="categorias-grid">
+
+
+            <a
+                href="calculadoras.html"
+                class="categoria"
+            >
+
+                <div class="icono">
+                    🧮
+                </div>
+
+                <h3>
+                    Calculadoras
+                </h3>
+
+                <p>
+                    Realiza operaciones matemáticas,
+                    porcentajes, fracciones, estadísticas
+                    y mucho más.
+                </p>
+
+                <div class="ver-seccion">
+                    Ver calculadoras →
+                </div>
+
+            </a>
+
+
+            <a
+                href="conversores.html"
+                class="categoria"
+            >
+
+                <div class="icono">
+                    🔄
+                </div>
+
+                <h3>
+                    Conversores
+                </h3>
+
+                <p>
+                    Convierte unidades de longitud, peso,
+                    temperatura, velocidad, datos,
+                    monedas y mucho más.
+                </p>
+
+                <div class="ver-seccion">
+                    Ver conversores →
+                </div>
+
+            </a>
+
+
+            <a
+                href="generadores.html"
+                class="categoria"
+            >
+
+                <div class="icono">
+                    🎲
+                </div>
+
+                <h3>
+                    Generadores
+                </h3>
+
+                <p>
+                    Genera números, contraseñas, equipos,
+                    colores, fechas, loterías y mucho más.
+                </p>
+
+                <div class="ver-seccion">
+                    Ver generadores →
+                </div>
+
+            </a>
+
+
+            <a
+                href="herramientas.html"
+                class="categoria"
+            >
+
+                <div class="icono">
+                    🧰
+                </div>
+
+                <h3>
+                    Herramientas
+                </h3>
+
+                <p>
+                    Utiliza reglas, cronómetros, calendarios,
+                    contadores, relojes y otras herramientas útiles.
+                </p>
+
+                <div class="ver-seccion">
+                    Ver herramientas →
+                </div>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- INFORMACIÓN -->
+
+    <section class="info">
+
+        <div class="info-contenido">
+
+            <h2>
+                🛠️ Todo lo que necesitas, sin complicaciones
+            </h2>
+
+            <p>
+                ToolBox reúne diferentes herramientas online
+                en una sola página para que puedas encontrarlas
+                rápidamente.
+            </p>
+
+            <p>
+                No necesitas instalar programas ni utilizar
+                aplicaciones diferentes para cada tarea.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACCESO RÁPIDO -->
+
+    <section class="acceso">
+
+        <div class="titulo-seccion">
+
+            <h2>
+                Acceso rápido
+            </h2>
+
+            <p>
+                Entra directamente a una de nuestras categorías
+            </p>
+
+        </div>
+
+
+        <div class="acceso-grid">
+
+            <a href="calculadoras.html">
+                🧮 Calculadoras
+            </a>
+
+            <a href="conversores.html">
+                🔄 Conversores
+            </a>
+
+            <a href="generadores.html">
+                🎲 Generadores
+            </a>
+
+            <a href="herramientas.html">
+                🧰 Herramientas
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <strong>
+            ToolBox
+        </strong>
+
+        <p>
+            Herramientas online rápidas, sencillas y gratuitas.
+        </p>
+
+        <p>
+            © 2026 ToolBox
+        </p>
+
+    </footer>
+
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "ToolBox",
+        "description": "Calculadoras, conversores, generadores y herramientas online gratis.",
+        "inLanguage": "es"
+    }
+    </script>
+
+    <script>
+
+        const herramientas = [
+            { nombre: "Calculadoras", categoria: "Calculadoras", url: "calculadoras.html", palabras: "calculadora calcular matemáticas operaciones" },
+            { nombre: "Sumas", categoria: "Calculadoras", url: "suma.html", palabras: "suma sumar adición añadir" },
+            { nombre: "Restas", categoria: "Calculadoras", url: "resta.html", palabras: "resta restar quitar" },
+            { nombre: "Multiplicaciones", categoria: "Calculadoras", url: "multiplicacion.html", palabras: "multiplicacion multiplicación multiplicar" },
+            { nombre: "Divisiones", categoria: "Calculadoras", url: "division.html", palabras: "division división dividir" },
+            { nombre: "Porcentajes", categoria: "Calculadoras", url: "porcentaje.html", palabras: "porcentaje porcentaje tanto por ciento" },
+            { nombre: "Potencias", categoria: "Calculadoras", url: "potencias.html", palabras: "potencia potencias exponente exponentes elevar" },
+            { nombre: "Raíces", categoria: "Calculadoras", url: "raices.html", palabras: "raiz raíces raíz square root" },
+            { nombre: "Fracciones", categoria: "Calculadoras", url: "fracciones.html", palabras: "fraccion fracciones fracción" },
+            { nombre: "Estadística", categoria: "Calculadoras", url: "estadistica.html", palabras: "estadistica estadística media mediana moda promedio" },
+
+            { nombre: "Conversores", categoria: "Conversores", url: "conversores.html", palabras: "convertir conversor conversion conversión unidades" },
+            { nombre: "Temperatura", categoria: "Conversores", url: "temperatura.html", palabras: "temperatura grados celsius fahrenheit kelvin calor frio frío" },
+            { nombre: "Longitud", categoria: "Conversores", url: "longitud.html", palabras: "longitud distancia metros kilometros kilómetros centimetros centímetros millas" },
+            { nombre: "Peso y masa", categoria: "Conversores", url: "peso.html", palabras: "peso masa gramos kilos kilogramos libras onzas" },
+            { nombre: "Área", categoria: "Conversores", url: "area.html", palabras: "area área metros cuadrados hectareas hectáreas acres" },
+            { nombre: "Volumen", categoria: "Conversores", url: "volumen.html", palabras: "volumen litros mililitros metros cubicos cúbicos" },
+            { nombre: "Velocidad", categoria: "Conversores", url: "velocidad.html", palabras: "velocidad kmh km/h mph nudos metros segundo" },
+            { nombre: "Tiempo", categoria: "Conversores", url: "tiempo.html", palabras: "tiempo segundos minutos horas dias días semanas" },
+            { nombre: "Datos digitales", categoria: "Conversores", url: "datos.html", palabras: "datos digital bytes bits kb mb gb tb kib mib gigas almacenamiento" },
+            { nombre: "Monedas", categoria: "Conversores", url: "monedas.html", palabras: "moneda monedas euro euros dolar dólares dólares libra yen cambio divisas" },
+            { nombre: "Ángulos", categoria: "Conversores", url: "angulos.html", palabras: "angulo ángulo grados radianes gradianes revoluciones" },
+
+            { nombre: "Generadores", categoria: "Generadores", url: "generadores.html", palabras: "generador generar crear aleatorio" },
+            { nombre: "Número aleatorio", categoria: "Generadores", url: "numero-aleatorio.html", palabras: "numero número aleatorio azar random" },
+            { nombre: "Dados", categoria: "Generadores", url: "dados.html", palabras: "dado dados tirar dado" },
+            { nombre: "Cara o cruz", categoria: "Generadores", url: "cara-cruz.html", palabras: "cara cruz moneda lanzar moneda" },
+            { nombre: "Contraseñas", categoria: "Generadores", url: "contrasenas.html", palabras: "contraseña contraseñas password passwords clave claves seguridad" },
+            { nombre: "Selector aleatorio", categoria: "Generadores", url: "selector-aleatorio.html", palabras: "selector seleccionar elegir elección aleatoria nombres" },
+            { nombre: "Generador de equipos", categoria: "Generadores", url: "equipos.html", palabras: "equipos equipo grupos repartir jugadores" },
+            { nombre: "Generador de colores", categoria: "Generadores", url: "colores.html", palabras: "color colores rgb hex hexadecimal" },
+            { nombre: "Bingo", categoria: "Generadores", url: "bingo.html", palabras: "bingo numeros números cartones" },
+            { nombre: "Lotería", categoria: "Generadores", url: "loteria.html", palabras: "loteria lotería sorteo numeros números" },
+            { nombre: "Fecha aleatoria", categoria: "Generadores", url: "fecha-aleatoria.html", palabras: "fecha fechas aleatoria calendario" },
+
+            { nombre: "Herramientas", categoria: "Herramientas", url: "herramientas.html", palabras: "herramienta herramientas utilidades" },
+            { nombre: "Regla online", categoria: "Herramientas", url: "regla.html", palabras: "regla medir medida centímetros cm" },
+            { nombre: "Cronómetro", categoria: "Herramientas", url: "cronometro.html", palabras: "cronometro cronómetro tiempo stopwatch" },
+            { nombre: "Temporizador", categoria: "Herramientas", url: "temporizador.html", palabras: "temporizador cuenta atras cuenta atrás timer" },
+            { nombre: "Días entre fechas", categoria: "Herramientas", url: "dias-fechas.html", palabras: "dias días fechas diferencia fecha calcular dias" },
+            { nombre: "Calendario", categoria: "Herramientas", url: "calendario.html", palabras: "calendario mes año fecha" },
+            { nombre: "Reloj mundial", categoria: "Herramientas", url: "reloj-mundial.html", palabras: "reloj mundial hora horas pais países ciudades" },
+            { nombre: "Contador de palabras", categoria: "Herramientas", url: "contador-palabras.html", palabras: "palabras texto contador letras caracteres" },
+            { nombre: "Mayúsculas y minúsculas", categoria: "Herramientas", url: "mayusculas.html", palabras: "mayusculas mayúsculas minusculas minúsculas texto letras" },
+            { nombre: "Lorem Ipsum", categoria: "Herramientas", url: "lorem-ipsum.html", palabras: "lorem ipsum texto generador texto prueba" },
+            { nombre: "Contador", categoria: "Herramientas", url: "contador.html", palabras: "contador contar cuenta numero número" }
+        ];
+
+        const campoBusqueda = document.getElementById("busqueda");
+        const resultadosBusqueda = document.getElementById("resultados-busqueda");
+        let resultadoActivo = -1;
+
+        function normalizarTexto(texto) {
+            return texto
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .trim();
+        }
+
+        function obtenerResultados(texto) {
+            const busqueda = normalizarTexto(texto);
+
+            if (!busqueda) {
+                return [];
+            }
+
+            return herramientas
+                .filter(herramienta => {
+                    const contenido = normalizarTexto(
+                        herramienta.nombre + " " +
+                        herramienta.categoria + " " +
+                        herramienta.palabras
+                    );
+
+                    return contenido.includes(busqueda);
+                })
+                .slice(0, 7);
+        }
+
+        function mostrarResultados() {
+            const resultados = obtenerResultados(campoBusqueda.value);
+            resultadosBusqueda.innerHTML = "";
+            resultadoActivo = -1;
+
+            if (!campoBusqueda.value.trim()) {
+                resultadosBusqueda.style.display = "none";
+                return;
+            }
+
+            resultadosBusqueda.style.display = "block";
+
+            if (resultados.length === 0) {
+                resultadosBusqueda.innerHTML =
+                    '<div class="sin-resultados">No encontramos ninguna herramienta.</div>';
+                return;
+            }
+
+            resultados.forEach((herramienta, indice) => {
+                const boton = document.createElement("button");
+                boton.type = "button";
+                boton.className = "resultado-busqueda";
+                boton.setAttribute("role", "option");
+
+                boton.innerHTML = `
+                    <span class="resultado-nombre">${herramienta.nombre}</span>
+                    <span class="resultado-categoria">${herramienta.categoria}</span>
+                `;
+
+                boton.addEventListener("click", function() {
+                    window.location.href = herramienta.url;
+                });
+
+                resultadosBusqueda.appendChild(boton);
+            });
+        }
+
+        function buscarHerramienta() {
+            const resultados = obtenerResultados(campoBusqueda.value);
+
+            if (resultados.length > 0) {
+                const indice = resultadoActivo >= 0 ? resultadoActivo : 0;
+                window.location.href = resultados[indice].url;
+                return;
+            }
+
+            if (!campoBusqueda.value.trim()) {
+                campoBusqueda.focus();
+                return;
+            }
+
+            mostrarResultados();
+        }
+
+        campoBusqueda.addEventListener("input", mostrarResultados);
+
+        campoBusqueda.addEventListener("keydown", function(event) {
+            const resultados = resultadosBusqueda.querySelectorAll(".resultado-busqueda");
+
+            if (event.key === "ArrowDown" && resultados.length > 0) {
+                event.preventDefault();
+                resultadoActivo = Math.min(resultadoActivo + 1, resultados.length - 1);
+                actualizarResultadoActivo(resultados);
+            }
+
+            if (event.key === "ArrowUp" && resultados.length > 0) {
+                event.preventDefault();
+                resultadoActivo = Math.max(resultadoActivo - 1, 0);
+                actualizarResultadoActivo(resultados);
+            }
+
+            if (event.key === "Enter") {
+                event.preventDefault();
+                buscarHerramienta();
+            }
+
+            if (event.key === "Escape") {
+                resultadosBusqueda.style.display = "none";
+                resultadoActivo = -1;
+            }
+        });
+
+        function actualizarResultadoActivo(resultados) {
+            resultados.forEach((resultado, indice) => {
+                resultado.classList.toggle("activo", indice === resultadoActivo);
+            });
+        }
+
+        document.addEventListener("click", function(event) {
+            const contenedor = document.querySelector(".buscador-contenedor");
+
+            if (!contenedor.contains(event.target)) {
+                resultadosBusqueda.style.display = "none";
+                resultadoActivo = -1;
+            }
+        });
+
+    </script>
+
+</body>
+</html>

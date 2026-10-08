@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras | ToolBox</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-seccion {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 20px;
+        }
+
+        .cabecera-seccion {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .cabecera-seccion h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cabecera-seccion p {
+            color: #6b7280;
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .herramientas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .herramienta-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .herramienta-card:hover {
+            transform: translateY(-4px);
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37,99,235,0.12);
+        }
+
+        .herramienta-icono {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .herramienta-card h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .herramienta-card p {
+            color: #6b7280;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        @media (max-width: 850px) {
+            .herramientas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-seccion {
+                padding: 50px 15px;
+            }
+
+            .herramientas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ToolBox</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-seccion">
+
+        <div class="cabecera-seccion">
+            <h1>🧮 Calculadoras</h1>
+            <p>
+                Resuelve operaciones matemáticas de forma rápida,
+                sencilla y gratuita.
+            </p>
+        </div>
+
+        <div class="herramientas-grid">
+
+            <a href="suma.html" class="herramienta-card">
+                <div class="herramienta-icono">➕</div>
+                <h2>Sumas</h2>
+                <p>Suma dos o más números fácilmente.</p>
+            </a>
+
+            <a href="resta.html" class="herramienta-card">
+                <div class="herramienta-icono">➖</div>
+                <h2>Restas</h2>
+                <p>Resta varios números de forma rápida.</p>
+            </a>
+
+            <a href="multiplicacion.html" class="herramienta-card">
+                <div class="herramienta-icono">✖️</div>
+                <h2>Multiplicaciones</h2>
+                <p>Multiplica dos o más números.</p>
+            </a>
+
+            <a href="division.html" class="herramienta-card">
+                <div class="herramienta-icono">➗</div>
+                <h2>Divisiones</h2>
+                <p>Realiza divisiones de forma sencilla.</p>
+            </a>
+
+            <a href="porcentaje.html" class="herramienta-card">
+                <div class="herramienta-icono">💯</div>
+                <h2>Porcentajes</h2>
+                <p>Calcula porcentajes, descuentos, aumentos e IVA.</p>
+            </a>
+
+            <a href="potencias.html" class="herramienta-card">
+                <div class="herramienta-icono">²</div>
+                <h2>Potencias</h2>
+                <p>Calcula potencias y exponentes.</p>
+            </a>
+
+            <a href="raices.html" class="herramienta-card">
+                <div class="herramienta-icono">√</div>
+                <h2>Raíces</h2>
+                <p>Calcula raíces cuadradas, cúbicas y de cualquier índice.</p>
+            </a>
+
+            <a href="fracciones.html" class="herramienta-card">
+                <div class="herramienta-icono">½</div>
+                <h2>Fracciones</h2>
+                <p>Suma, resta, multiplica, divide y simplifica fracciones.</p>
+            </a>
+
+            <a href="estadistica.html" class="herramienta-card">
+                <div class="herramienta-icono">📊</div>
+                <h2>Estadística</h2>
+                <p>Calcula media, mediana, moda, rango y otros valores.</p>
+            </a>
+
+            <a href="otras.html" class="herramienta-card">
+                <div class="herramienta-icono">🧠</div>
+                <h2>Otras operaciones</h2>
+                <p>MCD, MCM, factorial, números primos, divisores y más.</p>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

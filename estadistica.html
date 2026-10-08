@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Estadística | ToolBox</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-herramienta {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .cabecera-herramienta {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cabecera-herramienta h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera-herramienta p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .calculadora-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .modos {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .modo {
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            padding: 12px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modo:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .modo.activo {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .descripcion-modo {
+            background: #f5f7fb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 24px;
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .numeros {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .numero-fila {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .numero-fila input {
+            flex: 1;
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .numero-fila input:focus {
+            border-color: #2563eb;
+        }
+
+        .eliminar {
+            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            border-radius: 8px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .eliminar:hover {
+            background: #fecaca;
+        }
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-principal {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secundario {
+            background: #eef2ff;
+            color: #2563eb;
+        }
+
+        .btn-secundario:hover {
+            background: #dbeafe;
+        }
+
+        .btn-anadir {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-anadir:hover {
+            background: #e5e7eb;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f5f7fb;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        .resultado .texto {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .resultado .valor {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            word-break: break-word;
+        }
+
+        .error {
+            color: #dc2626 !important;
+            font-weight: 600;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 750px) {
+            .modos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-herramienta {
+                padding: 45px 15px;
+            }
+
+            .cabecera-herramienta h1 {
+                font-size: 34px;
+            }
+
+            .calculadora-card {
+                padding: 20px;
+            }
+
+            .modos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ToolBox</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-herramienta">
+
+        <div class="cabecera-herramienta">
+            <h1>📊 Estadística</h1>
+            <p>Calcula las principales medidas estadísticas.</p>
+        </div>
+
+        <div class="calculadora-card">
+
+            <div class="modos">
+
+                <button class="modo activo" data-modo="media">
+                    Media
+                </button>
+
+                <button class="modo" data-modo="mediana">
+                    Mediana
+                </button>
+
+                <button class="modo" data-modo="moda">
+                    Moda
+                </button>
+
+                <button class="modo" data-modo="maximo">
+                    Máximo
+                </button>
+
+                <button class="modo" data-modo="minimo">
+                    Mínimo
+                </button>
+
+                <button class="modo" data-modo="rango">
+                    Rango
+                </button>
+
+                <button class="modo" data-modo="suma">
+                    Suma
+                </button>
+
+                <button class="modo" data-modo="cantidad">
+                    Cantidad
+                </button>
+
+            </div>
+
+            <div class="descripcion-modo" id="descripcion">
+                Calcula la media de un conjunto de números.
+            </div>
+
+            <div class="numeros" id="numeros"></div>
+
+            <div class="botones">
+
+                <button
+                    class="btn btn-anadir"
+                    id="anadir"
+                    type="button">
+                    ＋ Añadir número
+                </button>
+
+                <button
+                    class="btn btn-principal"
+                    id="calcular"
+                    type="button">
+                    Calcular
+                </button>
+
+                <button
+                    class="btn btn-secundario"
+                    id="limpiar"
+                    type="button">
+                    Limpiar
+                </button>
+
+            </div>
+
+            <div class="resultado" id="resultado">
+
+                <div class="texto" id="textoResultado"></div>
+
+                <div class="valor" id="valorResultado"></div>
+
+            </div>
+
+        </div>
+
+        <a href="calculadoras.html" class="volver">
+            ← Volver a Calculadoras
+        </a>
+
+    </main>
+
+    <script>
+        const modos = document.querySelectorAll(".modo");
+
+        const numeros = document.getElementById("numeros");
+        const descripcion = document.getElementById("descripcion");
+
+        const botonAnadir = document.getElementById("anadir");
+        const botonCalcular = document.getElementById("calcular");
+        const botonLimpiar = document.getElementById("limpiar");
+
+        const resultado = document.getElementById("resultado");
+        const textoResultado = document.getElementById("textoResultado");
+        const valorResultado = document.getElementById("valorResultado");
+
+        let modoActual = "media";
+        let cantidadNumeros = 2;
+
+        const descripciones = {
+            media: "Calcula la media de un conjunto de números.",
+            mediana: "Encuentra el valor central de un conjunto de números.",
+            moda: "Encuentra el número que más veces se repite.",
+            maximo: "Encuentra el número más grande.",
+            minimo: "Encuentra el número más pequeño.",
+            rango: "Calcula la diferencia entre el valor máximo y el mínimo.",
+            suma: "Suma todos los números introducidos.",
+            cantidad: "Cuenta cuántos números has introducido."
+        };
+
+        function limpiarResultado() {
+            resultado.style.display = "none";
+            textoResultado.textContent = "";
+            valorResultado.textContent = "";
+            textoResultado.classList.remove("error");
+        }
+
+        function crearNumero(index) {
+
+            const fila = document.createElement("div");
+            fila.className = "numero-fila";
+            fila.dataset.index = index;
+
+            const input = document.createElement("input");
+
+            input.type = "number";
+            input.step = "any";
+            input.placeholder = `Número ${index + 1}`;
+
+            input.addEventListener("input", limpiarResultado);
+
+            fila.appendChild(input);
+
+            if (index > 1) {
+
+                const eliminar = document.createElement("button");
+
+                eliminar.type = "button";
+                eliminar.className = "eliminar";
+                eliminar.textContent = "✕";
+
+                eliminar.addEventListener("click", () => {
+
+                    if (document.querySelectorAll(".numero-fila").length <= 2) {
+                        return;
+                    }
+
+                    fila.remove();
+
+                    renumerar();
+
+                    limpiarResultado();
+                });
+
+                fila.appendChild(eliminar);
+            }
+
+            numeros.appendChild(fila);
+        }
+
+        function renumerar() {
+
+            const filas = document.querySelectorAll(".numero-fila");
+
+            filas.forEach((fila, index) => {
+
+                const input = fila.querySelector("input");
+
+                input.placeholder = `Número ${index + 1}`;
+
+                fila.dataset.index = index;
+            });
+
+            cantidadNumeros = filas.length;
+        }
+
+        function crearNumeros() {
+
+            numeros.innerHTML = "";
+
+            for (let i = 0; i < cantidadNumeros; i++) {
+                crearNumero(i);
+            }
+        }
+
+        function obtenerNumeros() {
+
+            const inputs = document.querySelectorAll(
+                ".numero-fila input"
+            );
+
+            const valores = [];
+
+            for (const input of inputs) {
+
+                if (input.value.trim() === "") {
+                    return null;
+                }
+
+                const numero = Number(input.value);
+
+                if (!Number.isFinite(numero)) {
+                    return null;
+                }
+
+                valores.push(numero);
+            }
+
+            return valores;
+        }
+
+        function redondear(numero) {
+
+            return Math.round(
+                (numero + Number.EPSILON) * 100000000
+            ) / 100000000;
+        }
+
+        function mostrarError(mensaje) {
+
+            resultado.style.display = "block";
+
+            textoResultado.textContent = mensaje;
+            textoResultado.classList.add("error");
+
+            valorResultado.textContent = "";
+        }
+
+        function mostrarResultado(texto, valor) {
+
+            textoResultado.classList.remove("error");
+
+            textoResultado.textContent = texto;
+            valorResultado.textContent = valor;
+
+            resultado.style.display = "block";
+        }
+
+        modos.forEach(boton => {
+
+            boton.addEventListener("click", () => {
+
+                modos.forEach(b => {
+                    b.classList.remove("activo");
+                });
+
+                boton.classList.add("activo");
+
+                modoActual = boton.dataset.modo;
+
+                descripcion.textContent =
+                    descripciones[modoActual];
+
+                limpiarResultado();
+            });
+        });
+
+        botonAnadir.addEventListener("click", () => {
+
+            cantidadNumeros++;
+
+            crearNumero(cantidadNumeros - 1);
+
+            limpiarResultado();
+        });
+
+        botonCalcular.addEventListener("click", () => {
+
+            limpiarResultado();
+
+            const valores = obtenerNumeros();
+
+            if (!valores) {
+                mostrarError("Introduce todos los números.");
+                return;
+            }
+
+            let valor;
+            let texto;
+
+            if (modoActual === "media") {
+
+                const suma = valores.reduce(
+                    (a, b) => a + b,
+                    0
+                );
+
+                valor = suma / valores.length;
+
+                texto = "La media es";
+
+            } else if (modoActual === "mediana") {
+
+                const ordenados = [...valores].sort(
+                    (a, b) => a - b
+                );
+
+                const mitad =
+                    Math.floor(ordenados.length / 2);
+
+                if (ordenados.length % 2 === 0) {
+
+                    valor =
+                        (ordenados[mitad - 1] +
+                        ordenados[mitad]) / 2;
+
+                } else {
+
+                    valor = ordenados[mitad];
+                }
+
+                texto = "La mediana es";
+
+            } else if (modoActual === "moda") {
+
+                const frecuencias = {};
+
+                valores.forEach(numero => {
+
+                    frecuencias[numero] =
+                        (frecuencias[numero] || 0) + 1;
+                });
+
+                const maxFrecuencia =
+                    Math.max(...Object.values(frecuencias));
+
+                if (maxFrecuencia === 1) {
+
+                    valor = "No hay moda";
+
+                } else {
+
+                    const modas = Object.keys(frecuencias)
+                        .filter(
+                            numero =>
+                                frecuencias[numero] === maxFrecuencia
+                        )
+                        .map(Number);
+
+                    valor = modas.join(", ");
+                }
+
+                texto = "La moda es";
+
+            } else if (modoActual === "maximo") {
+
+                valor = Math.max(...valores);
+
+                texto = "El máximo es";
+
+            } else if (modoActual === "minimo") {
+
+                valor = Math.min(...valores);
+
+                texto = "El mínimo es";
+
+            } else if (modoActual === "rango") {
+
+                valor =
+                    Math.max(...valores) -
+                    Math.min(...valores);
+
+                texto = "El rango es";
+
+            } else if (modoActual === "suma") {
+
+                valor = valores.reduce(
+                    (a, b) => a + b,
+                    0
+                );
+
+                texto = "La suma es";
+
+            } else if (modoActual === "cantidad") {
+
+                valor = valores.length;
+
+                texto = "La cantidad de números es";
+            }
+
+            if (typeof valor === "number") {
+                valor = redondear(valor);
+            }
+
+            mostrarResultado(texto, valor);
+        });
+
+        botonLimpiar.addEventListener("click", () => {
+
+            cantidadNumeros = 2;
+
+            crearNumeros();
+
+            limpiarResultado();
+        });
+
+        crearNumeros();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Herramientas | ToolBox</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-seccion {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 20px;
+        }
+
+        .cabecera-seccion {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .cabecera-seccion h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cabecera-seccion p {
+            color: #6b7280;
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .herramientas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .herramienta-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .herramienta-card:hover {
+            transform: translateY(-4px);
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+        }
+
+        .herramienta-icono {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .herramienta-card h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .herramienta-card p {
+            color: #6b7280;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        @media (max-width: 850px) {
+            .herramientas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-seccion {
+                padding: 50px 15px;
+            }
+
+            .herramientas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cabecera-seccion h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ToolBox</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-seccion">
+
+        <div class="cabecera-seccion">
+            <h1>🧰 Herramientas</h1>
+
+            <p>
+                Herramientas útiles para organizar, medir,
+                calcular y trabajar más fácilmente.
+            </p>
+        </div>
+
+        <div class="herramientas-grid">
+
+            <a href="regla.html" class="herramienta-card">
+                <div class="herramienta-icono">📏</div>
+                <h2>Regla online</h2>
+                <p>
+                    Utiliza una regla virtual para medir objetos
+                    directamente en tu pantalla.
+                </p>
+            </a>
+
+            <a href="cronometro.html" class="herramienta-card">
+                <div class="herramienta-icono">⏱️</div>
+                <h2>Cronómetro</h2>
+                <p>
+                    Mide el tiempo con precisión y registra
+                    tus vueltas.
+                </p>
+            </a>
+
+            <a href="temporizador.html" class="herramienta-card">
+                <div class="herramienta-icono">⏲️</div>
+                <h2>Temporizador</h2>
+                <p>
+                    Configura una cuenta atrás personalizada
+                    para controlar el tiempo.
+                </p>
+            </a>
+
+            <a href="dias-fechas.html" class="herramienta-card">
+                <div class="herramienta-icono">📅</div>
+                <h2>Días entre fechas</h2>
+                <p>
+                    Calcula cuántos días hay entre dos fechas.
+                </p>
+            </a>
+
+            <a href="calendario.html" class="herramienta-card">
+                <div class="herramienta-icono">🗓️</div>
+                <h2>Calendario</h2>
+                <p>
+                    Consulta cualquier mes y navega fácilmente
+                    entre fechas.
+                </p>
+            </a>
+
+            <a href="reloj-mundial.html" class="herramienta-card">
+                <div class="herramienta-icono">🌍</div>
+                <h2>Reloj mundial</h2>
+                <p>
+                    Consulta la hora actual de diferentes
+                    ciudades del mundo.
+                </p>
+            </a>
+
+            <a href="contador-palabras.html" class="herramienta-card">
+                <div class="herramienta-icono">🔤</div>
+                <h2>Contador de palabras</h2>
+                <p>
+                    Cuenta palabras, caracteres, frases,
+                    líneas y tiempo de lectura.
+                </p>
+            </a>
+
+            <a href="mayusculas.html" class="herramienta-card">
+                <div class="herramienta-icono">🔠</div>
+                <h2>Mayúsculas y minúsculas</h2>
+                <p>
+                    Convierte textos entre mayúsculas,
+                    minúsculas y diferentes formatos.
+                </p>
+            </a>
+
+            <a href="lorem-ipsum.html" class="herramienta-card">
+                <div class="herramienta-icono">📝</div>
+                <h2>Lorem Ipsum</h2>
+                <p>
+                    Genera texto de prueba para diseños,
+                    páginas web y proyectos.
+                </p>
+            </a>
+
+            <a href="contador.html" class="herramienta-card">
+                <div class="herramienta-icono">🔢</div>
+                <h2>Contador</h2>
+                <p>
+                    Utiliza un contador sencillo para aumentar,
+                    disminuir y reiniciar valores.
+                </p>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

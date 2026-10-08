@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Días entre fechas | ToolBox</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .herramienta {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .fechas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .campo label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .campo input:focus {
+            border-color: #2563eb;
+        }
+
+        .boton {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 25px 20px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .resultado-titulo {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .numero {
+            font-size: 42px;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .detalle {
+            margin-top: 15px;
+            color: #4b5563;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .mensaje {
+            min-height: 20px;
+            margin-top: 12px;
+            color: #dc2626;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .herramienta {
+                padding: 20px;
+            }
+
+            .fechas {
+                grid-template-columns: 1fr;
+            }
+
+            .numero {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ToolBox</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>📅 Días entre fechas</h1>
+        <p>Calcula cuántos días hay entre dos fechas.</p>
+    </div>
+
+    <section class="herramienta">
+
+        <div class="fechas">
+
+            <div class="campo">
+                <label for="fechaInicio">Fecha inicial</label>
+                <input
+                    type="date"
+                    id="fechaInicio"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="fechaFin">Fecha final</label>
+                <input
+                    type="date"
+                    id="fechaFin"
+                >
+            </div>
+
+        </div>
+
+        <button
+            class="boton"
+            id="calcular"
+            type="button"
+        >
+            Calcular diferencia
+        </button>
+
+        <div class="resultado">
+
+            <div class="resultado-titulo">
+                Diferencia
+            </div>
+
+            <div class="numero" id="resultado">
+                —
+            </div>
+
+            <div class="detalle" id="detalle"></div>
+
+        </div>
+
+        <div class="mensaje" id="mensaje"></div>
+
+    </section>
+
+    <a href="herramientas.html" class="volver">
+        ← Volver a Herramientas
+    </a>
+
+</main>
+
+<script>
+
+    const fechaInicio = document.getElementById("fechaInicio");
+    const fechaFin = document.getElementById("fechaFin");
+
+    const calcular = document.getElementById("calcular");
+
+    const resultado = document.getElementById("resultado");
+    const detalle = document.getElementById("detalle");
+    const mensaje = document.getElementById("mensaje");
+
+    function crearFecha(valor) {
+
+        return new Date(valor + "T00:00:00");
+    }
+
+    calcular.addEventListener("click", () => {
+
+        resultado.textContent = "—";
+        detalle.textContent = "";
+        mensaje.textContent = "";
+
+        if (!fechaInicio.value || !fechaFin.value) {
+
+            mensaje.textContent =
+                "Selecciona las dos fechas.";
+
+            return;
+        }
+
+        const inicio =
+            crearFecha(fechaInicio.value);
+
+        const fin =
+            crearFecha(fechaFin.value);
+
+        const diferenciaMilisegundos =
+            Math.abs(fin.getTime() - inicio.getTime());
+
+        const dias =
+            Math.floor(
+                diferenciaMilisegundos /
+                (1000 * 60 * 60 * 24)
+            );
+
+        const semanas =
+            Math.floor(dias / 7);
+
+        const diasRestantes =
+            dias % 7;
+
+        resultado.textContent =
+            dias + (dias === 1 ? " día" : " días");
+
+        if (dias === 0) {
+
+            detalle.textContent =
+                "Las dos fechas son el mismo día.";
+
+        } else {
+
+            detalle.textContent =
+                `${semanas} ${
+                    semanas === 1 ? "semana" : "semanas"
+                } y ${diasRestantes} ${
+                    diasRestantes === 1 ? "día" : "días"
+                }.`;
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

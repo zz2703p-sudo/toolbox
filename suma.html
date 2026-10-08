@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sumas | ToolBox</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pagina-herramienta {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .cabecera-herramienta {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cabecera-herramienta h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera-herramienta p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .calculadora-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .numero {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .numero input {
+            flex: 1;
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .numero input:focus {
+            border-color: #2563eb;
+        }
+
+        .eliminar {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 8px;
+            background: #fee2e2;
+            color: #dc2626;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .eliminar:hover {
+            background: #fecaca;
+        }
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-principal {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secundario {
+            background: #eef2ff;
+            color: #2563eb;
+        }
+
+        .btn-secundario:hover {
+            background: #dbeafe;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f5f7fb;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        .resultado .expresion {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .resultado .total {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            word-break: break-word;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .pagina-herramienta {
+                padding: 45px 15px;
+            }
+
+            .cabecera-herramienta h1 {
+                font-size: 34px;
+            }
+
+            .calculadora-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ToolBox</div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+        </nav>
+    </header>
+
+    <main class="pagina-herramienta">
+
+        <div class="cabecera-herramienta">
+            <h1>➕ Sumas</h1>
+            <p>Suma dos o más números de forma rápida y sencilla.</p>
+        </div>
+
+        <div class="calculadora-card">
+
+            <div id="numeros">
+
+                <div class="numero">
+                    <input type="number" step="any" placeholder="Número 1">
+                </div>
+
+                <div class="numero">
+                    <input type="number" step="any" placeholder="Número 2">
+                    <button class="eliminar" type="button" title="Eliminar número">✕</button>
+                </div>
+
+            </div>
+
+            <div class="botones">
+                <button class="btn btn-secundario" id="anadir" type="button">
+                    ＋ Añadir número
+                </button>
+
+                <button class="btn btn-principal" id="calcular" type="button">
+                    Calcular suma
+                </button>
+            </div>
+
+            <div class="resultado" id="resultado">
+                <div class="expresion" id="expresion"></div>
+                <div class="total" id="total"></div>
+            </div>
+
+        </div>
+
+        <a href="calculadoras.html" class="volver">
+            ← Volver a Calculadoras
+        </a>
+
+    </main>
+
+    <script>
+        const contenedor = document.getElementById("numeros");
+        const botonAnadir = document.getElementById("anadir");
+        const botonCalcular = document.getElementById("calcular");
+        const resultado = document.getElementById("resultado");
+        const expresion = document.getElementById("expresion");
+        const total = document.getElementById("total");
+
+        function limpiarResultado() {
+            resultado.style.display = "none";
+            expresion.textContent = "";
+            total.textContent = "";
+        }
+
+        function actualizarBotonesEliminar() {
+            const filas = contenedor.querySelectorAll(".numero");
+
+            filas.forEach((fila, indice) => {
+                const boton = fila.querySelector(".eliminar");
+
+                if (indice === 0) {
+                    if (boton) {
+                        boton.remove();
+                    }
+                } else {
+                    if (!boton) {
+                        const nuevoBoton = document.createElement("button");
+                        nuevoBoton.type = "button";
+                        nuevoBoton.className = "eliminar";
+                        nuevoBoton.title = "Eliminar número";
+                        nuevoBoton.textContent = "✕";
+
+                        nuevoBoton.addEventListener("click", () => {
+                            fila.remove();
+                            actualizarBotonesEliminar();
+                            limpiarResultado();
+                        });
+
+                        fila.appendChild(nuevoBoton);
+                    }
+                }
+            });
+        }
+
+        function crearNumero() {
+            const filas = contenedor.querySelectorAll(".numero");
+            const numero = filas.length + 1;
+
+            const fila = document.createElement("div");
+            fila.className = "numero";
+
+            const input = document.createElement("input");
+            input.type = "number";
+            input.step = "any";
+            input.placeholder = "Número " + numero;
+
+            input.addEventListener("input", limpiarResultado);
+
+            fila.appendChild(input);
+
+            const botonEliminar = document.createElement("button");
+            botonEliminar.type = "button";
+            botonEliminar.className = "eliminar";
+            botonEliminar.title = "Eliminar número";
+            botonEliminar.textContent = "✕";
+
+            botonEliminar.addEventListener("click", () => {
+                fila.remove();
+                actualizarBotonesEliminar();
+                limpiarResultado();
+            });
+
+            fila.appendChild(botonEliminar);
+
+            contenedor.appendChild(fila);
+        }
+
+        botonAnadir.addEventListener("click", () => {
+            crearNumero();
+            limpiarResultado();
+        });
+
+        botonCalcular.addEventListener("click", () => {
+            const inputs = contenedor.querySelectorAll("input");
+
+            const valores = [];
+
+            for (const input of inputs) {
+                if (input.value.trim() === "") {
+                    input.focus();
+                    resultado.style.display = "block";
+                    expresion.textContent = "Introduce todos los números.";
+                    total.textContent = "";
+                    return;
+                }
+
+                valores.push(Number(input.value));
+            }
+
+            const suma = valores.reduce((acumulado, valor) => {
+                return acumulado + valor;
+            }, 0);
+
+            expresion.textContent = valores.join(" + ");
+            total.textContent = suma;
+
+            resultado.style.display = "block";
+        });
+
+        document.querySelectorAll("input").forEach(input => {
+            input.addEventListener("input", limpiarResultado);
+        });
+
+        actualizarBotonesEliminar();
+    </script>
+
+</body>
+</html>

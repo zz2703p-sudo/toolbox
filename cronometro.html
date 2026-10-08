@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro | ToolBox</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .pagina {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        .cabecera {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cabecera h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .cabecera p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .herramienta {
+            background: white;
+            border-radius: 18px;
+            padding: 35px 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .tiempo {
+            font-size: 56px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .boton {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-principal {
+            background: #2563eb;
+            color: white;
+        }
+
+        .boton-principal:hover {
+            background: #1d4ed8;
+        }
+
+        .boton-secundario {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .boton-secundario:hover {
+            background: #d1d5db;
+        }
+
+        .vueltas {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .vueltas h3 {
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .lista-vueltas {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .vuelta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 11px 14px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .vuelta span:first-child {
+            color: #6b7280;
+        }
+
+        .vuelta span:last-child {
+            font-weight: bold;
+            color: #1e3a8a;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .volver {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .pagina {
+                padding-top: 40px;
+            }
+
+            .cabecera h1 {
+                font-size: 32px;
+            }
+
+            .herramienta {
+                padding: 25px 20px;
+            }
+
+            .tiempo {
+                font-size: 42px;
+            }
+
+            .botones {
+                flex-direction: column;
+            }
+
+            .boton {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ToolBox</div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="conversores.html">Conversores</a>
+        <a href="generadores.html">Generadores</a>
+        <a href="herramientas.html">Herramientas</a>
+    </nav>
+</header>
+
+<main class="pagina">
+
+    <div class="cabecera">
+        <h1>⏱️ Cronómetro</h1>
+        <p>Mide el tiempo con precisión y registra tus vueltas.</p>
+    </div>
+
+    <section class="herramienta">
+
+        <div class="tiempo" id="tiempo">
+            00:00:00.00
+        </div>
+
+        <div class="botones">
+
+            <button
+                class="boton boton-principal"
+                id="iniciar"
+                type="button"
+            >
+                Iniciar
+            </button>
+
+            <button
+                class="boton boton-secundario"
+                id="vuelta"
+                type="button"
+            >
+                Vuelta
+            </button>
+
+            <button
+                class="boton boton-secundario"
+                id="reiniciar"
+                type="button"
+            >
+                Reiniciar
+            </button>
+
+        </div>
+
+        <div class="vueltas">
+
+            <h3>Vueltas</h3>
+
+            <div
+                class="lista-vueltas"
+                id="listaVueltas"
+            ></div>
+
+        </div>
+
+    </section>
+
+    <a href="herramientas.html" class="volver">
+        ← Volver a Herramientas
+    </a>
+
+</main>
+
+<script>
+
+    const tiempoElemento = document.getElementById("tiempo");
+    const iniciar = document.getElementById("iniciar");
+    const vuelta = document.getElementById("vuelta");
+    const reiniciar = document.getElementById("reiniciar");
+    const listaVueltas = document.getElementById("listaVueltas");
+
+    let corriendo = false;
+    let tiempoInicio = 0;
+    let tiempoAcumulado = 0;
+    let intervalo = null;
+    let numeroVuelta = 0;
+
+    function obtenerTiempo() {
+
+        if (!corriendo) {
+            return tiempoAcumulado;
+        }
+
+        return tiempoAcumulado + (Date.now() - tiempoInicio);
+    }
+
+    function formatearTiempo(milisegundos) {
+
+        const minutos = Math.floor(
+            milisegundos / 60000
+        );
+
+        const segundos = Math.floor(
+            (milisegundos % 60000) / 1000
+        );
+
+        const centesimas = Math.floor(
+            (milisegundos % 1000) / 10
+        );
+
+        return (
+            String(minutos).padStart(2, "0") +
+            ":" +
+            String(segundos).padStart(2, "0") +
+            ":" +
+            String(centesimas).padStart(2, "0")
+        );
+    }
+
+    function actualizar() {
+
+        tiempoElemento.textContent =
+            formatearTiempo(obtenerTiempo());
+    }
+
+    iniciar.addEventListener("click", () => {
+
+        if (!corriendo) {
+
+            tiempoInicio = Date.now();
+            corriendo = true;
+
+            intervalo = setInterval(actualizar, 10);
+
+            iniciar.textContent = "Pausar";
+
+        } else {
+
+            tiempoAcumulado += Date.now() - tiempoInicio;
+
+            corriendo = false;
+
+            clearInterval(intervalo);
+
+            intervalo = null;
+
+            iniciar.textContent = "Continuar";
+
+            actualizar();
+        }
+    });
+
+    vuelta.addEventListener("click", () => {
+
+        if (!corriendo) {
+            return;
+        }
+
+        numeroVuelta++;
+
+        const tiempoActual = obtenerTiempo();
+
+        const elemento = document.createElement("div");
+
+        elemento.className = "vuelta";
+
+        elemento.innerHTML = `
+            <span>Vuelta ${numeroVuelta}</span>
+            <span>${formatearTiempo(tiempoActual)}</span>
+        `;
+
+        listaVueltas.prepend(elemento);
+    });
+
+    reiniciar.addEventListener("click", () => {
+
+        corriendo = false;
+
+        clearInterval(intervalo);
+
+        intervalo = null;
+
+        tiempoInicio = 0;
+        tiempoAcumulado = 0;
+        numeroVuelta = 0;
+
+        tiempoElemento.textContent = "00:00:00.00";
+
+        listaVueltas.innerHTML = "";
+
+        iniciar.textContent = "Iniciar";
+    });
+
+</script>
+
+</body>
+</html>
