@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Herramientas gratuitas de productividad y organización para planificar tareas y organizar tu día con Herramio.">
+    <title>Productividad y organización | Herramio</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pagina-seccion { max-width: 1200px; margin: 0 auto; padding: 70px 20px; }
+        .cabecera-seccion { text-align: center; margin-bottom: 50px; }
+        .cabecera-seccion h1 { font-size: 42px; margin-bottom: 15px; }
+        .cabecera-seccion p { color: #6b7280; font-size: 18px; max-width: 650px; margin: 0 auto; line-height: 1.6; }
+        .herramientas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+        .herramienta-card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 28px; text-decoration: none; color: #1f2937; transition: .2s ease; box-shadow: 0 4px 12px rgba(0,0,0,.04); display: block; }
+        .herramienta-card:hover { transform: translateY(-4px); border-color: #2563eb; box-shadow: 0 8px 20px rgba(37,99,235,.12); }
+        .herramienta-icono { font-size: 38px; margin-bottom: 18px; }
+        .herramienta-card h2 { font-size: 21px; margin-bottom: 10px; }
+        .herramienta-card p { color: #6b7280; line-height: 1.5; font-size: 15px; }
+        @media (max-width: 850px) { .herramientas-grid { grid-template-columns: repeat(2, 1fr); } .cabecera-seccion h1 { font-size: 36px; } }
+        @media (max-width: 700px) { header { height: auto; min-height: 70px; padding: 12px 16px; flex-wrap: wrap; justify-content: center; gap: 8px; } nav { flex-wrap: wrap; justify-content: center; gap: 8px 14px; width: 100%; } .pagina-seccion { padding: 45px 16px; } .herramientas-grid { grid-template-columns: 1fr; gap: 14px; } .cabecera-seccion { margin-bottom: 30px; } .cabecera-seccion h1 { font-size: 32px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo" style="color: #111827 !important; text-decoration: none !important;" aria-label="Volver a la página principal de Herramio">Herramio</a>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+            <a href="productividad.html">Productividad</a>
+        </nav>
+    </header>
+    <main class="pagina-seccion">
+        <div class="cabecera-seccion">
+            <h1>📋 Productividad y organización</h1>
+            <p>Organiza tus tareas, planifica tu tiempo y mantén todo bajo control con herramientas sencillas.</p>
+        </div>
+        <div class="herramientas-grid">
+            <a href="tareas.html" class="herramienta-card">
+                <div class="herramienta-icono">✅</div>
+                <h2>Gestor de tareas</h2>
+                <p>Añade tareas, marca las que hayas terminado y consulta lo que todavía tienes pendiente.</p>
+            </a>
+        </div>
+    </main>
+</body>
+</html>
