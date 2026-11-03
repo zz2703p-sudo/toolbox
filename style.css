@@ -25,6 +25,14 @@ header {
 .logo {
     font-size: 28px;
     font-weight: bold;
+    color: #111827;
+    text-decoration: none;
+}
+
+.logo:hover,
+.logo:focus {
+    color: #111827;
+    text-decoration: none;
 }
 
 nav {
