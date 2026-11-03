@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Temporizador Pomodoro gratuito para concentrarte, estudiar y organizar tus descansos con Herramio.">
+<title>Temporizador Pomodoro | Herramio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+body{background:#f5f7fb;color:#1f2937;font-family:Arial,sans-serif}
+main{max-width:900px;margin:0 auto;padding:54px 20px 75px}
+.intro{text-align:center;margin-bottom:30px}
+.intro h1{font-size:38px;margin:0 0 12px;color:#111827}
+.intro p{color:#6b7280;line-height:1.6;margin:0 auto;max-width:620px}
+.pomodoro{max-width:620px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:30px;box-shadow:0 12px 35px rgba(31,41,55,.07)}
+.modos{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:25px}
+.modos button,.accion-secundaria{border:1px solid #dbe2ea;background:#f8fafc;color:#475569;padding:10px 15px;border-radius:10px;font-weight:700;cursor:pointer;transition:.2s}
+.modos button.activo{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
+.reloj{width:min( min(100%,340px),340px);aspect-ratio:1;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2563eb var(--progreso,100%),#e5e7eb 0);padding:12px}
+.reloj-interior{width:100%;height:100%;border-radius:50%;background:white;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tiempo{font-size:76px;font-weight:800;letter-spacing:-3px;font-variant-numeric:tabular-nums;color:#111827}
+.estado{font-size:14px;color:#6b7280;margin-top:7px}
+.controles{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.controles button{border:0;border-radius:12px;padding:14px 25px;font-size:16px;font-weight:700;cursor:pointer;transition:.2s}
+#iniciar{background:#2563eb;color:white;min-width:150px}
+#iniciar:hover{background:#1d4ed8}
+#reiniciar{background:#eef2f7;color:#334155}
+#saltar{background:#eef2f7;color:#334155}
+button:focus-visible{outline:3px solid #93c5fd;outline-offset:3px}
+.resumen{display:flex;justify-content:center;gap:30px;margin-top:27px;text-align:center}
+.resumen strong{display:block;font-size:23px;color:#1d4ed8}
+.resumen span{font-size:13px;color:#6b7280}
+.configuracion{max-width:620px;margin:20px auto 0;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 25px}
+.configuracion h2{font-size:18px;margin:0 0 16px}
+.ajustes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ajustes label{display:flex;flex-direction:column;gap:7px;color:#475569;font-size:14px;font-weight:600}
+.ajustes input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;color:#1f2937;background:white}
+.ayuda{text-align:center;color:#6b7280;font-size:13px;line-height:1.6;margin:18px auto 0;max-width:570px}
+@media(max-width:600px){main{padding:38px 14px 55px}.intro h1{font-size:31px}.pomodoro{padding:22px 15px}.tiempo{font-size:62px}.reloj{width:min(100%,290px)}.ajustes{grid-template-columns:1fr}.configuracion{padding:20px}.resumen{gap:20px}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="logo" style="color:#111827!important;text-decoration:none!important" aria-label="Volver a la página principal de Herramio">Herramio</a>
+<nav>
+<a href="index.html">Inicio</a><a href="calculadoras.html">Calculadoras</a><a href="conversores.html">Conversores</a><a href="generadores.html">Generadores</a><a href="herramientas.html">Herramientas</a><a href="productividad.html">Productividad</a>
+</nav>
+</header>
+<main>
+<section class="intro">
+<h1>🍅 Temporizador Pomodoro</h1>
+<p>Concéntrate en una tarea durante un tiempo definido y descansa entre sesiones. ¡Pequeños intervalos para avanzar más!</p>
+</section>
+<section class="pomodoro" aria-label="Temporizador">
+<div class="modos" role="group" aria-label="Tipo de sesión">
+<button type="button" class="activo" data-modo="trabajo">Concentración</button>
+<button type="button" data-modo="descanso">Descanso corto</button>
+<button type="button" data-modo="largo">Descanso largo</button>
+</div>
+<div class="reloj" id="anillo" style="--progreso:100%">
+<div class="reloj-interior">
+<div class="tiempo" id="tiempo" aria-live="off">25:00</div>
+<div class="estado" id="estado" aria-live="polite">Listo para concentrarte</div>
+</div>
+</div>
+<div class="controles">
+<button type="button" id="iniciar">Empezar</button>
+<button type="button" id="reiniciar">Reiniciar</button>
+<button type="button" id="saltar">Saltar</button>
+</div>
+<div class="resumen">
+<div><strong id="sesiones">0</strong><span>Sesiones completadas</span></div>
+<div><strong id="ciclos">0</strong><span>Ciclos completos</span></div>
+</div>
+</section>
+<section class="configuracion">
+<h2>⚙️ Duración de las sesiones</h2>
+<div class="ajustes">
+<label for="min-trabajo">Concentración (min)
+<input id="min-trabajo" type="number" min="1" max="120" value="25">
+</label>
+<label for="min-descanso">Descanso corto (min)
+<input id="min-descanso" type="number" min="1" max="30" value="5">
+</label>
+<label for="min-largo">Descanso largo (min)
+<input id="min-largo" type="number" min="1" max="60" value="15">
+</label>
+</div>
+<p class="ayuda">Después de cuatro sesiones de concentración, toca un descanso largo. Puedes cambiar las duraciones cuando el temporizador esté parado.</p>
+</section>
+<p class="ayuda">Consejo: elige una tarea, elimina distracciones y céntrate únicamente en ella hasta que termine el tiempo.</p>
+</main>
+<script>
+(function(){
+const tiempoEl=document.getElementById('tiempo');
+const estadoEl=document.getElementById('estado');
+const anillo=document.getElementById('anillo');
+const iniciarBtn=document.getElementById('iniciar');
+const reiniciarBtn=document.getElementById('reiniciar');
+const saltarBtn=document.getElementById('saltar');
+const botonesModo=[...document.querySelectorAll('[data-modo]')];
+const campos={trabajo:document.getElementById('min-trabajo'),descanso:document.getElementById('min-descanso'),largo:document.getElementById('min-largo')};
+let modo='trabajo',restante=1500,duracion=1500,intervalo=null,ejecutando=false,sesiones=0,ciclos=0;
+function minutos(m){return Math.max(1,Math.min(m==='trabajo'?120:m==='descanso'?30:60,parseInt(campos[m].value,10)||1))*60}
+function pintar(){
+const min=Math.floor(restante/60),seg=restante%60;
+tiempoEl.textContent=String(min).padStart(2,'0')+':'+String(seg).padStart(2,'0');
+const progreso=duracion?Math.max(0,restante/duracion)*100:0;
+anillo.style.setProperty('--progreso',progreso+'%');
+document.title=tiempoEl.textContent+' · '+(modo==='trabajo'?'Concentración':'Descanso')+' | Herramio';
+}
+function cambiarModo(nuevo){
+parar();modo=nuevo;duracion=minutos(modo);restante=duracion;
+botonesModo.forEach(b=>{const activo=b.dataset.modo===modo;b.classList.toggle('activo',activo);b.setAttribute('aria-pressed',String(activo))});
+estadoEl.textContent=modo==='trabajo'?'Listo para concentrarte':modo==='descanso'?'Tómate un respiro':'¡Buen trabajo! Descansa un poco';
+iniciarBtn.textContent='Empezar';pintar();
+}
+function parar(){if(intervalo!==null){clearInterval(intervalo);intervalo=null}ejecutando=false;iniciarBtn.textContent='Continuar'}
+function terminar(){
+parar();
+if(modo==='trabajo'){
+sesiones++;document.getElementById('sesiones').textContent=sesiones;
+if(sesiones%4===0){ciclos++;document.getElementById('ciclos').textContent=ciclos;cambiarModo('largo')}
+else cambiarModo('descanso');
+}else cambiarModo('trabajo');
+estadoEl.textContent='¡Sesión terminada!';iniciarBtn.textContent='Empezar';
+}
+function tick(){restante--;pintar();if(restante<=0)terminar()}
+function iniciar(){
+if(ejecutando){parar();pintar();return}
+if(restante<=0)restante=duracion;
+ejecutando=true;iniciarBtn.textContent='Pausar';estadoEl.textContent=modo==='trabajo'?'¡A concentrarse!':'Tiempo para descansar';
+intervalo=setInterval(tick,1000);
+}
+iniciarBtn.addEventListener('click',iniciar);
+reiniciarBtn.addEventListener('click',()=>{parar();duracion=minutos(modo);restante=duracion;estadoEl.textContent='Temporizador reiniciado';iniciarBtn.textContent='Empezar';pintar()});
+saltarBtn.addEventListener('click',()=>{if(modo==='trabajo'){cambiarModo('descanso')}else cambiarModo('trabajo')});
+botonesModo.forEach(b=>b.addEventListener('click',()=>cambiarModo(b.dataset.modo)));
+Object.entries(campos).forEach(([clave,campo])=>campo.addEventListener('change',()=>{campo.value=Math.max(1,Math.min(clave==='trabajo'?120:clave==='descanso'?30:60,parseInt(campo.value,10)||1));if(!ejecutando&&modo===clave){duracion=minutos(modo);restante=duracion;pintar()}}));
+botonesModo.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.modo==='trabajo')));
+pintar();
+})();
+</script>
+</body>
+</html>
