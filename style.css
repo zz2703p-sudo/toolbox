@@ -22,17 +22,16 @@ header {
     border-bottom: 1px solid #e5e7eb;
 }
 
-.logo {
+a.logo,
+a.logo:link,
+a.logo:visited,
+a.logo:hover,
+a.logo:active,
+a.logo:focus {
+    color: #111827 !important;
+    text-decoration: none !important;
     font-size: 28px;
     font-weight: bold;
-    color: #111827;
-    text-decoration: none;
-}
-
-.logo:hover,
-.logo:focus {
-    color: #111827;
-    text-decoration: none;
 }
 
 nav {
