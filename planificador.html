@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Planificador semanal gratuito para organizar tareas y actividades de cada día con Herramio.">
+<title>Planificador semanal | Herramio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+body{background:#f5f7fb;color:#1f2937;font-family:Arial,sans-serif}
+main{max-width:1150px;margin:0 auto;padding:52px 20px 75px}
+.intro{text-align:center;margin-bottom:32px}
+.intro h1{font-size:38px;color:#111827;margin:0 0 12px}
+.intro p{color:#6b7280;line-height:1.6;max-width:650px;margin:auto}
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px;margin-bottom:22px;box-shadow:0 8px 25px rgba(31,41,55,.045)}
+.cabecera-plan{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.cabecera-plan h2{font-size:20px;margin:0}
+.acciones{display:flex;gap:8px;flex-wrap:wrap}
+button,input{font:inherit}
+.boton{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer;transition:.2s}
+.boton-principal{background:#2563eb;color:white}
+.boton-principal:hover{background:#1d4ed8}
+.boton-secundario{background:#eef2f7;color:#334155}
+.boton-peligro{background:#fff1f2;color:#be123c}
+button:focus-visible,input:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.semana{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.dia{border:1px solid #e5e7eb;border-radius:13px;padding:12px;min-width:0;background:#fff}
+.dia h3{font-size:15px;margin:0 0 12px;color:#1e40af}
+.form-dia{display:flex;gap:6px;margin-bottom:10px}
+.form-dia input{min-width:0;width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px}
+.form-dia button{width:34px;flex:0 0 34px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-size:20px;cursor:pointer}
+.lista{display:flex;flex-direction:column;gap:7px}
+.tarea{display:flex;align-items:flex-start;gap:7px;padding:8px;background:#f8fafc;border-radius:8px;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+.tarea input{margin-top:2px;accent-color:#2563eb}
+.tarea.completada span{text-decoration:line-through;color:#94a3b8}
+.tarea span{flex:1}
+.eliminar{border:0;background:transparent;color:#94a3b8;cursor:pointer;font-size:17px;line-height:1;padding:0 2px}
+.eliminar:hover{color:#e11d48}
+.vacio{font-size:12px;color:#9ca3af;text-align:center;padding:9px 0}
+.resumen{display:flex;justify-content:center;gap:35px;text-align:center;flex-wrap:wrap}
+.resumen strong{display:block;font-size:25px;color:#1d4ed8}
+.resumen span{font-size:13px;color:#6b7280}
+.ayuda{text-align:center;color:#6b7280;font-size:13px;line-height:1.6;margin:18px auto 0}
+@media(max-width:950px){.semana{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){main{padding:38px 14px 55px}.intro h1{font-size:31px}.panel{padding:16px}.semana{grid-template-columns:1fr 1fr;gap:8px}.dia{padding:10px}}
+@media(max-width:380px){.semana{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="logo" style="color:#111827!important;text-decoration:none!important" aria-label="Volver a la página principal de Herramio">Herramio</a>
+<nav>
+<a href="index.html">Inicio</a><a href="calculadoras.html">Calculadoras</a><a href="conversores.html">Conversores</a><a href="generadores.html">Generadores</a><a href="herramientas.html">Herramientas</a><a href="productividad.html">Productividad</a>
+</nav>
+</header>
+<main>
+<section class="intro">
+<h1>🗓️ Planificador semanal</h1>
+<p>Organiza tus tareas y actividades de lunes a domingo. Añade lo que tienes que hacer y marca cada actividad cuando la termines.</p>
+</section>
+<section class="panel">
+<div class="cabecera-plan">
+<h2>Mi semana</h2>
+<div class="acciones">
+<button class="boton boton-secundario" id="limpiar-completadas" type="button">Borrar completadas</button>
+<button class="boton boton-peligro" id="limpiar-todo" type="button">Vaciar semana</button>
+</div>
+</div>
+<div class="semana" id="semana"></div>
+</section>
+<section class="panel resumen" aria-live="polite">
+<div><strong id="total">0</strong><span>Actividades</span></div>
+<div><strong id="pendientes">0</strong><span>Pendientes</span></div>
+<div><strong id="completadas">0</strong><span>Completadas</span></div>
+</section>
+<p class="ayuda">Tus actividades se guardan automáticamente en este navegador. Si cambias de dispositivo o navegador, no se sincronizarán entre ellos.</p>
+</main>
+<script>
+(function(){
+const dias=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+const clave='herramio_planificador_semanal_v1';
+let plan={};
+try{plan=JSON.parse(localStorage.getItem(clave))||{}}catch(e){plan={}}
+dias.forEach(d=>{if(!Array.isArray(plan[d]))plan[d]=[]});
+const semana=document.getElementById('semana');
+function guardar(){localStorage.setItem(clave,JSON.stringify(plan));actualizarResumen()}
+function escapar(texto){return String(texto).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function dibujar(){
+semana.innerHTML='';
+dias.forEach(dia=>{
+const columna=document.createElement('section');columna.className='dia';
+const titulo=document.createElement('h3');titulo.textContent=dia;columna.appendChild(titulo);
+const form=document.createElement('form');form.className='form-dia';
+const input=document.createElement('input');input.type='text';input.maxLength=100;input.placeholder='Nueva actividad';input.setAttribute('aria-label','Nueva actividad para '+dia);
+const boton=document.createElement('button');boton.type='submit';boton.textContent='+';boton.setAttribute('aria-label','Añadir actividad a '+dia);
+form.append(input,boton);
+form.addEventListener('submit',e=>{e.preventDefault();const texto=input.value.trim();if(!texto)return;plan[dia].push({id:Date.now().toString(36)+Math.random().toString(36).slice(2),texto,hecha:false});guardar();dibujar()});
+columna.appendChild(form);
+const lista=document.createElement('div');lista.className='lista';
+if(!plan[dia].length){const vacio=document.createElement('div');vacio.className='vacio';vacio.textContent='Sin actividades';lista.appendChild(vacio)}
+plan[dia].forEach(tarea=>{
+const item=document.createElement('div');item.className='tarea'+(tarea.hecha?' completada':'');
+const check=document.createElement('input');check.type='checkbox';check.checked=!!tarea.hecha;check.setAttribute('aria-label','Marcar '+tarea.texto+' como completada');
+check.addEventListener('change',()=>{tarea.hecha=check.checked;guardar();dibujar()});
+const texto=document.createElement('span');texto.textContent=tarea.texto;
+const borrar=document.createElement('button');borrar.type='button';borrar.className='eliminar';borrar.textContent='×';borrar.setAttribute('aria-label','Eliminar '+tarea.texto);
+borrar.addEventListener('click',()=>{plan[dia]=plan[dia].filter(x=>x.id!==tarea.id);guardar();dibujar()});
+item.append(check,texto,borrar);lista.appendChild(item);
+});
+columna.appendChild(lista);semana.appendChild(columna);
+});
+actualizarResumen();
+}
+function actualizarResumen(){
+const todas=dias.flatMap(d=>plan[d]);const hechas=todas.filter(t=>t.hecha).length;
+document.getElementById('total').textContent=todas.length;
+document.getElementById('pendientes').textContent=todas.length-hechas;
+document.getElementById('completadas').textContent=hechas;
+}
+document.getElementById('limpiar-completadas').addEventListener('click',()=>{dias.forEach(d=>plan[d]=plan[d].filter(t=>!t.hecha));guardar();dibujar()});
+document.getElementById('limpiar-todo').addEventListener('click',()=>{if(!confirm('¿Seguro que quieres borrar todas las actividades de la semana?'))return;dias.forEach(d=>plan[d]=[]);guardar();dibujar()});
+dibujar();
+})();
+</script>
+</body>
+</html>
