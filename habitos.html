@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Seguimiento de hábitos gratuito: crea rutinas, registra tus avances diarios y mantén tus rachas con Herramio.">
+<meta name="theme-color" content="#2563eb">
+<title>Seguimiento de hábitos | Herramio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7fb;color:#1f2937;min-height:100vh}
+header{min-height:70px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 8%;border-bottom:1px solid #e5e7eb}
+a.logo,a.logo:link,a.logo:visited,a.logo:hover,a.logo:active,a.logo:focus{color:#111827!important;text-decoration:none!important;font-size:28px;font-weight:bold}
+nav{display:flex;flex-wrap:wrap;gap:20px}
+nav a{color:#4b5563;text-decoration:none;font-size:15px}
+nav a:hover{color:#2563eb}
+main{width:min(1000px,calc(100% - 32px));margin:0 auto;padding:55px 0 75px}
+.intro{text-align:center;margin-bottom:32px}
+.intro h1{font-size:clamp(30px,5vw,42px);color:#111827;margin-bottom:12px}
+.intro p{color:#6b7280;line-height:1.6;font-size:17px;max-width:650px;margin:auto}
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:25px;box-shadow:0 8px 25px rgba(15,23,42,.05);margin-bottom:20px}
+.formulario{display:flex;gap:10px}
+.formulario input{flex:1;min-width:0;padding:14px 15px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px}
+button{border:0;border-radius:10px;padding:12px 17px;background:#2563eb;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+button:hover{background:#1d4ed8}
+button:focus-visible,input:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.resumen{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.dato{background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:15px;text-align:center}
+.dato strong{display:block;font-size:25px;color:#1d4ed8;margin-bottom:4px}
+.dato span{font-size:13px;color:#64748b}
+.encabezado-lista{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}
+.encabezado-lista h2,.panel h2{font-size:20px;color:#111827}
+.fecha{font-size:14px;color:#64748b}
+.lista{display:grid;gap:11px}
+.habito{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px;border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+.habito-info{min-width:0}
+.habito-nombre{font-weight:700;overflow-wrap:anywhere}
+.habito-meta{font-size:13px;color:#64748b;margin-top:5px}
+.habito-completar{display:flex;align-items:center;gap:8px;color:#475569;font-size:13px;white-space:nowrap}
+.habito-completar input{width:19px;height:19px;accent-color:#2563eb;cursor:pointer}
+.eliminar{background:#fef2f2;color:#dc2626;padding:9px 11px}
+.eliminar:hover{background:#fee2e2}
+.vacio{text-align:center;color:#94a3b8;padding:28px 10px;line-height:1.5}
+.semana{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin-top:17px}
+.dia{background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:10px 4px;text-align:center}
+.dia span{display:block;font-size:12px;color:#64748b;margin-bottom:7px}
+.dia strong{font-size:16px;color:#1f2937}
+.dia.hoy{border-color:#93c5fd;background:#eff6ff}
+.progreso{height:10px;background:#e5e7eb;border-radius:20px;overflow:hidden;margin-top:12px}
+.progreso span{display:block;height:100%;width:0;background:#2563eb;border-radius:20px;transition:width .2s}
+.nota{text-align:center;color:#94a3b8;font-size:13px;margin-top:17px;line-height:1.5}
+@media(max-width:650px){header{padding:14px 16px;flex-direction:column;gap:10px}nav{justify-content:center;gap:9px 14px}nav a{font-size:13px}main{padding-top:38px}.panel{padding:18px}.formulario{flex-direction:column}.formulario button{width:100%}.resumen{gap:7px}.dato{padding:12px 5px}.dato strong{font-size:21px}.habito{grid-template-columns:minmax(0,1fr) auto;gap:10px}.habito-completar{grid-column:1;grid-row:2}.eliminar{grid-column:2;grid-row:1/3}.semana{gap:4px}.dia{padding:9px 2px}.dia span{font-size:10px}.dia strong{font-size:14px}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="logo" aria-label="Volver a Herramio">Herramio</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a><a href="calculadoras.html">Calculadoras</a><a href="conversores.html">Conversores</a><a href="generadores.html">Generadores</a><a href="herramientas.html">Herramientas</a><a href="productividad.html">Productividad</a>
+</nav>
+</header>
+<main>
+<section class="intro">
+<h1>🎯 Seguimiento de hábitos</h1>
+<p>Construye rutinas poco a poco. Añade tus hábitos, marca cada día que los completes y observa cómo avanzas.</p>
+</section>
+<section class="panel">
+<form class="formulario" id="formulario">
+<input id="nuevo-habito" type="text" maxlength="60" placeholder="Ej. Leer 20 minutos, hacer ejercicio..." aria-label="Nombre del nuevo hábito" required>
+<button type="submit">+ Añadir hábito</button>
+</form>
+<div class="resumen" aria-live="polite">
+<div class="dato"><strong id="total">0</strong><span>Hábitos activos</span></div>
+<div class="dato"><strong id="hechos">0</strong><span>Completados hoy</span></div>
+<div class="dato"><strong id="racha">0</strong><span>Mejor racha actual</span></div>
+</div>
+</section>
+<section class="panel">
+<div class="encabezado-lista"><h2>Mis hábitos</h2><span class="fecha" id="fecha-hoy"></span></div>
+<div class="lista" id="lista"></div>
+<p class="vacio" id="vacio">Todavía no has añadido hábitos. ¡Empieza con uno pequeño!</p>
+<p class="nota">Marca la casilla cuando completes cada hábito. El registro se guarda automáticamente en este navegador.</p>
+</section>
+<section class="panel">
+<h2>📅 Tu semana</h2>
+<p class="fecha" style="margin-top:7px">Número de hábitos completados cada día</p>
+<div class="semana" id="semana"></div>
+<div class="progreso"><span id="barra"></span></div>
+<p class="nota" id="resumen-semana">Tu progreso semanal aparecerá aquí.</p>
+</section>
+</main>
+<script>
+(function(){
+const KEY="herramio_habitos_v1";
+const form=document.getElementById("formulario");
+const input=document.getElementById("nuevo-habito");
+const lista=document.getElementById("lista");
+const vacio=document.getElementById("vacio");
+let habitos=[];
+try{habitos=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(habitos))habitos=[]}catch(e){habitos=[]}
+const fechaISO=d=>{const x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)};
+const hoy=fechaISO(new Date());
+const fechaTexto=new Intl.DateTimeFormat("es-ES",{weekday:"long",day:"numeric",month:"long"}).format(new Date());
+document.getElementById("fecha-hoy").textContent=fechaTexto.charAt(0).toUpperCase()+fechaTexto.slice(1);
+function guardar(){localStorage.setItem(KEY,JSON.stringify(habitos))}
+function rachaDe(h){
+let n=0;const d=new Date();let cursor=fechaISO(d);
+if(!(h.registros||[]).includes(cursor)){d.setDate(d.getDate()-1);cursor=fechaISO(d)}
+while((h.registros||[]).includes(cursor)){n++;d.setDate(d.getDate()-1);cursor=fechaISO(d)}
+return n;
+}
+function render(){
+lista.innerHTML="";
+habitos.forEach(h=>{
+const completado=(h.registros||[]).includes(hoy);
+const item=document.createElement("article");item.className="habito";
+const info=document.createElement("div");info.className="habito-info";
+const nombre=document.createElement("div");nombre.className="habito-nombre";nombre.textContent=h.nombre;
+const meta=document.createElement("div");meta.className="habito-meta";meta.textContent="🔥 Racha: "+rachaDe(h)+" "+(rachaDe(h)===1?"día":"días");
+info.append(nombre,meta);
+const label=document.createElement("label");label.className="habito-completar";
+const check=document.createElement("input");check.type="checkbox";check.checked=completado;check.setAttribute("aria-label","Marcar "+h.nombre+" como completado hoy");
+check.addEventListener("change",()=>{h.registros=h.registros||[];if(check.checked){if(!h.registros.includes(hoy))h.registros.push(hoy)}else h.registros=h.registros.filter(x=>x!==hoy);guardar();render()});
+label.append(check,document.createTextNode(completado?"Hecho hoy":"Completar hoy"));
+const del=document.createElement("button");del.type="button";del.className="eliminar";del.textContent="Eliminar";del.setAttribute("aria-label","Eliminar hábito "+h.nombre);
+del.addEventListener("click",()=>{if(confirm("¿Quieres eliminar el hábito «"+h.nombre+"» y su historial?")){habitos=habitos.filter(x=>x.id!==h.id);guardar();render()}});
+item.append(info,label,del);lista.appendChild(item);
+});
+vacio.style.display=habitos.length?"none":"block";
+const hechos=habitos.filter(h=>(h.registros||[]).includes(hoy)).length;
+document.getElementById("total").textContent=habitos.length;
+document.getElementById("hechos").textContent=hechos;
+document.getElementById("racha").textContent=habitos.reduce((m,h)=>Math.max(m,rachaDe(h)),0);
+renderSemana();
+}
+function renderSemana(){
+const cont=document.getElementById("semana");cont.innerHTML="";
+const base=new Date();const dia=(base.getDay()+6)%7;base.setDate(base.getDate()-dia);
+const nombres=["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+let total=0,hechos=0;
+for(let i=0;i<7;i++){
+const d=new Date(base);d.setDate(base.getDate()+i);const iso=fechaISO(d);
+const count=habitos.filter(h=>(h.registros||[]).includes(iso)).length;
+total+=habitos.length;hechos+=count;
+const el=document.createElement("div");el.className="dia"+(iso===hoy?" hoy":"");
+const n=document.createElement("span");n.textContent=nombres[i];
+const v=document.createElement("strong");v.textContent=count+"/"+habitos.length;
+el.append(n,v);cont.appendChild(el);
+}
+const pct=total?Math.round(hechos/total*100):0;
+document.getElementById("barra").style.width=pct+"%";
+document.getElementById("resumen-semana").textContent=total?pct+"% de cumplimiento esta semana ("+hechos+" de "+total+" registros).":"Añade hábitos para empezar a medir tu progreso.";
+}
+form.addEventListener("submit",e=>{
+e.preventDefault();const nombre=input.value.trim();if(!nombre)return;
+habitos.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nombre,registros:[]});
+guardar();input.value="";input.focus();render();
+});
+render();
+})();
+</script>
+</body>
+</html>
