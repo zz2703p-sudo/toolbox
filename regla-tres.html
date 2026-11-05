@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calcula reglas de tres simples directas e inversas con explicación paso a paso.">
+    <meta name="description" content="Calcula reglas de tres simples directas e inversas con cualquier incógnita y explicación paso a paso.">
     <title>Regla de tres | Herramio</title>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -12,14 +12,20 @@
         .intro h1{font-size:38px;margin-bottom:12px;color:#111827}
         .intro p{color:#6b7280;line-height:1.6;font-size:16px}
         .panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:28px;box-shadow:0 8px 25px rgba(15,23,42,.05)}
+        .configuracion{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+        .configuracion label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:8px}
+        .configuracion select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#1f2937;font-size:15px}
         .tipo{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
         .tipo button{flex:1;min-width:150px;padding:12px;border:1px solid #cbd5e1;background:#f8fafc;color:#334155;border-radius:10px;font-weight:700;cursor:pointer}
         .tipo button.activo{background:#2563eb;border-color:#2563eb;color:white}
-        .expresion{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:520px;margin:0 auto 22px}
+        .expresion{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:520px;margin:0 auto 22px}
         .dato{background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:15px}
+        .dato.desconocido{background:#eff6ff;border:2px solid #60a5fa}
         .dato label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:8px}
-        .dato input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:18px;color:#111827;background:white}
+        .dato input{width:100%;box-sizing:border-box;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:18px;color:#111827;background:white}
         .dato input:focus{outline:2px solid #bfdbfe;border-color:#2563eb}
+        .dato input:read-only{background:#dbeafe;color:#1d4ed8;font-weight:800;text-align:center}
+        .ayuda{text-align:center;color:#64748b;font-size:14px;margin:-5px 0 22px}
         .accion{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
         .accion button{border:0;border-radius:10px;padding:13px 22px;font-size:15px;font-weight:700;cursor:pointer}
         .calcular{background:#2563eb;color:white}.limpiar{background:#e2e8f0;color:#334155}
@@ -30,7 +36,8 @@
         .error{display:none;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;padding:12px;margin-top:18px}
         .explicacion{margin-top:25px;color:#475569;line-height:1.7}
         .explicacion h2{font-size:20px;color:#111827;margin-bottom:8px}
-        @media(max-width:650px){header{height:auto;min-height:70px;padding:12px 16px;flex-wrap:wrap;justify-content:center;gap:8px}nav{flex-wrap:wrap;justify-content:center;gap:8px 14px;width:100%}.contenedor{padding:38px 15px 55px}.intro h1{font-size:31px}.panel{padding:18px}.expresion{gap:10px}.dato{padding:11px}.dato input{font-size:16px}}
+        @media(max-width:650px){header{height:auto;min-height:70px;padding:12px 16px;flex-wrap:wrap;justify-content:center;gap:8px}nav{flex-wrap:wrap;justify-content:center;gap:8px 14px;width:100%}.contenedor{padding:38px 15px 55px}.intro h1{font-size:31px}.panel{padding:18px}.expresion{gap:10px}.dato{padding:11px}.dato input{font-size:16px}.configuracion{gap:10px}}
+        @media(max-width:390px){.configuracion{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
@@ -49,31 +56,50 @@
     <main class="contenedor">
         <div class="intro">
             <h1>🔢 Regla de tres</h1>
-            <p>Calcula el valor que falta en una proporción. Elige si la relación es directa o inversa y obtén el procedimiento.</p>
+            <p>Calcula el valor que falta en una proporción. Puedes colocar la incógnita en cualquiera de las cuatro posiciones y elegir si la relación es directa o inversa.</p>
         </div>
         <section class="panel">
             <div class="tipo" role="group" aria-label="Tipo de regla de tres">
-                <button type="button" class="activo" id="directa">Directa</button>
-                <button type="button" id="inversa">Inversa</button>
+                <button type="button" class="activo" id="directa" aria-pressed="true">Directa</button>
+                <button type="button" id="inversa" aria-pressed="false">Inversa</button>
             </div>
-            <div class="expresion">
-                <div class="dato">
-                    <label for="a">Primer valor (A)</label>
+            <div class="configuracion">
+                <div>
+                    <label for="desconocida">¿Qué posición quieres calcular?</label>
+                    <select id="desconocida">
+                        <option value="d">D (abajo a la derecha)</option>
+                        <option value="a">A (arriba a la izquierda)</option>
+                        <option value="b">B (arriba a la derecha)</option>
+                        <option value="c">C (abajo a la izquierda)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="tipoTexto">Tipo de proporcionalidad</label>
+                    <select id="tipoTexto" disabled>
+                        <option value="directa">Directa</option>
+                        <option value="inversa">Inversa</option>
+                    </select>
+                </div>
+            </div>
+            <div class="expresion" aria-label="Tabla de valores de la regla de tres">
+                <div class="dato" id="caja-a">
+                    <label for="a">A · Primer valor</label>
                     <input id="a" type="number" step="any" placeholder="Ej. 4">
                 </div>
-                <div class="dato">
-                    <label for="b">Resultado conocido (B)</label>
+                <div class="dato" id="caja-b">
+                    <label for="b">B · Segundo valor</label>
                     <input id="b" type="number" step="any" placeholder="Ej. 12">
                 </div>
-                <div class="dato">
-                    <label for="c">Segundo valor (C)</label>
+                <div class="dato" id="caja-c">
+                    <label for="c">C · Tercer valor</label>
                     <input id="c" type="number" step="any" placeholder="Ej. 6">
                 </div>
-                <div class="dato">
-                    <label for="x">Valor que falta (X)</label>
-                    <input id="x" type="text" value="?" readonly aria-label="Resultado desconocido">
+                <div class="dato desconocido" id="caja-d">
+                    <label for="d">D · Cuarto valor</label>
+                    <input id="d" type="number" step="any" placeholder="?" readonly aria-label="Valor desconocido">
                 </div>
             </div>
+            <p class="ayuda">Introduce los otros tres valores. La casilla azul es la incógnita.</p>
             <div class="accion">
                 <button type="button" class="calcular" id="calcular">Calcular resultado</button>
                 <button type="button" class="limpiar" id="limpiar">Limpiar</button>
@@ -87,52 +113,91 @@
         </section>
         <section class="explicacion">
             <h2>¿Cómo funciona?</h2>
-            <p><strong>Regla de tres directa:</strong> cuando una cantidad aumenta, la otra también aumenta (o ambas disminuyen). Se calcula multiplicando los valores en cruz y dividiendo entre el valor restante: X = (B × C) ÷ A.</p>
-            <p><strong>Regla de tres inversa:</strong> cuando una cantidad aumenta, la otra disminuye. Se calcula: X = (A × B) ÷ C.</p>
+            <p>La tabla se organiza así: <strong>A | B</strong> en la primera fila y <strong>C | D</strong> en la segunda.</p>
+            <p><strong>Regla de tres directa:</strong> las dos magnitudes aumentan o disminuyen juntas. La igualdad es A × D = B × C.</p>
+            <p><strong>Regla de tres inversa:</strong> cuando una magnitud aumenta, la otra disminuye. La igualdad es A × B = C × D.</p>
+            <p>Selecciona A, B, C o D como incógnita; la calculadora adapta la operación automáticamente.</p>
         </section>
     </main>
     <script>
-        const campoA=document.getElementById("a");
-        const campoB=document.getElementById("b");
-        const campoC=document.getElementById("c");
-        const campoX=document.getElementById("x");
+        const ids=["a","b","c","d"];
+        const campos=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
+        const selector=document.getElementById("desconocida");
         const error=document.getElementById("error");
         const resultado=document.getElementById("resultado");
         const valor=document.getElementById("valor");
         const pasos=document.getElementById("pasos");
         let tipo="directa";
+        const formulas={
+            directa:{a:{n:["b","c"],d:"d"},b:{n:["a","d"],d:"c"},c:{n:["b","c"],d:"a"},d:{n:["b","c"],d:"a"}},
+            inversa:{a:{n:["c","d"],d:"b"},b:{n:["a","c"],d:"d"},c:{n:["a","b"],d:"d"},d:{n:["a","b"],d:"c"}}
+        };
+        function limpiarResultado(){
+            error.style.display="none";
+            resultado.style.display="none";
+            campos[selector.value].value="";
+        }
+        function actualizarIncognita(){
+            const desconocida=selector.value;
+            ids.forEach(id=>{
+                const esIncognita=id===desconocida;
+                campos[id].readOnly=esIncognita;
+                document.getElementById("caja-"+id).classList.toggle("desconocido",esIncognita);
+                campos[id].placeholder=esIncognita?"?": "Introduce un valor";
+                if(esIncognita) campos[id].value="";
+            });
+            limpiarResultado();
+        }
         function cambiarTipo(nuevo){
             tipo=nuevo;
             document.getElementById("directa").classList.toggle("activo",tipo==="directa");
             document.getElementById("inversa").classList.toggle("activo",tipo==="inversa");
+            document.getElementById("directa").setAttribute("aria-pressed",String(tipo==="directa"));
+            document.getElementById("inversa").setAttribute("aria-pressed",String(tipo==="inversa"));
+            document.getElementById("tipoTexto").value=tipo;
             limpiarResultado();
-        }
-        function limpiarResultado(){
-            error.style.display="none";resultado.style.display="none";campoX.value="?";
         }
         document.getElementById("directa").addEventListener("click",()=>cambiarTipo("directa"));
         document.getElementById("inversa").addEventListener("click",()=>cambiarTipo("inversa"));
+        selector.addEventListener("change",actualizarIncognita);
         document.getElementById("calcular").addEventListener("click",()=>{
-            const a=Number(campoA.value),b=Number(campoB.value),c=Number(campoC.value);
-            if(campoA.value.trim()===""||campoB.value.trim()===""||campoC.value.trim()===""||![a,b,c].every(Number.isFinite)){
-                error.textContent="Introduce los tres valores para realizar el cálculo.";error.style.display="block";resultado.style.display="none";return;
+            const desconocida=selector.value;
+            const conocidos=ids.filter(id=>id!==desconocida);
+            const datos={};
+            for(const id of conocidos){
+                const raw=campos[id].value.trim();
+                if(raw===""){error.textContent="Introduce los tres valores conocidos.";error.style.display="block";resultado.style.display="none";return;}
+                datos[id]=Number(raw);
+                if(!Number.isFinite(datos[id])){error.textContent="Comprueba los valores introducidos.";error.style.display="block";resultado.style.display="none";return;}
             }
-            if((tipo==="directa"&&a===0)||(tipo==="inversa"&&c===0)){
-                error.textContent="No se puede dividir entre cero. Comprueba los valores introducidos.";error.style.display="block";resultado.style.display="none";return;
+            const formula=formulas[tipo][desconocida];
+            const denominador=datos[formula.d];
+            if(denominador===0){
+                error.textContent="No se puede dividir entre cero. Comprueba los valores conocidos.";
+                error.style.display="block";resultado.style.display="none";return;
             }
-            const x=tipo==="directa"?(b*c)/a:(a*b)/c;
+            const numerador=datos[formula.n[0]]*datos[formula.n[1]];
+            const calculado=numerador/denominador;
+            if(!Number.isFinite(calculado)){
+                error.textContent="No se ha podido obtener un resultado válido. Revisa los valores.";
+                error.style.display="block";resultado.style.display="none";return;
+            }
             const formato=new Intl.NumberFormat("es-ES",{maximumFractionDigits:10});
-            campoX.value=formato.format(x);
-            valor.textContent="X = "+formato.format(x);
-            pasos.innerHTML=tipo==="directa"
-                ? "1. Multiplicamos B por C: "+formato.format(b)+" × "+formato.format(c)+" = "+formato.format(b*c)+".<br>2. Dividimos el resultado entre A: "+formato.format(b*c)+" ÷ "+formato.format(a)+" = <strong>"+formato.format(x)+"</strong>."
-                : "1. Multiplicamos A por B: "+formato.format(a)+" × "+formato.format(b)+" = "+formato.format(a*b)+".<br>2. Dividimos el resultado entre C: "+formato.format(a*b)+" ÷ "+formato.format(c)+" = <strong>"+formato.format(x)+"</strong>.";
+            campos[desconocida].value=String(calculado);
+            valor.textContent=desconocida.toUpperCase()+" = "+formato.format(calculado);
+            const nombre=desconocida.toUpperCase();
+            pasos.innerHTML="1. Multiplicamos "+formula.n[0].toUpperCase()+" × "+formula.n[1].toUpperCase()+": "+formato.format(datos[formula.n[0]])+" × "+formato.format(datos[formula.n[1]])+" = "+formato.format(numerador)+".<br>2. Dividimos entre "+formula.d.toUpperCase()+": "+formato.format(numerador)+" ÷ "+formato.format(denominador)+" = <strong>"+formato.format(calculado)+"</strong>.";
             error.style.display="none";resultado.style.display="block";
         });
         document.getElementById("limpiar").addEventListener("click",()=>{
-            campoA.value="";campoB.value="";campoC.value="";limpiarResultado();campoA.focus();
+            ids.forEach(id=>{if(id!==selector.value)campos[id].value="";});
+            limpiarResultado();
+            campos[ids.find(id=>id!==selector.value)].focus();
         });
-        [campoA,campoB,campoC].forEach(campo=>campo.addEventListener("input",limpiarResultado));
+        ids.forEach(id=>campos[id].addEventListener("input",()=>{
+            if(id!==selector.value)limpiarResultado();
+        }));
+        actualizarIncognita();
     </script>
 </body>
 </html>
