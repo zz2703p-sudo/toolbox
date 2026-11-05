@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Bloc de notas online gratuito para escribir, guardar, buscar y organizar tus notas con Herramio.">
+<meta name="theme-color" content="#2563eb">
+<title>Bloc de notas | Herramio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7fb;color:#1f2937;min-height:100vh}
+header{min-height:70px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 8%;border-bottom:1px solid #e5e7eb}
+a.logo,a.logo:link,a.logo:visited,a.logo:hover,a.logo:active,a.logo:focus{color:#111827!important;text-decoration:none!important;font-size:28px;font-weight:bold}
+nav{display:flex;flex-wrap:wrap;gap:20px}
+nav a{color:#4b5563;text-decoration:none;font-size:15px}
+nav a:hover{color:#2563eb}
+main{width:min(1100px,calc(100% - 32px));margin:0 auto;padding:52px 0 75px}
+.intro{text-align:center;margin-bottom:30px}
+.intro h1{font-size:clamp(30px,5vw,42px);color:#111827;margin-bottom:12px}
+.intro p{font-size:17px;color:#6b7280;line-height:1.6}
+.layout{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(0,1.4fr);gap:20px;align-items:start}
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:23px;box-shadow:0 8px 25px rgba(15,23,42,.05)}
+.panel h2{font-size:20px;color:#111827;margin-bottom:17px}
+label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:7px}
+input,textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:12px 13px;font:inherit;color:#1f2937;background:#fff;outline:none}
+input:focus,textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+textarea{resize:vertical;min-height:190px;line-height:1.55}
+.campo{margin-bottom:14px}
+button{border:0;border-radius:10px;padding:12px 16px;background:#2563eb;color:white;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+button:hover{background:#1d4ed8}
+button:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.acciones{display:flex;gap:9px;flex-wrap:wrap}
+.secundario{background:#eef2f7;color:#334155}
+.secundario:hover{background:#e2e8f0}
+.peligro{background:#fef2f2;color:#dc2626}
+.peligro:hover{background:#fee2e2}
+.mensaje{min-height:20px;color:#15803d;font-size:13px;margin-top:10px}
+.cabecera-lista{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.cabecera-lista h2{margin:0}
+.contador{font-size:13px;color:#64748b}
+.busqueda{margin-bottom:13px}
+.filtros{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.filtros button{background:#f1f5f9;color:#475569;padding:8px 11px;font-size:13px}
+.filtros button.activo{background:#2563eb;color:white}
+.lista{display:grid;gap:10px}
+.nota{border:1px solid #e5e7eb;border-radius:12px;padding:14px;background:#fff;cursor:pointer;transition:.2s}
+.nota:hover{border-color:#93c5fd;background:#f8fbff}
+.nota.seleccionada{border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.1)}
+.nota.fijada{background:#fffbeb;border-color:#fcd34d}
+.nota-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.nota-titulo{font-weight:700;color:#1f2937;overflow-wrap:anywhere}
+.pin{font-size:13px;white-space:nowrap}
+.nota-texto{color:#64748b;font-size:13px;line-height:1.45;margin-top:7px;white-space:pre-wrap;overflow-wrap:anywhere}
+.nota-fecha{font-size:11px;color:#94a3b8;margin-top:9px}
+.vacio{text-align:center;padding:30px 12px;color:#94a3b8;line-height:1.5}
+.ayuda{font-size:12px;color:#94a3b8;line-height:1.5;margin-top:15px}
+@media(max-width:760px){header{padding:14px 16px;flex-direction:column;gap:10px}nav{justify-content:center;gap:9px 14px}nav a{font-size:13px}main{padding-top:36px}.layout{grid-template-columns:1fr}.panel{padding:18px}textarea{min-height:150px}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="logo" aria-label="Volver a Herramio">Herramio</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a><a href="calculadoras.html">Calculadoras</a><a href="conversores.html">Conversores</a><a href="generadores.html">Generadores</a><a href="herramientas.html">Herramientas</a><a href="productividad.html">Productividad</a>
+</nav>
+</header>
+<main>
+<section class="intro">
+<h1>📝 Bloc de notas</h1>
+<p>Guarda ideas, apuntes y recordatorios en un solo lugar. Tus notas estarán disponibles cuando vuelvas a abrir esta página en el mismo navegador.</p>
+</section>
+<div class="layout">
+<section class="panel" aria-label="Editor de notas">
+<h2 id="titulo-editor">Crear una nota</h2>
+<form id="formulario">
+<div class="campo">
+<label for="titulo">Título</label>
+<input id="titulo" type="text" maxlength="80" placeholder="Ej. Ideas para un proyecto" required>
+</div>
+<div class="campo">
+<label for="texto">Contenido</label>
+<textarea id="texto" maxlength="5000" placeholder="Escribe aquí tu nota..."></textarea>
+</div>
+<div class="acciones">
+<button type="submit" id="guardar">Guardar nota</button>
+<button type="button" class="secundario" id="nueva">Nueva</button>
+</div>
+<p class="mensaje" id="mensaje" aria-live="polite"></p>
+<p class="ayuda">Las notas se guardan automáticamente al pulsar «Guardar nota». El almacenamiento es local a este navegador.</p>
+</form>
+</section>
+<section class="panel" aria-label="Notas guardadas">
+<div class="cabecera-lista"><h2>Mis notas</h2><span class="contador" id="contador">0 notas</span></div>
+<input class="busqueda" id="buscar" type="search" placeholder="Buscar en tus notas..." aria-label="Buscar notas">
+<div class="filtros" aria-label="Filtrar notas">
+<button type="button" class="activo" data-filtro="todas">Todas</button>
+<button type="button" data-filtro="fijadas">Fijadas</button>
+</div>
+<div class="lista" id="lista"></div>
+<p class="vacio" id="vacio">Todavía no tienes notas. ¡Crea la primera!</p>
+</section>
+</div>
+</main>
+<script>
+(function(){
+const KEY="herramio_notas_v1";
+const form=document.getElementById("formulario");
+const titulo=document.getElementById("titulo");
+const texto=document.getElementById("texto");
+const lista=document.getElementById("lista");
+const vacio=document.getElementById("vacio");
+const mensaje=document.getElementById("mensaje");
+const buscar=document.getElementById("buscar");
+let notas=[],actual=null,filtro="todas";
+try{notas=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(notas))notas=[]}catch(e){notas=[]}
+function guardarDatos(){localStorage.setItem(KEY,JSON.stringify(notas))}
+function fecha(n){return new Intl.DateTimeFormat("es-ES",{dateStyle:"medium",timeStyle:"short"}).format(new Date(n))}
+function limpiarEditor(){actual=null;form.reset();document.getElementById("titulo-editor").textContent="Crear una nota";document.getElementById("guardar").textContent="Guardar nota";mensaje.textContent="";}
+function editar(id){const n=notas.find(x=>x.id===id);if(!n)return;actual=id;titulo.value=n.titulo;texto.value=n.texto;document.getElementById("titulo-editor").textContent="Editar nota";document.getElementById("guardar").textContent="Actualizar nota";mensaje.textContent="Editando: "+n.titulo;titulo.focus();render()}
+function render(){
+lista.innerHTML="";
+const q=buscar.value.trim().toLocaleLowerCase("es");
+const visibles=notas.filter(n=>(filtro==="todas"||n.fijada)&&((n.titulo+" "+n.texto).toLocaleLowerCase("es").includes(q))).sort((a,b)=>(Number(b.fijada)-Number(a.fijada))||b.actualizada-a.actualizada);
+document.getElementById("contador").textContent=notas.length+" "+(notas.length===1?"nota":"notas");
+visibles.forEach(n=>{
+const card=document.createElement("article");card.className="nota"+(n.fijada?" fijada":"")+(n.id===actual?" seleccionada":"");card.tabIndex=0;card.setAttribute("role","button");card.setAttribute("aria-label","Editar nota "+n.titulo);
+const top=document.createElement("div");top.className="nota-top";
+const name=document.createElement("div");name.className="nota-titulo";name.textContent=n.titulo;
+const pin=document.createElement("span");pin.className="pin";pin.textContent=n.fijada?"📌 Fijada":"";
+top.append(name,pin);
+const body=document.createElement("p");body.className="nota-texto";body.textContent=n.texto.slice(0,180)+(n.texto.length>180?"…":"");
+const time=document.createElement("p");time.className="nota-fecha";time.textContent="Actualizada: "+fecha(n.actualizada);
+card.append(top,body,time);
+card.addEventListener("click",()=>editar(n.id));
+card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();editar(n.id)}});
+const actions=document.createElement("div");actions.className="acciones";actions.style.marginTop="10px";
+const pinBtn=document.createElement("button");pinBtn.type="button";pinBtn.className="secundario";pinBtn.textContent=n.fijada?"Desfijar":"Fijar";pinBtn.addEventListener("click",e=>{e.stopPropagation();n.fijada=!n.fijada;n.actualizada=Date.now();guardarDatos();render()});
+const del=document.createElement("button");del.type="button";del.className="peligro";del.textContent="Eliminar";del.addEventListener("click",e=>{e.stopPropagation();if(confirm("¿Eliminar la nota «"+n.titulo+"»?")){notas=notas.filter(x=>x.id!==n.id);if(actual===n.id)limpiarEditor();guardarDatos();render()}});
+actions.append(pinBtn,del);card.appendChild(actions);lista.appendChild(card);
+});
+vacio.style.display=visibles.length?"none":"block";
+vacio.textContent=notas.length?"No hay notas que coincidan con la búsqueda.":"Todavía no tienes notas. ¡Crea la primera!";
+document.querySelectorAll("[data-filtro]").forEach(b=>b.classList.toggle("activo",b.dataset.filtro===filtro));
+}
+form.addEventListener("submit",e=>{
+e.preventDefault();const t=titulo.value.trim(),body=texto.value.trim();if(!t){titulo.focus();return}
+if(actual){const n=notas.find(x=>x.id===actual);if(n){n.titulo=t;n.texto=body;n.actualizada=Date.now()}}
+else notas.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),titulo:t,texto:body,fijada:false,actualizada:Date.now()});
+guardarDatos();limpiarEditor();mensaje.textContent="Nota guardada correctamente.";render();
+});
+document.getElementById("nueva").addEventListener("click",limpiarEditor);
+buscar.addEventListener("input",render);
+document.querySelectorAll("[data-filtro]").forEach(b=>b.addEventListener("click",()=>{filtro=b.dataset.filtro;render()}));
+render();
+})();
+</script>
+</body>
+</html>
