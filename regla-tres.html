@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calcula reglas de tres simples directas e inversas con explicación paso a paso.">
+    <title>Regla de tres | Herramio</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contenedor{max-width:850px;margin:0 auto;padding:55px 20px 75px}
+        .intro{text-align:center;margin-bottom:30px}
+        .intro h1{font-size:38px;margin-bottom:12px;color:#111827}
+        .intro p{color:#6b7280;line-height:1.6;font-size:16px}
+        .panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:28px;box-shadow:0 8px 25px rgba(15,23,42,.05)}
+        .tipo{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+        .tipo button{flex:1;min-width:150px;padding:12px;border:1px solid #cbd5e1;background:#f8fafc;color:#334155;border-radius:10px;font-weight:700;cursor:pointer}
+        .tipo button.activo{background:#2563eb;border-color:#2563eb;color:white}
+        .expresion{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:520px;margin:0 auto 22px}
+        .dato{background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:15px}
+        .dato label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:8px}
+        .dato input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:18px;color:#111827;background:white}
+        .dato input:focus{outline:2px solid #bfdbfe;border-color:#2563eb}
+        .accion{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+        .accion button{border:0;border-radius:10px;padding:13px 22px;font-size:15px;font-weight:700;cursor:pointer}
+        .calcular{background:#2563eb;color:white}.limpiar{background:#e2e8f0;color:#334155}
+        .resultado{display:none;margin-top:24px;padding:20px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe}
+        .resultado h2{font-size:18px;color:#1e40af;margin-bottom:8px}
+        .valor{font-size:32px;font-weight:800;color:#1d4ed8;margin:5px 0 12px;overflow-wrap:anywhere}
+        .pasos{color:#334155;line-height:1.7;font-size:15px}
+        .error{display:none;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;padding:12px;margin-top:18px}
+        .explicacion{margin-top:25px;color:#475569;line-height:1.7}
+        .explicacion h2{font-size:20px;color:#111827;margin-bottom:8px}
+        @media(max-width:650px){header{height:auto;min-height:70px;padding:12px 16px;flex-wrap:wrap;justify-content:center;gap:8px}nav{flex-wrap:wrap;justify-content:center;gap:8px 14px;width:100%}.contenedor{padding:38px 15px 55px}.intro h1{font-size:31px}.panel{padding:18px}.expresion{gap:10px}.dato{padding:11px}.dato input{font-size:16px}}
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo" style="color:#111827!important;text-decoration:none!important" aria-label="Volver al inicio de Herramio">Herramio</a>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="calculadoras.html">Calculadoras</a>
+            <a href="conversores.html">Conversores</a>
+            <a href="generadores.html">Generadores</a>
+            <a href="herramientas.html">Herramientas</a>
+            <a href="productividad.html">Productividad</a>
+            <a href="estudio.html">Estudio</a>
+        </nav>
+    </header>
+    <main class="contenedor">
+        <div class="intro">
+            <h1>🔢 Regla de tres</h1>
+            <p>Calcula el valor que falta en una proporción. Elige si la relación es directa o inversa y obtén el procedimiento.</p>
+        </div>
+        <section class="panel">
+            <div class="tipo" role="group" aria-label="Tipo de regla de tres">
+                <button type="button" class="activo" id="directa">Directa</button>
+                <button type="button" id="inversa">Inversa</button>
+            </div>
+            <div class="expresion">
+                <div class="dato">
+                    <label for="a">Primer valor (A)</label>
+                    <input id="a" type="number" step="any" placeholder="Ej. 4">
+                </div>
+                <div class="dato">
+                    <label for="b">Resultado conocido (B)</label>
+                    <input id="b" type="number" step="any" placeholder="Ej. 12">
+                </div>
+                <div class="dato">
+                    <label for="c">Segundo valor (C)</label>
+                    <input id="c" type="number" step="any" placeholder="Ej. 6">
+                </div>
+                <div class="dato">
+                    <label for="x">Valor que falta (X)</label>
+                    <input id="x" type="text" value="?" readonly aria-label="Resultado desconocido">
+                </div>
+            </div>
+            <div class="accion">
+                <button type="button" class="calcular" id="calcular">Calcular resultado</button>
+                <button type="button" class="limpiar" id="limpiar">Limpiar</button>
+            </div>
+            <div class="error" id="error" role="alert"></div>
+            <div class="resultado" id="resultado" aria-live="polite">
+                <h2>Resultado</h2>
+                <div class="valor" id="valor"></div>
+                <div class="pasos" id="pasos"></div>
+            </div>
+        </section>
+        <section class="explicacion">
+            <h2>¿Cómo funciona?</h2>
+            <p><strong>Regla de tres directa:</strong> cuando una cantidad aumenta, la otra también aumenta (o ambas disminuyen). Se calcula multiplicando los valores en cruz y dividiendo entre el valor restante: X = (B × C) ÷ A.</p>
+            <p><strong>Regla de tres inversa:</strong> cuando una cantidad aumenta, la otra disminuye. Se calcula: X = (A × B) ÷ C.</p>
+        </section>
+    </main>
+    <script>
+        const campoA=document.getElementById("a");
+        const campoB=document.getElementById("b");
+        const campoC=document.getElementById("c");
+        const campoX=document.getElementById("x");
+        const error=document.getElementById("error");
+        const resultado=document.getElementById("resultado");
+        const valor=document.getElementById("valor");
+        const pasos=document.getElementById("pasos");
+        let tipo="directa";
+        function cambiarTipo(nuevo){
+            tipo=nuevo;
+            document.getElementById("directa").classList.toggle("activo",tipo==="directa");
+            document.getElementById("inversa").classList.toggle("activo",tipo==="inversa");
+            limpiarResultado();
+        }
+        function limpiarResultado(){
+            error.style.display="none";resultado.style.display="none";campoX.value="?";
+        }
+        document.getElementById("directa").addEventListener("click",()=>cambiarTipo("directa"));
+        document.getElementById("inversa").addEventListener("click",()=>cambiarTipo("inversa"));
+        document.getElementById("calcular").addEventListener("click",()=>{
+            const a=Number(campoA.value),b=Number(campoB.value),c=Number(campoC.value);
+            if(campoA.value.trim()===""||campoB.value.trim()===""||campoC.value.trim()===""||![a,b,c].every(Number.isFinite)){
+                error.textContent="Introduce los tres valores para realizar el cálculo.";error.style.display="block";resultado.style.display="none";return;
+            }
+            if((tipo==="directa"&&a===0)||(tipo==="inversa"&&c===0)){
+                error.textContent="No se puede dividir entre cero. Comprueba los valores introducidos.";error.style.display="block";resultado.style.display="none";return;
+            }
+            const x=tipo==="directa"?(b*c)/a:(a*b)/c;
+            const formato=new Intl.NumberFormat("es-ES",{maximumFractionDigits:10});
+            campoX.value=formato.format(x);
+            valor.textContent="X = "+formato.format(x);
+            pasos.innerHTML=tipo==="directa"
+                ? "1. Multiplicamos B por C: "+formato.format(b)+" × "+formato.format(c)+" = "+formato.format(b*c)+".<br>2. Dividimos el resultado entre A: "+formato.format(b*c)+" ÷ "+formato.format(a)+" = <strong>"+formato.format(x)+"</strong>."
+                : "1. Multiplicamos A por B: "+formato.format(a)+" × "+formato.format(b)+" = "+formato.format(a*b)+".<br>2. Dividimos el resultado entre C: "+formato.format(a*b)+" ÷ "+formato.format(c)+" = <strong>"+formato.format(x)+"</strong>.";
+            error.style.display="none";resultado.style.display="block";
+        });
+        document.getElementById("limpiar").addEventListener("click",()=>{
+            campoA.value="";campoB.value="";campoC.value="";limpiarResultado();campoA.focus();
+        });
+        [campoA,campoB,campoC].forEach(campo=>campo.addEventListener("input",limpiarResultado));
+    </script>
+</body>
+</html>
