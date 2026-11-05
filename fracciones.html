@@ -526,9 +526,11 @@
 
     function mostrarFraccionesNecesarias() {
 
-        if (operacionActual === "fraccion") {
-            contenedor.innerHTML = "";
+        // Reconstruimos el contenido desde cero para que nunca queden
+        // campos de numerador/denominador al convertir un número decimal.
+        contenedor.replaceChildren();
 
+        if (operacionActual === "fraccion") {
             const grupo = document.createElement("div");
             grupo.className = "entrada-decimal";
 
@@ -540,37 +542,29 @@
             entrada.type = "text";
             entrada.id = "numeroDecimal";
             entrada.inputMode = "decimal";
-            entrada.placeholder = "Ej. 2,75";
+            entrada.placeholder = "Escribe un número, por ejemplo 2,75";
             entrada.autocomplete = "off";
 
             grupo.append(etiqueta, entrada);
             contenedor.appendChild(grupo);
-        } else {
-            if (contenedor.querySelector("#numeroDecimal")) {
-                contenedor.innerHTML = "";
-                crearFraccion();
-                if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
-                    crearFraccion();
-                }
-            }
 
-            if (["simplificar", "decimal"].includes(operacionActual)) {
-                while (contenedor.children.length > 1) {
-                    contenedor.lastElementChild.remove();
-                }
-            }
+            calcular.textContent = "Ver resultado";
+        } else {
+            crearFraccion();
 
             if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
-                while (contenedor.children.length < 2) {
-                    crearFraccion();
-                }
+                crearFraccion();
             }
+
+            calcular.textContent = "Calcular";
         }
 
         anadir.style.display =
             ["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)
                 ? "inline-block"
                 : "none";
+
+        resultado.textContent = "Resultado";
     }
 
 
