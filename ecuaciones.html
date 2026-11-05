@@ -3,38 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Resuelve ecuaciones de primer grado añadiendo tantos términos con X o números como necesites.">
+  <meta name="description" content="Resuelve ecuaciones de primer grado con sumas, restas, multiplicaciones, divisiones, raíces cuadradas y paréntesis.">
   <title>Resolución de ecuaciones | Herramio</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .contenedor{max-width:950px;margin:0 auto;padding:48px 20px 75px}
+    .contenedor{max-width:900px;margin:0 auto;padding:48px 20px 75px}
     .intro{text-align:center;margin-bottom:28px}
     .intro h1{font-size:36px;margin:0 0 10px;color:#111827}
     .intro p{color:#64748b;line-height:1.6;margin:0}
     .panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:26px;box-shadow:0 8px 25px rgba(15,23,42,.05)}
-    .lados{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .lado{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:18px;min-width:0}
-    .lado h2{font-size:18px;color:#1e293b;margin:0 0 14px}
-    .lista-terminos{display:grid;gap:9px}
-    .termino{display:grid;grid-template-columns:minmax(0,1fr) 125px 38px;gap:8px;align-items:center}
-    .termino input,.termino select{width:100%;min-width:0;box-sizing:border-box;padding:11px 9px;border:1px solid #cbd5e1;border-radius:8px;background:white;color:#111827;font-size:15px}
-    .termino input:focus,.termino select:focus{outline:2px solid #bfdbfe;border-color:#2563eb}
-    .quitar{height:38px;border:0;border-radius:8px;background:#fee2e2;color:#b91c1c;font-size:20px;cursor:pointer}
-    .quitar:disabled{opacity:.35;cursor:not-allowed}
-    .anadir{margin-top:12px;width:100%;padding:10px;border:1px dashed #93c5fd;border-radius:9px;background:#eff6ff;color:#1d4ed8;font-weight:700;cursor:pointer}
+    .campos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .campo{min-width:0}
+    .campo label{display:block;font-size:15px;font-weight:700;color:#334155;margin-bottom:8px}
+    .campo input{width:100%;box-sizing:border-box;padding:14px;border:1px solid #cbd5e1;border-radius:10px;font-size:18px;color:#111827;background:#fff}
+    .campo input:focus{outline:2px solid #bfdbfe;border-color:#2563eb}
+    .ayuda{font-size:13px;color:#64748b;line-height:1.5;margin:7px 0 0}
     .vista{margin:22px 0;padding:18px 12px;text-align:center;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;color:#1e40af;font-size:25px;font-weight:800;overflow-wrap:anywhere}
-    .nota{text-align:center;color:#64748b;font-size:14px;line-height:1.55;margin:0 0 20px}
-    .acciones{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .sintaxis{background:#f8fafc;border:1px solid #e2e8f0;border-radius:11px;padding:14px 16px;margin:18px 0;color:#475569;font-size:14px;line-height:1.65}
+    .sintaxis strong{color:#1e293b}
+    .ejemplos{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .ejemplos button{border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;border-radius:8px;padding:7px 10px;font-size:13px;cursor:pointer}
+    .acciones{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
     .acciones button{border:0;border-radius:9px;padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer}
     .resolver{background:#2563eb;color:#fff}.secundario{background:#e2e8f0;color:#334155}
-    .error{display:none;margin-top:17px;padding:12px;border-radius:9px;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c}
+    .error{display:none;margin-top:17px;padding:12px;border-radius:9px;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;line-height:1.5}
     .resultado{display:none;margin-top:22px;padding:20px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe}
     .resultado h2{font-size:20px;color:#1e40af;margin:0 0 8px}
     .valor{font-size:30px;font-weight:800;color:#1d4ed8;margin-bottom:12px;overflow-wrap:anywhere}
-    .pasos{color:#334155;line-height:1.85;font-size:15px}
+    .pasos{color:#334155;line-height:1.85;font-size:15px;overflow-wrap:anywhere}
     .explicacion{margin-top:25px;color:#475569;line-height:1.7}
     .explicacion h2{font-size:20px;color:#111827;margin-bottom:8px}
-    @media(max-width:650px){.contenedor{padding:35px 14px 55px}.intro h1{font-size:30px}.panel{padding:15px}.lados{grid-template-columns:1fr;gap:13px}.lado{padding:14px}.vista{font-size:20px}.termino{grid-template-columns:minmax(0,1fr) 112px 36px;gap:6px}.termino input,.termino select{font-size:14px;padding:10px 6px}}
+    @media(max-width:650px){.contenedor{padding:35px 14px 55px}.intro h1{font-size:30px}.panel{padding:16px}.campos{grid-template-columns:1fr;gap:14px}.vista{font-size:20px}.campo input{font-size:16px}}
   </style>
 </head>
 <body>
@@ -54,29 +53,38 @@
   <main class="contenedor">
     <div class="intro">
       <h1>🧮 Resolución de ecuaciones</h1>
-      <p>Añade todos los términos que necesites, eligiendo si cada uno contiene X o es un número normal.</p>
+      <p>Escribe una ecuación de primer grado y resuélvela paso a paso con operaciones matemáticas.</p>
     </div>
 
     <section class="panel">
-      <div class="lados">
-        <div class="lado">
-          <h2>Lado izquierdo</h2>
-          <div class="lista-terminos" id="lista-izquierda"></div>
-          <button type="button" class="anadir" id="anadir-izquierda">+ Añadir término</button>
+      <div class="campos">
+        <div class="campo">
+          <label for="izquierda">Lado izquierdo</label>
+          <input id="izquierda" type="text" value="2x + 5" autocomplete="off" spellcheck="false" aria-label="Expresión del lado izquierdo">
+          <p class="ayuda">Por ejemplo: 2x + 5 - 3x + √(16)</p>
         </div>
-        <div class="lado">
-          <h2>Lado derecho</h2>
-          <div class="lista-terminos" id="lista-derecha"></div>
-          <button type="button" class="anadir" id="anadir-derecha">+ Añadir término</button>
+        <div class="campo">
+          <label for="derecha">Lado derecho</label>
+          <input id="derecha" type="text" value="17" autocomplete="off" spellcheck="false" aria-label="Expresión del lado derecho">
+          <p class="ayuda">Por ejemplo: 4x - 6 + 2</p>
         </div>
       </div>
 
-      <div class="vista" id="vista" aria-live="polite">2X + 5 = 17</div>
-      <p class="nota">Escribe valores positivos o negativos. En el selector de cada término elige <strong>Con X</strong> o <strong>Número normal</strong>. Puedes añadir tantos términos como quieras en ambos lados.</p>
+      <div class="vista" id="vista" aria-live="polite">2x + 5 = 17</div>
+
+      <div class="sintaxis">
+        <strong>Operaciones admitidas:</strong> suma (+), resta (−), multiplicación (* o ×), división (/ o ÷), raíces cuadradas (√(16) o sqrt(16)), paréntesis y números negativos.
+        <br><strong>Importante:</strong> puedes multiplicar o dividir por números, pero no multiplicar X por X, dividir entre X ni calcular la raíz de una expresión con X, porque dejaría de ser una ecuación de primer grado.
+        <div class="ejemplos">
+          <button type="button" data-left="3*(x + 2) - 4" data-right="2x + 10">Ejemplo con paréntesis</button>
+          <button type="button" data-left="2x + √(16) - 3x" data-right="10 - 2">Ejemplo con raíz</button>
+          <button type="button" data-left="(6x / 2) + 5" data-right="2x + 9">Ejemplo con división</button>
+        </div>
+      </div>
 
       <div class="acciones">
         <button type="button" class="resolver" id="resolver">Resolver ecuación</button>
-        <button type="button" class="secundario" id="ejemplo">Ejemplo con varios términos</button>
+        <button type="button" class="secundario" id="ejemplo">Cargar ejemplo</button>
         <button type="button" class="secundario" id="limpiar">Limpiar</button>
       </div>
 
@@ -89,37 +97,29 @@
     </section>
 
     <section class="explicacion">
-      <h2>¿Cómo funciona?</h2>
-      <p>La calculadora suma por separado los términos con X y los números normales de cada lado. Después agrupa las X a la izquierda, los números a la derecha y despeja la incógnita.</p>
-      <p>También reconoce ecuaciones sin solución y ecuaciones con infinitas soluciones. Está diseñada para ecuaciones de primer grado con una sola incógnita.</p>
+      <h2>¿Qué puede resolver?</h2>
+      <p>La herramienta transforma cada expresión en la forma <strong>aX + b</strong>. Así puede agrupar términos semejantes, aplicar operaciones numéricas y despejar X.</p>
+      <p>Si introduces una operación que convierte la ecuación en una expresión de segundo grado o no lineal, te indicará qué parte no es válida para este tipo de calculadora.</p>
     </section>
   </main>
 
   <script>
-    const lados = {
-      izquierda: [
-        { id: 1, tipo: "x", valor: "2" },
-        { id: 2, tipo: "numero", valor: "5" }
-      ],
-      derecha: [
-        { id: 3, tipo: "numero", valor: "17" }
-      ]
-    };
-    let siguienteId = 4;
-
-    const listas = {
-      izquierda: document.getElementById("lista-izquierda"),
-      derecha: document.getElementById("lista-derecha")
-    };
+    const entradaIzquierda = document.getElementById("izquierda");
+    const entradaDerecha = document.getElementById("derecha");
     const vista = document.getElementById("vista");
     const error = document.getElementById("error");
     const resultado = document.getElementById("resultado");
-    const valorResultado = document.getElementById("valor");
+    const valor = document.getElementById("valor");
     const pasos = document.getElementById("pasos");
     const formato = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 10 });
 
-    function formatear(n) {
+    function fmt(n) {
+      if (Math.abs(n) < 1e-12) n = 0;
       return formato.format(n);
+    }
+
+    function actualizarVista() {
+      vista.textContent = (entradaIzquierda.value || "…") + " = " + (entradaDerecha.value || "…");
     }
 
     function ocultarResultado() {
@@ -127,97 +127,137 @@
       resultado.style.display = "none";
     }
 
-    function crearTermino(lado, termino) {
-      const fila = document.createElement("div");
-      fila.className = "termino";
-
-      const entrada = document.createElement("input");
-      entrada.type = "number";
-      entrada.step = "any";
-      entrada.value = termino.valor;
-      entrada.placeholder = "Valor";
-      entrada.setAttribute("aria-label", "Valor del término");
-      entrada.addEventListener("input", () => {
-        termino.valor = entrada.value;
+    [entradaIzquierda, entradaDerecha].forEach(input => {
+      input.addEventListener("input", () => {
         actualizarVista();
         ocultarResultado();
       });
+    });
 
-      const selector = document.createElement("select");
-      selector.setAttribute("aria-label", "Tipo de término");
-      const opcionX = document.createElement("option");
-      opcionX.value = "x";
-      opcionX.textContent = "Con X";
-      const opcionNumero = document.createElement("option");
-      opcionNumero.value = "numero";
-      opcionNumero.textContent = "Número normal";
-      selector.append(opcionX, opcionNumero);
-      selector.value = termino.tipo;
-      selector.addEventListener("change", () => {
-        termino.tipo = selector.value;
-        actualizarVista();
-        ocultarResultado();
-      });
-
-      const quitar = document.createElement("button");
-      quitar.type = "button";
-      quitar.className = "quitar";
-      quitar.textContent = "×";
-      quitar.title = "Eliminar término";
-      quitar.setAttribute("aria-label", "Eliminar término");
-      quitar.disabled = lados[lado].length === 1;
-      quitar.addEventListener("click", () => {
-        if (lados[lado].length <= 1) return;
-        lados[lado] = lados[lado].filter(item => item.id !== termino.id);
-        renderizarLado(lado);
-        actualizarVista();
-        ocultarResultado();
-      });
-
-      fila.append(entrada, selector, quitar);
-      return fila;
+    function normalizar(texto) {
+      return texto
+        .replace(/,/g, ".")
+        .replace(/[×·]/g, "*")
+        .replace(/[÷]/g, "/")
+        .replace(/[−–]/g, "-")
+        .replace(/√\s*\(/g, "sqrt(")
+        .replace(/\bSQRT\b/gi, "sqrt")
+        .replace(/\bX\b/g, "x")
+        .replace(/(\d)(x)/gi, "$1*$2")
+        .replace(/(\d)\s*\(/g, "$1*(")
+        .replace(/(x)\s*\(/gi, "$1*(")
+        .replace(/\)\s*(x|\()/gi, ")*$1");
     }
 
-    function renderizarLado(lado) {
-      listas[lado].replaceChildren();
-      lados[lado].forEach(termino => {
-        listas[lado].appendChild(crearTermino(lado, termino));
-      });
-    }
-
-    function textoLado(terminos) {
-      return terminos.map((termino, indice) => {
-        const n = Number(termino.valor);
-        if (termino.valor.trim() === "") return (indice === 0 ? "?" : "+ ?") + (termino.tipo === "x" ? "X" : "");
-        const negativo = n < 0;
-        const magnitud = Math.abs(n);
-        let cuerpo;
-        if (termino.tipo === "x") {
-          cuerpo = (magnitud === 1 ? "" : formatear(magnitud)) + "X";
-        } else {
-          cuerpo = formatear(magnitud);
+    function tokenizar(texto) {
+      const tokens = [];
+      let i = 0;
+      while (i < texto.length) {
+        if (/\s/.test(texto[i])) { i++; continue; }
+        const resto = texto.slice(i);
+        const funcion = resto.match(/^sqrt\b/i);
+        if (funcion) { tokens.push({ tipo: "sqrt" }); i += funcion[0].length; continue; }
+        const numero = resto.match(/^(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?/i);
+        if (numero) {
+          const n = Number(numero[0]);
+          if (!Number.isFinite(n)) throw new Error("Hay un número demasiado grande o no válido.");
+          tokens.push({ tipo: "numero", valor: n });
+          i += numero[0].length;
+          continue;
         }
-        if (indice === 0) return (negativo ? "− " : "") + cuerpo;
-        return (negativo ? " − " : " + ") + cuerpo;
-      }).join("");
+        if (texto[i].toLowerCase() === "x") { tokens.push({ tipo: "x" }); i++; continue; }
+        if ("+-*/()".includes(texto[i])) { tokens.push({ tipo: texto[i] }); i++; continue; }
+        throw new Error("No reconozco el símbolo «" + texto[i] + "». Revisa la expresión.");
+      }
+      tokens.push({ tipo: "fin" });
+      return tokens;
     }
 
-    function actualizarVista() {
-      vista.textContent = textoLado(lados.izquierda) + " = " + textoLado(lados.derecha);
+    // Cada expresión se representa como a*x + b.
+    function analizarExpresion(texto) {
+      const tokens = tokenizar(normalizar(texto));
+      let posicion = 0;
+      const actual = () => tokens[posicion];
+      const aceptar = tipo => {
+        if (actual().tipo === tipo) { posicion++; return true; }
+        return false;
+      };
+      const exigir = tipo => {
+        if (!aceptar(tipo)) throw new Error("La expresión tiene un paréntesis u operador mal colocado.");
+      };
+      const sumar = (u, v) => ({ a: u.a + v.a, b: u.b + v.b });
+      const restar = (u, v) => ({ a: u.a - v.a, b: u.b - v.b });
+      const multiplicar = (u, v) => {
+        if (Math.abs(u.a) > 1e-12 && Math.abs(v.a) > 1e-12) {
+          throw new Error("No se puede multiplicar una expresión con X por otra expresión con X (por ejemplo, X × X). Eso ya no sería de primer grado.");
+        }
+        return { a: u.a * v.b + v.a * u.b, b: u.b * v.b };
+      };
+      const dividir = (u, v) => {
+        if (Math.abs(v.a) > 1e-12) throw new Error("No puedes dividir entre una expresión que contiene X en una ecuación de primer grado.");
+        if (Math.abs(v.b) < 1e-12) throw new Error("No se puede dividir entre cero.");
+        return { a: u.a / v.b, b: u.b / v.b };
+      };
+
+      function primaria() {
+        if (aceptar("+")) return primaria();
+        if (aceptar("-")) { const v = primaria(); return { a: -v.a, b: -v.b }; }
+        if (aceptar("numero")) return { a: 0, b: tokens[posicion - 1].valor };
+        if (aceptar("x")) return { a: 1, b: 0 };
+        if (aceptar("(")) {
+          const v = expresion();
+          exigir(")");
+          return v;
+        }
+        if (aceptar("sqrt")) {
+          exigir("(");
+          const v = expresion();
+          exigir(")");
+          if (Math.abs(v.a) > 1e-12) throw new Error("La raíz cuadrada no puede contener X; √X no es una ecuación de primer grado.");
+          if (v.b < 0) throw new Error("No se puede calcular una raíz cuadrada real de un número negativo.");
+          return { a: 0, b: Math.sqrt(v.b) };
+        }
+        throw new Error("La expresión está incompleta. Comprueba los números, las X y los paréntesis.");
+      }
+
+      function producto() {
+        let v = primaria();
+        while (actual().tipo === "*" || actual().tipo === "/") {
+          const op = actual().tipo; posicion++;
+          const siguiente = primaria();
+          v = op === "*" ? multiplicar(v, siguiente) : dividir(v, siguiente);
+        }
+        return v;
+      }
+
+      function expresion() {
+        let v = producto();
+        while (actual().tipo === "+" || actual().tipo === "-") {
+          const op = actual().tipo; posicion++;
+          const siguiente = producto();
+          v = op === "+" ? sumar(v, siguiente) : restar(v, siguiente);
+        }
+        return v;
+      }
+
+      const valor = expresion();
+      if (actual().tipo !== "fin") throw new Error("Hay un operador o paréntesis sobrante. Revisa la expresión.");
+      if (!Number.isFinite(valor.a) || !Number.isFinite(valor.b)) throw new Error("El resultado intermedio es demasiado grande.");
+      return valor;
     }
 
-    function anadirTermino(lado, tipo = "x", valor = "1") {
-      lados[lado].push({ id: siguienteId++, tipo, valor });
-      renderizarLado(lado);
-      actualizarVista();
-      ocultarResultado();
-    }
-
-    document.getElementById("anadir-izquierda").addEventListener("click", () => anadirTermino("izquierda"));
-    document.getElementById("anadir-derecha").addEventListener("click", () => anadirTermino("derecha"));
-
-    function sumar(terminos, tipo) {
-      return terminos.filter(t => t.tipo === tipo).reduce((total, t) => total + Number(t.valor), 0);
+    function expresionReducida(v) {
+      const partes = [];
+      if (Math.abs(v.a) > 1e-12) {
+        const coef = Math.abs(v.a) === 1 ? "X" : fmt(Math.abs(v.a)) + "X";
+        partes.push((v.a < 0 ? "− " : "") + coef);
+      }
+      if (Math.abs(v.b) > 1e-12 || partes.length === 0) {
+        const constante = fmt(Math.abs(v.b));
+        if (partes.length === 0) partes.push((v.b < 0 ? "−" : "") + constante);
+        else partes.push((v.b < 0 ? " − " : " + ") + constante);
+      }
+      return partes.join("");
     }
 
     function mostrarError(mensaje) {
@@ -227,72 +267,65 @@
 
     document.getElementById("resolver").addEventListener("click", () => {
       ocultarResultado();
-      const todos = [...lados.izquierda, ...lados.derecha];
-      if (todos.some(t => t.valor.trim() === "" || !Number.isFinite(Number(t.valor)))) {
-        mostrarError("Completa todos los valores con números válidos antes de resolver la ecuación.");
+      if (!entradaIzquierda.value.trim() || !entradaDerecha.value.trim()) {
+        mostrarError("Escribe una expresión a cada lado del signo igual.");
         return;
       }
+      try {
+        const izquierda = analizarExpresion(entradaIzquierda.value);
+        const derecha = analizarExpresion(entradaDerecha.value);
+        const coeficiente = izquierda.a - derecha.a;
+        const independiente = derecha.b - izquierda.b;
 
-      const xIzquierda = sumar(lados.izquierda, "x");
-      const numIzquierda = sumar(lados.izquierda, "numero");
-      const xDerecha = sumar(lados.derecha, "x");
-      const numDerecha = sumar(lados.derecha, "numero");
-      const coeficiente = xIzquierda - xDerecha;
-      const independiente = numDerecha - numIzquierda;
-
-      if (Math.abs(coeficiente) < 1e-12) {
-        if (Math.abs(independiente) < 1e-12) {
-          valorResultado.textContent = "Infinitas soluciones";
-          pasos.textContent = "Al simplificar ambos lados obtenemos 0 = 0. La igualdad se cumple para cualquier valor de X.";
+        if (Math.abs(coeficiente) < 1e-12) {
+          if (Math.abs(independiente) < 1e-12) {
+            valor.textContent = "Infinitas soluciones";
+            pasos.textContent = "Al simplificar ambos lados obtenemos 0 = 0. La igualdad se cumple para cualquier valor de X.";
+          } else {
+            valor.textContent = "Sin solución";
+            pasos.textContent = "Al simplificar obtenemos 0 = " + fmt(independiente) + ". Esta igualdad es imposible, así que la ecuación no tiene solución.";
+          }
         } else {
-          valorResultado.textContent = "Sin solución";
-          pasos.textContent = "Al simplificar obtenemos 0 = " + formatear(independiente) + ". Esta igualdad es imposible, así que la ecuación no tiene solución.";
+          const x = independiente / coeficiente;
+          if (!Number.isFinite(x)) throw new Error("El resultado es demasiado grande para mostrarlo.");
+          valor.textContent = "X = " + fmt(x);
+          pasos.innerHTML =
+            "1. Simplificamos el lado izquierdo: <strong>" + expresionReducida(izquierda) + "</strong>.<br>" +
+            "2. Simplificamos el lado derecho: <strong>" + expresionReducida(derecha) + "</strong>.<br>" +
+            "3. Pasamos las X a la izquierda y los números a la derecha: <strong>(" + fmt(izquierda.a) + " − " + fmt(derecha.a) + ")X = " + fmt(derecha.b) + " − (" + fmt(izquierda.b) + ")</strong>.<br>" +
+            "4. Simplificamos: <strong>" + fmt(coeficiente) + "X = " + fmt(independiente) + "</strong>.<br>" +
+            "5. Despejamos: <strong>X = " + fmt(independiente) + " ÷ " + fmt(coeficiente) + " = " + fmt(x) + "</strong>.";
         }
-      } else {
-        const x = independiente / coeficiente;
-        if (!Number.isFinite(x)) {
-          mostrarError("No se ha podido calcular un resultado válido. Revisa los valores.");
-          return;
-        }
-        valorResultado.textContent = "X = " + formatear(x);
-        pasos.innerHTML =
-          "1. Sumamos los términos con X: <strong>(" + formatear(xIzquierda) + " − " + formatear(xDerecha) + ")X</strong>.<br>" +
-          "2. Sumamos los números normales y los pasamos al otro lado: <strong>" + formatear(numDerecha) + " − (" + formatear(numIzquierda) + ")</strong>.<br>" +
-          "3. La ecuación simplificada queda: <strong>" + formatear(coeficiente) + "X = " + formatear(independiente) + "</strong>.<br>" +
-          "4. Despejamos X: <strong>" + formatear(independiente) + " ÷ " + formatear(coeficiente) + " = " + formatear(x) + "</strong>.";
+        resultado.style.display = "block";
+      } catch (e) {
+        mostrarError(e.message || "No se ha podido interpretar la ecuación.");
       }
-      resultado.style.display = "block";
     });
 
     document.getElementById("ejemplo").addEventListener("click", () => {
-      lados.izquierda = [
-        { id: siguienteId++, tipo: "x", valor: "2" },
-        { id: siguienteId++, tipo: "numero", valor: "5" },
-        { id: siguienteId++, tipo: "x", valor: "-3" },
-        { id: siguienteId++, tipo: "numero", valor: "8" }
-      ];
-      lados.derecha = [
-        { id: siguienteId++, tipo: "x", valor: "4" },
-        { id: siguienteId++, tipo: "numero", valor: "-6" },
-        { id: siguienteId++, tipo: "numero", valor: "2" }
-      ];
-      renderizarLado("izquierda");
-      renderizarLado("derecha");
+      entradaIzquierda.value = "2x + 5 - 3x + 8";
+      entradaDerecha.value = "4x - 6 + 2";
       actualizarVista();
       ocultarResultado();
     });
 
     document.getElementById("limpiar").addEventListener("click", () => {
-      lados.izquierda = [{ id: siguienteId++, tipo: "x", valor: "" }];
-      lados.derecha = [{ id: siguienteId++, tipo: "numero", valor: "" }];
-      renderizarLado("izquierda");
-      renderizarLado("derecha");
+      entradaIzquierda.value = "";
+      entradaDerecha.value = "";
       actualizarVista();
       ocultarResultado();
+      entradaIzquierda.focus();
     });
 
-    renderizarLado("izquierda");
-    renderizarLado("derecha");
+    document.querySelectorAll(".ejemplos button").forEach(boton => {
+      boton.addEventListener("click", () => {
+        entradaIzquierda.value = boton.dataset.left;
+        entradaDerecha.value = boton.dataset.right;
+        actualizarVista();
+        ocultarResultado();
+      });
+    });
+
     actualizarVista();
   </script>
 </body>
