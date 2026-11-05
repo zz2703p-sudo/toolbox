@@ -12,9 +12,12 @@
         .intro h1{font-size:38px;margin-bottom:12px;color:#111827}
         .intro p{color:#6b7280;line-height:1.6;font-size:16px}
         .panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:28px;box-shadow:0 8px 25px rgba(15,23,42,.05)}
-        .configuracion{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
-        .configuracion label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:8px}
-        .configuracion select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#1f2937;font-size:15px}
+        .selector-posicion{margin:0 0 24px;text-align:center}
+        .selector-posicion>p{font-size:15px;font-weight:800;color:#334155;margin:0 0 12px}
+        .botones-posicion{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:520px;margin:auto}
+        .botones-posicion button{padding:13px 8px;border:2px solid #cbd5e1;border-radius:10px;background:#f8fafc;color:#334155;font-size:17px;font-weight:800;cursor:pointer}
+        .botones-posicion button.activo{background:#2563eb;border-color:#2563eb;color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.2)}
+        .selector-posicion small{display:block;color:#64748b;margin-top:9px;font-size:13px}
         .tipo{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
         .tipo button{flex:1;min-width:150px;padding:12px;border:1px solid #cbd5e1;background:#f8fafc;color:#334155;border-radius:10px;font-weight:700;cursor:pointer}
         .tipo button.activo{background:#2563eb;border-color:#2563eb;color:white}
@@ -36,8 +39,8 @@
         .error{display:none;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;padding:12px;margin-top:18px}
         .explicacion{margin-top:25px;color:#475569;line-height:1.7}
         .explicacion h2{font-size:20px;color:#111827;margin-bottom:8px}
-        @media(max-width:650px){header{height:auto;min-height:70px;padding:12px 16px;flex-wrap:wrap;justify-content:center;gap:8px}nav{flex-wrap:wrap;justify-content:center;gap:8px 14px;width:100%}.contenedor{padding:38px 15px 55px}.intro h1{font-size:31px}.panel{padding:18px}.expresion{gap:10px}.dato{padding:11px}.dato input{font-size:16px}.configuracion{gap:10px}}
-        @media(max-width:390px){.configuracion{grid-template-columns:1fr}}
+        @media(max-width:650px){header{height:auto;min-height:70px;padding:12px 16px;flex-wrap:wrap;justify-content:center;gap:8px}nav{flex-wrap:wrap;justify-content:center;gap:8px 14px;width:100%}.contenedor{padding:38px 15px 55px}.intro h1{font-size:31px}.panel{padding:18px}.expresion{gap:10px}.dato{padding:11px}.dato input{font-size:16px}.botones-posicion{gap:7px}.botones-posicion button{padding:12px 5px}}
+        @media(max-width:390px){.botones-posicion{gap:6px}.botones-posicion button{font-size:15px}}
     </style>
 </head>
 <body>
@@ -63,23 +66,15 @@
                 <button type="button" class="activo" id="directa" aria-pressed="true">Directa</button>
                 <button type="button" id="inversa" aria-pressed="false">Inversa</button>
             </div>
-            <div class="configuracion">
-                <div>
-                    <label for="desconocida">¿Qué posición quieres calcular?</label>
-                    <select id="desconocida">
-                        <option value="d">D (abajo a la derecha)</option>
-                        <option value="a">A (arriba a la izquierda)</option>
-                        <option value="b">B (arriba a la derecha)</option>
-                        <option value="c">C (abajo a la izquierda)</option>
-                    </select>
+            <div class="selector-posicion">
+                <p>¿Dónde está la incógnita (X)?</p>
+                <div class="botones-posicion" role="group" aria-label="Elegir posición de la incógnita">
+                    <button type="button" data-posicion="a">A</button>
+                    <button type="button" data-posicion="b">B</button>
+                    <button type="button" data-posicion="c">C</button>
+                    <button type="button" data-posicion="d" class="activo" aria-pressed="true">D</button>
                 </div>
-                <div>
-                    <label for="tipoTexto">Tipo de proporcionalidad</label>
-                    <select id="tipoTexto" disabled>
-                        <option value="directa">Directa</option>
-                        <option value="inversa">Inversa</option>
-                    </select>
-                </div>
+                <small>Pulsa A, B, C o D para mover la incógnita a esa casilla.</small>
             </div>
             <div class="expresion" aria-label="Tabla de valores de la regla de tres">
                 <div class="dato" id="caja-a">
@@ -122,7 +117,7 @@
     <script>
         const ids=["a","b","c","d"];
         const campos=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
-        const selector=document.getElementById("desconocida");
+        let desconocida="d";
         const error=document.getElementById("error");
         const resultado=document.getElementById("resultado");
         const valor=document.getElementById("valor");
@@ -135,16 +130,20 @@
         function limpiarResultado(){
             error.style.display="none";
             resultado.style.display="none";
-            campos[selector.value].value="";
+            campos[desconocida].value="";
         }
         function actualizarIncognita(){
-            const desconocida=selector.value;
             ids.forEach(id=>{
                 const esIncognita=id===desconocida;
                 campos[id].readOnly=esIncognita;
                 document.getElementById("caja-"+id).classList.toggle("desconocido",esIncognita);
                 campos[id].placeholder=esIncognita?"?": "Introduce un valor";
                 if(esIncognita) campos[id].value="";
+            });
+            document.querySelectorAll("[data-posicion]").forEach(boton=>{
+                const activo=boton.dataset.posicion===desconocida;
+                boton.classList.toggle("activo",activo);
+                boton.setAttribute("aria-pressed",String(activo));
             });
             limpiarResultado();
         }
@@ -159,9 +158,8 @@
         }
         document.getElementById("directa").addEventListener("click",()=>cambiarTipo("directa"));
         document.getElementById("inversa").addEventListener("click",()=>cambiarTipo("inversa"));
-        selector.addEventListener("change",actualizarIncognita);
+        document.querySelectorAll("[data-posicion]").forEach(boton=>boton.addEventListener("click",()=>{desconocida=boton.dataset.posicion;actualizarIncognita();}));
         document.getElementById("calcular").addEventListener("click",()=>{
-            const desconocida=selector.value;
             const conocidos=ids.filter(id=>id!==desconocida);
             const datos={};
             for(const id of conocidos){
@@ -190,12 +188,12 @@
             error.style.display="none";resultado.style.display="block";
         });
         document.getElementById("limpiar").addEventListener("click",()=>{
-            ids.forEach(id=>{if(id!==selector.value)campos[id].value="";});
+            ids.forEach(id=>{if(id!==desconocida)campos[id].value="";});
             limpiarResultado();
-            campos[ids.find(id=>id!==selector.value)].focus();
+            campos[ids.find(id=>id!==desconocida)].focus();
         });
         ids.forEach(id=>campos[id].addEventListener("input",()=>{
-            if(id!==selector.value)limpiarResultado();
+            if(id!==desconocida)limpiarResultado();
         }));
         actualizarIncognita();
     </script>
