@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculadora de geometría online: calcula áreas, perímetros y volúmenes de figuras con fórmulas explicadas paso a paso.">
+<title>Geometría | Herramio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.contenedor{max-width:900px;margin:0 auto;padding:55px 20px 75px}.intro{text-align:center;margin-bottom:30px}.intro h1{font-size:38px;margin-bottom:12px;color:#111827}.intro p{color:#6b7280;line-height:1.6;font-size:16px}.panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:28px;box-shadow:0 8px 25px rgba(15,23,42,.05)}.controles{display:grid;grid-template-columns:1fr 1fr;gap:16px}.campo label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:8px}.campo select,.campo input{width:100%;box-sizing:border-box;padding:13px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#111827;font-size:16px}.campo select:focus,.campo input:focus{outline:2px solid #bfdbfe;border-color:#2563eb}.medidas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:20px}.medida{background:#f8fafc;border:1px solid #e5e7eb;border-radius:11px;padding:14px}.medida label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:8px}.medida input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px}.ayuda{color:#64748b;font-size:13px;margin-top:14px;line-height:1.5}.acciones{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}.acciones button{border:0;border-radius:10px;padding:13px 22px;font-size:15px;font-weight:700;cursor:pointer}.calcular{background:#2563eb;color:white}.limpiar{background:#e2e8f0;color:#334155}.resultado{display:none;margin-top:24px;padding:20px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe}.resultado h2{font-size:18px;color:#1e40af;margin-bottom:8px}.valor{font-size:30px;font-weight:800;color:#1d4ed8;margin:5px 0 12px;overflow-wrap:anywhere}.pasos{color:#334155;line-height:1.8;font-size:15px;white-space:pre-line}.error{display:none;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;padding:12px;margin-top:18px}.explicacion{margin-top:25px;color:#475569;line-height:1.7}.explicacion h2{font-size:20px;color:#111827;margin-bottom:8px}.explicacion ul{padding-left:22px;margin-top:8px}@media(max-width:650px){header{height:auto;min-height:70px;padding:12px 16px;flex-wrap:wrap;justify-content:center;gap:8px}nav{flex-wrap:wrap;justify-content:center;gap:8px 14px;width:100%}.contenedor{padding:38px 15px 55px}.intro h1{font-size:31px}.panel{padding:18px}}@media(max-width:420px){.controles,.medidas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="logo" style="color:#111827!important;text-decoration:none!important" aria-label="Volver al inicio de Herramio">Herramio</a>
+<nav><a href="index.html">Inicio</a><a href="calculadoras.html">Calculadoras</a><a href="conversores.html">Conversores</a><a href="generadores.html">Generadores</a><a href="herramientas.html">Herramientas</a><a href="productividad.html">Productividad</a><a href="estudio.html">Estudio</a></nav>
+</header>
+<main class="contenedor">
+<div class="intro"><h1>📐 Calculadora de geometría</h1><p>Calcula áreas, perímetros y volúmenes de las figuras geométricas más habituales y consulta cómo se obtiene cada resultado.</p></div>
+<section class="panel">
+<div class="controles">
+<div class="campo"><label for="figura">Figura geométrica</label><select id="figura"><option value="cuadrado">Cuadrado</option><option value="rectangulo">Rectángulo</option><option value="triangulo">Triángulo</option><option value="circulo">Círculo</option><option value="paralelogramo">Paralelogramo</option><option value="trapecio">Trapecio</option><option value="cubo">Cubo</option><option value="prisma">Prisma rectangular</option><option value="cilindro">Cilindro</option><option value="esfera">Esfera</option></select></div>
+<div class="campo"><label for="operacion">Qué quieres calcular</label><select id="operacion"><option value="area">Área</option><option value="perimetro">Perímetro</option><option value="volumen">Volumen</option></select></div>
+</div>
+<div class="medidas" id="medidas"></div>
+<p class="ayuda">Introduce las medidas en la misma unidad (por ejemplo, centímetros). El resultado aparecerá en unidades cuadradas o cúbicas según corresponda.</p>
+<div class="acciones"><button class="calcular" id="calcular" type="button">Calcular</button><button class="limpiar" id="limpiar" type="button">Limpiar</button></div>
+<div class="error" id="error" role="alert"></div>
+<div class="resultado" id="resultado" aria-live="polite"><h2>Resultado</h2><div class="valor" id="valor"></div><div class="pasos" id="pasos"></div></div>
+</section>
+<section class="explicacion"><h2>¿Qué puedes calcular?</h2><ul><li><strong>Figuras planas:</strong> áreas y perímetros de cuadrados, rectángulos, triángulos, círculos, paralelogramos y trapecios.</li><li><strong>Cuerpos geométricos:</strong> volúmenes de cubos, prismas rectangulares, cilindros y esferas.</li></ul><p>Selecciona una figura y una operación para que aparezcan únicamente las medidas necesarias.</p></section>
+</main>
+<script>
+const definiciones={
+cuadrado:{nombre:"Cuadrado",campos:[["lado","Lado"]],ops:["area","perimetro"]},
+rectangulo:{nombre:"Rectángulo",campos:[["base","Base"],["altura","Altura"]],ops:["area","perimetro"]},
+triangulo:{nombre:"Triángulo",campos:[["base","Base"],["altura","Altura"],["lado1","Lado 1"],["lado2","Lado 2"],["lado3","Lado 3"]],ops:["area","perimetro"]},
+circulo:{nombre:"Círculo",campos:[["radio","Radio"]],ops:["area","perimetro"]},
+paralelogramo:{nombre:"Paralelogramo",campos:[["base","Base"],["altura","Altura"],["lado","Lado inclinado"]],ops:["area","perimetro"]},
+trapecio:{nombre:"Trapecio",campos:[["baseMayor","Base mayor"],["baseMenor","Base menor"],["altura","Altura"],["lado1","Lado lateral 1"],["lado2","Lado lateral 2"]],ops:["area","perimetro"]},
+cubo:{nombre:"Cubo",campos:[["lado","Arista"]],ops:["volumen"]},
+prisma:{nombre:"Prisma rectangular",campos:[["largo","Largo"],["ancho","Ancho"],["altura","Altura"]],ops:["volumen"]},
+cilindro:{nombre:"Cilindro",campos:[["radio","Radio"],["altura","Altura"]],ops:["volumen"]},
+esfera:{nombre:"Esfera",campos:[["radio","Radio"]],ops:["volumen"]}
+};
+const figura=document.getElementById("figura"),operacion=document.getElementById("operacion"),medidas=document.getElementById("medidas"),resultado=document.getElementById("resultado"),error=document.getElementById("error");
+const nombresOps={area:"Área",perimetro:"Perímetro",volumen:"Volumen"};
+function actualizarCampos(){const def=definiciones[figura.value];operacion.innerHTML="";def.ops.forEach(op=>{const o=document.createElement("option");o.value=op;o.textContent=nombresOps[op];operacion.appendChild(o)});medidas.innerHTML="";def.campos.forEach(([id,label])=>{const wrap=document.createElement("div");wrap.className="medida";const l=document.createElement("label");l.htmlFor="m-"+id;l.textContent=label;const input=document.createElement("input");input.id="m-"+id;input.type="number";input.step="any";input.min="0";input.placeholder="Introduce "+label.toLowerCase();wrap.append(l,input);medidas.appendChild(wrap)});ocultar()}
+function ocultar(){resultado.style.display="none";error.style.display="none"}
+function numero(id){return Number(document.getElementById("m-"+id).value)}
+function formato(n){return new Intl.NumberFormat("es-ES",{maximumFractionDigits:8}).format(n)}
+function calcular(){ocultar();const f=figura.value,o=operacion.value,def=definiciones[f],v={};for(const [id,label] of def.campos){const input=document.getElementById("m-"+id);if(input.value.trim()===""||!Number.isFinite(Number(input.value))||Number(input.value)<=0){error.textContent="Introduce un valor mayor que cero para «"+label+"».";error.style.display="block";return}v[id]=Number(input.value)}
+let r,formula,detalle,unidad=o==="area"?"unidades²":o==="volumen"?"unidades³":"unidades";
+if(f==="cuadrado"){r=o==="area"?v.lado**2:4*v.lado;formula=o==="area"?"lado × lado":"4 × lado";detalle=o==="area"?v.lado+" × "+v.lado:"4 × "+v.lado}
+else if(f==="rectangulo"){r=o==="area"?v.base*v.altura:2*(v.base+v.altura);formula=o==="area"?"base × altura":"2 × (base + altura)";detalle=o==="area"?v.base+" × "+v.altura:"2 × ("+v.base+" + "+v.altura+")"}
+else if(f==="triangulo"){if(o==="area"){r=v.base*v.altura/2;formula="(base × altura) ÷ 2";detalle="("+v.base+" × "+v.altura+") ÷ 2"}else{if(v.lado1+v.lado2<=v.lado3||v.lado1+v.lado3<=v.lado2||v.lado2+v.lado3<=v.lado1){error.textContent="Esos lados no pueden formar un triángulo.";error.style.display="block";return}r=v.lado1+v.lado2+v.lado3;formula="lado 1 + lado 2 + lado 3";detalle=v.lado1+" + "+v.lado2+" + "+v.lado3}}
+else if(f==="circulo"){r=o==="area"?Math.PI*v.radio**2:2*Math.PI*v.radio;formula=o==="area"?"π × radio²":"2 × π × radio";detalle=o==="area"?"π × "+v.radio+"²":"2 × π × "+v.radio}
+else if(f==="paralelogramo"){r=o==="area"?v.base*v.altura:2*(v.base+v.lado);formula=o==="area"?"base × altura":"2 × (base + lado)";detalle=o==="area"?v.base+" × "+v.altura:"2 × ("+v.base+" + "+v.lado+")"}
+else if(f==="trapecio"){r=o==="area"?(v.baseMayor+v.baseMenor)*v.altura/2:v.baseMayor+v.baseMenor+v.lado1+v.lado2;formula=o==="area"?"((base mayor + base menor) × altura) ÷ 2":"base mayor + base menor + lado 1 + lado 2";detalle=o==="area"?"(("+v.baseMayor+" + "+v.baseMenor+") × "+v.altura+") ÷ 2":v.baseMayor+" + "+v.baseMenor+" + "+v.lado1+" + "+v.lado2}
+else if(f==="cubo"){r=v.lado**3;formula="lado³";detalle=v.lado+" × "+v.lado+" × "+v.lado}
+else if(f==="prisma"){r=v.largo*v.ancho*v.altura;formula="largo × ancho × altura";detalle=v.largo+" × "+v.ancho+" × "+v.altura}
+else if(f==="cilindro"){r=Math.PI*v.radio**2*v.altura;formula="π × radio² × altura";detalle="π × "+v.radio+"² × "+v.altura}
+else{r=4/3*Math.PI*v.radio**3;formula="(4 ÷ 3) × π × radio³";detalle="(4 ÷ 3) × π × "+v.radio+"³"}
+document.getElementById("valor").textContent=formato(r)+" "+unidad;document.getElementById("pasos").textContent="Figura: "+def.nombre+"\nFórmula: "+formula+"\nSustitución: "+detalle+"\nResultado: "+formato(r)+" "+unidad;resultado.style.display="block"}
+figura.addEventListener("change",actualizarCampos);document.getElementById("calcular").addEventListener("click",calcular);document.getElementById("limpiar").addEventListener("click",()=>{medidas.querySelectorAll("input").forEach(i=>i.value="");ocultar()});actualizarCampos();
+</script>
+</body>
+</html>
