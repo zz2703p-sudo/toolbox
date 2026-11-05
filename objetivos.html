@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Define tus objetivos, divídelos en pasos y sigue tu progreso con el gestor de objetivos gratuito de Herramio.">
+<meta name="theme-color" content="#2563eb">
+<title>Mis objetivos | Herramio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7fb;color:#1f2937;min-height:100vh}
+header{min-height:70px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 8%;border-bottom:1px solid #e5e7eb}
+a.logo,a.logo:link,a.logo:visited,a.logo:hover,a.logo:active{color:#111827!important;text-decoration:none!important;font-size:28px;font-weight:bold}
+nav{display:flex;flex-wrap:wrap;gap:20px}
+nav a{color:#4b5563;text-decoration:none;font-size:15px}
+nav a:hover{color:#2563eb}
+main{width:min(1100px,calc(100% - 32px));margin:0 auto;padding:52px 0 75px}
+.intro{text-align:center;margin-bottom:30px}
+.intro h1{font-size:clamp(30px,5vw,42px);color:#111827;margin-bottom:12px}
+.intro p{font-size:17px;color:#6b7280;line-height:1.6}
+.resumen{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.stat{background:#fff;border:1px solid #e5e7eb;border-radius:15px;padding:18px;text-align:center}
+.stat strong{display:block;font-size:27px;color:#2563eb;margin-bottom:5px}
+.stat span{font-size:13px;color:#64748b}
+.layout{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.5fr);gap:20px;align-items:start}
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:23px;box-shadow:0 8px 25px rgba(15,23,42,.05)}
+.panel h2{font-size:20px;color:#111827;margin-bottom:17px}
+label{display:block;font-size:14px;font-weight:700;color:#475569;margin-bottom:7px}
+input,textarea,select{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:12px 13px;font:inherit;color:#1f2937;background:#fff;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+textarea{resize:vertical;min-height:85px;line-height:1.5}
+.campo{margin-bottom:14px}
+.dos-columnas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{border:0;border-radius:10px;padding:12px 16px;background:#2563eb;color:white;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+button:hover{background:#1d4ed8}
+button:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.acciones{display:flex;gap:9px;flex-wrap:wrap}
+.secundario{background:#eef2f7;color:#334155}.secundario:hover{background:#e2e8f0}
+.peligro{background:#fef2f2;color:#dc2626}.peligro:hover{background:#fee2e2}
+.mensaje{min-height:20px;color:#15803d;font-size:13px;margin-top:10px}
+.cabecera-lista{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.cabecera-lista h2{margin:0}
+.filtros{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}
+.filtros button{background:#f1f5f9;color:#475569;padding:8px 11px;font-size:13px}
+.filtros button.activo{background:#2563eb;color:white}
+.lista{display:grid;gap:13px}
+.objetivo{border:1px solid #e5e7eb;border-radius:14px;padding:17px;background:#fff}
+.objetivo-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.objetivo h3{font-size:18px;color:#1f2937;overflow-wrap:anywhere}
+.categoria{font-size:12px;color:#2563eb;background:#eff6ff;border-radius:20px;padding:5px 9px;white-space:nowrap}
+.descripcion{font-size:14px;color:#64748b;line-height:1.5;margin:9px 0}
+.meta{font-size:12px;color:#94a3b8;margin-bottom:12px}
+.progreso-cabecera{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#475569;margin-bottom:7px}
+.barra{height:9px;background:#e5e7eb;border-radius:99px;overflow:hidden}
+.barra span{display:block;height:100%;background:#2563eb;border-radius:99px;transition:width .2s}
+.pasos{display:grid;gap:8px;margin:15px 0}
+.paso{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:#475569;line-height:1.4}
+.paso input{width:17px;height:17px;margin-top:1px;accent-color:#2563eb;flex:none}
+.paso.hecho span{text-decoration:line-through;color:#94a3b8}
+.objetivo-acciones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.objetivo-acciones button{padding:9px 12px;font-size:12px}
+.vacio{text-align:center;padding:35px 12px;color:#94a3b8;line-height:1.5}
+.ayuda{font-size:12px;color:#94a3b8;line-height:1.5;margin-top:15px}
+@media(max-width:780px){header{padding:14px 16px;flex-direction:column;gap:10px}nav{justify-content:center;gap:9px 14px}nav a{font-size:13px}main{padding-top:36px}.layout{grid-template-columns:1fr}.panel{padding:18px}}
+@media(max-width:520px){.resumen{gap:8px}.stat{padding:13px 7px}.stat strong{font-size:23px}.stat span{font-size:11px}.dos-columnas{grid-template-columns:1fr}.objetivo-top{flex-direction:column;gap:7px}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="logo" aria-label="Volver a Herramio">Herramio</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a><a href="calculadoras.html">Calculadoras</a><a href="conversores.html">Conversores</a><a href="generadores.html">Generadores</a><a href="herramientas.html">Herramientas</a><a href="productividad.html">Productividad</a>
+</nav>
+</header>
+<main>
+<section class="intro">
+<h1>🎯 Mis objetivos</h1>
+<p>Convierte tus metas en pasos pequeños, marca tus avances y comprueba cuánto te falta para conseguirlas.</p>
+</section>
+<section class="resumen" aria-label="Resumen de objetivos">
+<div class="stat"><strong id="total">0</strong><span>Objetivos activos</span></div>
+<div class="stat"><strong id="completados">0</strong><span>Objetivos completados</span></div>
+<div class="stat"><strong id="media">0%</strong><span>Progreso medio</span></div>
+</section>
+<div class="layout">
+<section class="panel">
+<h2 id="titulo-formulario">Crear un objetivo</h2>
+<form id="formulario">
+<div class="campo"><label for="nombre">¿Qué quieres conseguir?</label><input id="nombre" maxlength="90" placeholder="Ej. Aprender inglés" required></div>
+<div class="dos-columnas">
+<div class="campo"><label for="categoria">Categoría</label><select id="categoria"><option>Personal</option><option>Estudios</option><option>Trabajo</option><option>Salud</option><option>Finanzas</option><option>Otros</option></select></div>
+<div class="campo"><label for="fecha">Fecha objetivo</label><input id="fecha" type="date"></div>
+</div>
+<div class="campo"><label for="descripcion">Descripción (opcional)</label><textarea id="descripcion" maxlength="350" placeholder="Describe brevemente tu meta..."></textarea></div>
+<div class="campo"><label for="pasos">Pasos para conseguirlo</label><textarea id="pasos" maxlength="1200" placeholder="Escribe un paso por línea&#10;Ej. Investigar cómo empezar&#10;Practicar 20 minutos al día"></textarea></div>
+<div class="acciones"><button type="submit" id="guardar">Guardar objetivo</button><button type="button" class="secundario" id="nuevo">Limpiar</button></div>
+<p class="mensaje" id="mensaje" aria-live="polite"></p>
+<p class="ayuda">Tus objetivos se guardan en este navegador. Escribe cada paso en una línea para poder marcarlo por separado.</p>
+</form>
+</section>
+<section class="panel">
+<div class="cabecera-lista"><h2>Mis metas</h2></div>
+<div class="filtros" aria-label="Filtrar objetivos">
+<button type="button" class="activo" data-filtro="todos">Todos</button>
+<button type="button" data-filtro="activos">En marcha</button>
+<button type="button" data-filtro="completados">Completados</button>
+</div>
+<div class="lista" id="lista"></div>
+<p class="vacio" id="vacio">Todavía no has creado ningún objetivo. ¡Empieza por tu primera meta!</p>
+</section>
+</div>
+</main>
+<script>
+(function(){
+const KEY="herramio_objetivos_v1";
+const $=id=>document.getElementById(id);
+let objetivos=[],actual=null,filtro="todos";
+try{objetivos=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(objetivos))objetivos=[]}catch(e){objetivos=[]}
+function persistir(){localStorage.setItem(KEY,JSON.stringify(objetivos))}
+function porcentaje(o){return o.pasos.length?Math.round(o.pasos.filter(p=>p.hecho).length/o.pasos.length*100):(o.completado?100:0)}
+function limpiar(){actual=null;$("formulario").reset();$("titulo-formulario").textContent="Crear un objetivo";$("guardar").textContent="Guardar objetivo";$("mensaje").textContent=""}
+function editar(id){const o=objetivos.find(x=>x.id===id);if(!o)return;actual=id;$("nombre").value=o.nombre;$("categoria").value=o.categoria;$("fecha").value=o.fecha||"";$("descripcion").value=o.descripcion||"";$("pasos").value=o.pasos.map(p=>p.texto).join("\n");$("titulo-formulario").textContent="Editar objetivo";$("guardar").textContent="Actualizar objetivo";$("mensaje").textContent="Editando: "+o.nombre;$("nombre").focus();window.scrollTo({top:0,behavior:"smooth"})}
+function actualizarResumen(){const activos=objetivos.filter(o=>porcentaje(o)<100).length;const hechos=objetivos.length-activos;const media=objetivos.length?Math.round(objetivos.reduce((s,o)=>s+porcentaje(o),0)/objetivos.length):0;$("total").textContent=activos;$("completados").textContent=hechos;$("media").textContent=media+"%"}
+function render(){
+$("lista").innerHTML="";
+const visibles=objetivos.filter(o=>filtro==="todos"||(filtro==="activos"&&porcentaje(o)<100)||(filtro==="completados"&&porcentaje(o)===100)).sort((a,b)=>b.creado-a.creado);
+visibles.forEach(o=>{
+const card=document.createElement("article");card.className="objetivo";
+const top=document.createElement("div");top.className="objetivo-top";
+const heading=document.createElement("h3");heading.textContent=o.nombre;
+const cat=document.createElement("span");cat.className="categoria";cat.textContent=o.categoria;
+top.append(heading,cat);card.append(top);
+if(o.descripcion){const d=document.createElement("p");d.className="descripcion";d.textContent=o.descripcion;card.append(d)}
+if(o.fecha){const f=document.createElement("p");f.className="meta";f.textContent="Fecha objetivo: "+new Intl.DateTimeFormat("es-ES",{dateStyle:"long"}).format(new Date(o.fecha+"T12:00:00"));card.append(f)}
+const pct=porcentaje(o),pc=document.createElement("div");pc.className="progreso-cabecera";
+const left=document.createElement("span");left.textContent="Progreso";
+const right=document.createElement("strong");right.textContent=pct+"%";pc.append(left,right);card.append(pc);
+const bar=document.createElement("div");bar.className="barra";const fill=document.createElement("span");fill.style.width=pct+"%";bar.append(fill);card.append(bar);
+if(o.pasos.length){const steps=document.createElement("div");steps.className="pasos";o.pasos.forEach((p,i)=>{const label=document.createElement("label");label.className="paso"+(p.hecho?" hecho":"");const check=document.createElement("input");check.type="checkbox";check.checked=p.hecho;check.addEventListener("change",()=>{p.hecho=check.checked;persistir();render()});const txt=document.createElement("span");txt.textContent=p.texto;label.append(check,txt);steps.append(label)});card.append(steps)}
+const actions=document.createElement("div");actions.className="objetivo-acciones";
+const edit=document.createElement("button");edit.type="button";edit.className="secundario";edit.textContent="Editar";edit.addEventListener("click",()=>editar(o.id));
+const finish=document.createElement("button");finish.type="button";finish.textContent=pct===100?"Reabrir objetivo":"Completar objetivo";finish.addEventListener("click",()=>{if(pct===100)o.pasos.forEach(p=>p.hecho=false);else if(o.pasos.length)o.pasos.forEach(p=>p.hecho=true);else o.completado=true;if(pct===100)o.completado=false;persistir();render()});
+const del=document.createElement("button");del.type="button";del.className="peligro";del.textContent="Eliminar";del.addEventListener("click",()=>{if(confirm("¿Eliminar el objetivo «"+o.nombre+"»?")){objetivos=objetivos.filter(x=>x.id!==o.id);if(actual===o.id)limpiar();persistir();render()}});
+actions.append(edit,finish,del);card.append(actions);$("lista").append(card);
+});
+$("vacio").style.display=visibles.length?"none":"block";
+$("vacio").textContent=objetivos.length?"No hay objetivos en este filtro.":"Todavía no has creado ningún objetivo. ¡Empieza por tu primera meta!";
+document.querySelectorAll("[data-filtro]").forEach(b=>b.classList.toggle("activo",b.dataset.filtro===filtro));
+actualizarResumen();
+}
+$("formulario").addEventListener("submit",e=>{
+e.preventDefault();const nombre=$("nombre").value.trim();if(!nombre)return;
+const pasos=$("pasos").value.split("\n").map(x=>x.trim()).filter(Boolean).map(texto=>({texto,hecho:false}));
+if(actual){const o=objetivos.find(x=>x.id===actual);if(o){o.nombre=nombre;o.categoria=$("categoria").value;o.fecha=$("fecha").value;o.descripcion=$("descripcion").value.trim();const anteriores=new Map(o.pasos.map(p=>[p.texto,p.hecho]));o.pasos=pasos.map(p=>({...p,hecho:anteriores.get(p.texto)||false}));o.completado=false}}
+else objetivos.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nombre,categoria:$("categoria").value,fecha:$("fecha").value,descripcion:$("descripcion").value.trim(),pasos,completado:false,creado:Date.now()});
+persistir();limpiar();$("mensaje").textContent="Objetivo guardado correctamente.";render();
+});
+$("nuevo").addEventListener("click",limpiar);
+document.querySelectorAll("[data-filtro]").forEach(b=>b.addEventListener("click",()=>{filtro=b.dataset.filtro;render()}));
+render();
+})();
+</script>
+</body>
+</html>
