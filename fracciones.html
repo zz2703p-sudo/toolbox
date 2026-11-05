@@ -686,7 +686,7 @@
             const entrada = document.getElementById("numeroDecimal");
             const texto = entrada.value.trim().replace(",", ".");
 
-            if (!/^[+-]?(?:\\d+\\.?\\d*|\\.\\d+)$/.test(texto)) {
+            if (!/^[+-]?(?:\d+\.?\d*|\.\d+)$/.test(texto)) {
                 resultado.textContent = "Introduce un número válido, por ejemplo 2,75.";
                 entrada.focus();
                 return;
@@ -703,7 +703,7 @@
 
             const signo = texto.startsWith("-") ? -1 : 1;
             const parteEntera = partes[0].replace(/[+-]/g, "") || "0";
-            const cifras = (parteEntera + decimales).replace(/^0+(?=\\d)/, "");
+            const cifras = (parteEntera + decimales).replace(/^0+(?=\d)/, "");
             const numerador = signo * Number(cifras || "0");
             const denominador = 10 ** decimales.length;
 
