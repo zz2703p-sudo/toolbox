@@ -148,6 +148,34 @@
             background: #374151;
         }
 
+        .entrada-decimal {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .entrada-decimal label {
+            display: block;
+            margin-bottom: 9px;
+            color: #374151;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .entrada-decimal input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 18px;
+            outline: none;
+        }
+
+        .entrada-decimal input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+        }
+
         .simbolo {
             font-size: 25px;
             font-weight: bold;
@@ -498,61 +526,49 @@
 
     function mostrarFraccionesNecesarias() {
 
-        const todas =
-            [...contenedor.children];
+        if (operacionActual === "fraccion") {
+            contenedor.innerHTML = "";
 
-        if (
-            operacionActual === "simplificar" ||
-            operacionActual === "decimal"
-        ) {
+            const grupo = document.createElement("div");
+            grupo.className = "entrada-decimal";
 
-            while (
-                contenedor.children.length > 1
-            ) {
+            const etiqueta = document.createElement("label");
+            etiqueta.htmlFor = "numeroDecimal";
+            etiqueta.textContent = "Número que quieres convertir";
 
-                contenedor.lastElementChild.remove();
+            const entrada = document.createElement("input");
+            entrada.type = "text";
+            entrada.id = "numeroDecimal";
+            entrada.inputMode = "decimal";
+            entrada.placeholder = "Ej. 2,75";
+            entrada.autocomplete = "off";
 
-            }
-
-        }
-
-        if (
-            operacionActual === "fraccion"
-        ) {
-
-            while (
-                contenedor.children.length > 1
-            ) {
-
-                contenedor.lastElementChild.remove();
-
-            }
-        }
-
-        if (
-            operacionActual === "sumar" ||
-            operacionActual === "restar" ||
-            operacionActual === "multiplicar" ||
-            operacionActual === "dividir"
-        ) {
-
-            if (
-                contenedor.children.length < 2
-            ) {
-
+            grupo.append(etiqueta, entrada);
+            contenedor.appendChild(grupo);
+        } else {
+            if (contenedor.querySelector("#numeroDecimal")) {
+                contenedor.innerHTML = "";
                 crearFraccion();
-
+                if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
+                    crearFraccion();
+                }
             }
 
+            if (["simplificar", "decimal"].includes(operacionActual)) {
+                while (contenedor.children.length > 1) {
+                    contenedor.lastElementChild.remove();
+                }
+            }
+
+            if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
+                while (contenedor.children.length < 2) {
+                    crearFraccion();
+                }
+            }
         }
 
         anadir.style.display =
-            (
-                operacionActual === "sumar" ||
-                operacionActual === "restar" ||
-                operacionActual === "multiplicar" ||
-                operacionActual === "dividir"
-            )
+            ["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)
                 ? "inline-block"
                 : "none";
     }
@@ -667,46 +683,33 @@
 
         if (operacionActual === "fraccion") {
 
-            const valor =
-                Number(
-                    document.querySelector(".numerador").value
-                );
+            const entrada = document.getElementById("numeroDecimal");
+            const texto = entrada.value.trim().replace(",", ".");
 
-            const denominador =
-                Number(
-                    document.querySelector(".denominador").value
-                );
-
-            if (
-                !Number.isFinite(valor) ||
-                !Number.isFinite(denominador)
-            ) {
-
-                resultado.textContent =
-                    "Introduce un número.";
-
+            if (!/^[+-]?(?:\\d+\\.?\\d*|\\.\\d+)$/.test(texto)) {
+                resultado.textContent = "Introduce un número válido, por ejemplo 2,75.";
+                entrada.focus();
                 return;
-
             }
 
-            if (denominador === 0) {
+            const partes = texto.split(".");
+            const decimales = partes[1] || "";
 
-                resultado.textContent =
-                    "El denominador no puede ser 0.";
-
+            if (decimales.length > 12) {
+                resultado.textContent = "Introduce como máximo 12 cifras decimales.";
+                entrada.focus();
                 return;
-
             }
 
-            const fraccion =
-                simplificarFraccion(
-                    valor,
-                    denominador
-                );
+            const signo = texto.startsWith("-") ? -1 : 1;
+            const parteEntera = partes[0].replace(/[+-]/g, "") || "0";
+            const cifras = (parteEntera + decimales).replace(/^0+(?=\\d)/, "");
+            const numerador = signo * Number(cifras || "0");
+            const denominador = 10 ** decimales.length;
 
-            resultado.textContent =
-                textoFraccion(fraccion);
+            const fraccion = simplificarFraccion(numerador, denominador);
 
+            resultado.textContent = textoFraccion(fraccion);
             return;
         }
 
