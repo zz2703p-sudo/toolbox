@@ -522,20 +522,17 @@
     function mostrarFraccionesNecesarias() {
 
         contenedor.replaceChildren();
+        crearFraccion();
+
+        if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
             crearFraccion();
-
-            if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
-                crearFraccion();
-            }
-
-            calcular.textContent = "Calcular";
         }
 
+        calcular.textContent = "Calcular";
         anadir.style.display =
             ["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)
                 ? "inline-block"
                 : "none";
-
         resultado.textContent = "Resultado";
     }
 
@@ -647,161 +644,63 @@
 
     calcular.addEventListener("click", () => {
 
-const partes = texto.split(".");
-            const decimales = partes[1] || "";
+        const fracciones = obtenerFracciones();
 
-            if (decimales.length > 12) {
-                resultado.textContent = "Introduce como máximo 12 cifras decimales.";
-                entrada.focus();
-                return;
-            }
+        if (!fracciones) {
+            resultado.textContent = "Introduce valores válidos y asegúrate de que ningún denominador sea 0.";
+            return;
+        }
 
-            const signo = texto.startsWith("-") ? -1 : 1;
-            const parteEntera = partes[0].replace(/[+-]/g, "") || "0";
-            const cifras = (parteEntera + decimales).replace(/^0+(?=\d)/, "");
-            const numerador = signo * Number(cifras || "0");
-            const denominador = 10 ** decimales.length;
-
-            const fraccion = simplificarFraccion(numerador, denominador);
-
+        if (operacionActual === "simplificar") {
+            const fraccion = simplificarFraccion(
+                fracciones[0].numerador,
+                fracciones[0].denominador
+            );
             resultado.textContent = textoFraccion(fraccion);
             return;
         }
 
-
-        const fracciones =
-            obtenerFracciones();
-
-        if (!fracciones) {
-
-            resultado.textContent =
-                "Introduce valores válidos.";
-
-            return;
-        }
-
-
-        if (operacionActual === "simplificar") {
-
-            const fraccion =
-                simplificarFraccion(
-                    fracciones[0].numerador,
-                    fracciones[0].denominador
-                );
-
-            resultado.textContent =
-                textoFraccion(fraccion);
-
-            return;
-        }
-
-
         if (operacionActual === "decimal") {
-
-            const valor =
-                fracciones[0].numerador /
-                fracciones[0].denominador;
-
-            resultado.textContent =
-                valor.toLocaleString(
-                    "es-ES",
-                    {
-                        maximumFractionDigits: 12
-                    }
-                );
-
+            const valor = fracciones[0].numerador / fracciones[0].denominador;
+            resultado.textContent = valor.toLocaleString("es-ES", {
+                maximumFractionDigits: 12
+            });
             return;
         }
 
+        let numerador = fracciones[0].numerador;
+        let denominador = fracciones[0].denominador;
 
-        let numerador =
-            fracciones[0].numerador;
-
-        let denominador =
-            fracciones[0].denominador;
-
-
-        for (
-            let i = 1;
-            i < fracciones.length;
-            i++
-        ) {
-
-            const siguiente =
-                fracciones[i];
+        for (let i = 1; i < fracciones.length; i++) {
+            const siguiente = fracciones[i];
 
             if (operacionActual === "sumar") {
-
-                numerador =
-                    numerador *
-                    siguiente.denominador +
-                    siguiente.numerador *
-                    denominador;
-
-                denominador *=
-                    siguiente.denominador;
-
+                numerador = numerador * siguiente.denominador + siguiente.numerador * denominador;
+                denominador *= siguiente.denominador;
             }
-
 
             if (operacionActual === "restar") {
-
-                numerador =
-                    numerador *
-                    siguiente.denominador -
-                    siguiente.numerador *
-                    denominador;
-
-                denominador *=
-                    siguiente.denominador;
-
+                numerador = numerador * siguiente.denominador - siguiente.numerador * denominador;
+                denominador *= siguiente.denominador;
             }
-
 
             if (operacionActual === "multiplicar") {
-
-                numerador *=
-                    siguiente.numerador;
-
-                denominador *=
-                    siguiente.denominador;
-
+                numerador *= siguiente.numerador;
+                denominador *= siguiente.denominador;
             }
-
 
             if (operacionActual === "dividir") {
-
-                if (
-                    siguiente.numerador === 0
-                ) {
-
-                    resultado.textContent =
-                        "No se puede dividir entre 0.";
-
+                if (siguiente.numerador === 0) {
+                    resultado.textContent = "No se puede dividir entre 0.";
                     return;
-
                 }
-
-                numerador *=
-                    siguiente.denominador;
-
-                denominador *=
-                    siguiente.numerador;
-
+                numerador *= siguiente.denominador;
+                denominador *= siguiente.numerador;
             }
-
         }
 
-
-        const simplificada =
-            simplificarFraccion(
-                numerador,
-                denominador
-            );
-
-        resultado.textContent =
-            textoFraccion(simplificada);
-
+        const simplificada = simplificarFraccion(numerador, denominador);
+        resultado.textContent = textoFraccion(simplificada);
     });
 
 
