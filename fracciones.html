@@ -344,11 +344,6 @@
             <button class="operacion" data-operacion="decimal">
                 A decimal
             </button>
-
-            <button class="operacion" data-operacion="fraccion">
-                A fracción
-            </button>
-
         </div>
 
         <div id="fracciones" class="fracciones"></div>
@@ -530,26 +525,7 @@
         // campos de numerador/denominador al convertir un número decimal.
         contenedor.replaceChildren();
 
-        if (operacionActual === "fraccion") {
-            const grupo = document.createElement("div");
-            grupo.className = "entrada-decimal";
-
-            const etiqueta = document.createElement("label");
-            etiqueta.htmlFor = "numeroDecimal";
-            etiqueta.textContent = "Número que quieres convertir";
-
-            const entrada = document.createElement("input");
-            entrada.type = "text";
-            entrada.id = "numeroDecimal";
-            entrada.inputMode = "decimal";
-            entrada.placeholder = "Escribe un número, por ejemplo 2,75";
-            entrada.autocomplete = "off";
-
-            grupo.append(etiqueta, entrada);
-            contenedor.appendChild(grupo);
-
-            calcular.textContent = "Ver resultado";
-        } else {
+        else {
             crearFraccion();
 
             if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
@@ -675,18 +651,7 @@
 
     calcular.addEventListener("click", () => {
 
-        if (operacionActual === "fraccion") {
-
-            const entrada = document.getElementById("numeroDecimal");
-            const texto = entrada.value.trim().replace(",", ".");
-
-            if (!/^[+-]?(?:\d+\.?\d*|\.\d+)$/.test(texto)) {
-                resultado.textContent = "Introduce un número válido, por ejemplo 2,75.";
-                entrada.focus();
-                return;
-            }
-
-            const partes = texto.split(".");
+const partes = texto.split(".");
             const decimales = partes[1] || "";
 
             if (decimales.length > 12) {
