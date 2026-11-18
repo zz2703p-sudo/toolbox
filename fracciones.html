@@ -521,11 +521,7 @@
 
     function mostrarFraccionesNecesarias() {
 
-        // Reconstruimos el contenido desde cero para que nunca queden
-        // campos de numerador/denominador al convertir un número decimal.
         contenedor.replaceChildren();
-
-        else {
             crearFraccion();
 
             if (["sumar", "restar", "multiplicar", "dividir"].includes(operacionActual)) {
