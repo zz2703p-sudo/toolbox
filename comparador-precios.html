@@ -130,7 +130,8 @@ const nombre=campos[0].value.trim()||("Producto "+(i+1));
 const precio=Number(campos[1].value),cantidad=Number(campos[2].value);
 const unidad=unidades.find(u=>u.valor===campos[3].value);
 if(campos[1].value===""||campos[2].value===""||!Number.isFinite(precio)||!Number.isFinite(cantidad)||precio<0||cantidad<=0){mostrarError("Revisa el precio y la cantidad de "+nombre+". Deben ser valores válidos y la cantidad mayor que cero.");return}
-datos.push({nombre,precio,cantidad,unidad,indice:i,unitario:precio/(cantidad/unidad.base)});
+const escala=unidad.familia==="longitud"?100:unidad.familia==="unidad"?1:1000;
+ datos.push({nombre,precio,cantidad,unidad,indice:i,unitario:precio/(cantidad*unidad.base/escala)});
 }
 const familia=datos[0].unidad.familia;
 if(!datos.every(d=>d.unidad.familia===familia)){mostrarError("Para comparar correctamente, todos los productos deben utilizar unidades de la misma categoría (peso, volumen, longitud o unidades).");return}
